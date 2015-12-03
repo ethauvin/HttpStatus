@@ -21,11 +21,6 @@ repositories {
 dependencies {
 	compile 'servletapi:servlet-api:+'
 	compile 'javax.servlet.jsp:jsp-api:+'
-	testCompile 'org.testng:testng:+'
-}
-
-test {
-	useTestNG()
 }
 
 compileJava {

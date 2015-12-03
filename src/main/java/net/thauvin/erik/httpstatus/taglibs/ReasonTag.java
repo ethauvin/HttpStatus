@@ -58,7 +58,7 @@ public class ReasonTag extends SimpleTagSupport
 				}
 			}
 		}
-		catch (IOException e)
+		catch (IOException ignore)
 		{
 			// Ignore.
 		}

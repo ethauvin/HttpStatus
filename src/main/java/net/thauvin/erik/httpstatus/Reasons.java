@@ -57,7 +57,7 @@ public class Reasons
 	{
 		for (final Map.Entry<String, String> entry : REASON_PHRASES.entrySet())
 		{
-			System.out.println(entry.getKey() + '=' + entry.getValue());
+			System.out.println(entry.getKey() + ": " + entry.getValue());
 		}
 	}
 

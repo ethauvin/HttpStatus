@@ -21,6 +21,8 @@ repositories {
 dependencies {
 	compile 'servletapi:servlet-api:+'
 	compile 'javax.servlet.jsp:jsp-api:+'
+
+	testCompile 'org.testng:testng:+'
 }
 
 compileJava {
@@ -49,6 +51,10 @@ jar {
 
 clean {
 	delete deployDir
+}
+
+test {
+	useTestNG()
 }
 
 task wrapper(type: Wrapper) {

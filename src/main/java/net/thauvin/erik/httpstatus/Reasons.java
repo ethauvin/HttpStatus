@@ -1,5 +1,5 @@
 /*
- * HttpStatus.java
+ * Reasons.java
  *
  * Copyright (c) 2015 Erik C. Thauvin (http://erik.thauvin.net/)
  * All rights reserved.
@@ -66,7 +66,7 @@ public class Reasons
 	 */
 	static
 	{
-		final ResourceBundle bundle = ResourceBundle.getBundle("reasons", java.util.Locale.getDefault());
+		final ResourceBundle bundle = ResourceBundle.getBundle("net.thauvin.erik.httpstatus.reasons");
 		for (final String key : bundle.keySet())
 		{
 			REASON_PHRASES.put(key, bundle.getString(key));

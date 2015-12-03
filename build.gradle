@@ -45,12 +45,10 @@ compileJava {
 
 
 jar {
-	doFirst {
-		def props = new Properties()
-		file(buildProps).withInputStream { stream -> props.load(stream) }
-		version = version + '.' + props.get(buildProp)
-	}
-	archiveName = archiveName.toLowerCase()
+	def props = new Properties()
+	file(buildProps).withInputStream { stream -> props.load(stream) }
+	version = version + '.' + props.get(buildProp)
+	archiveName = archiveName.toLowerCase() 
 	manifest.attributes('Main-Class': mainClassName)
 }
 

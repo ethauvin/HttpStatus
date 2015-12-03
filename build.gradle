@@ -1,0 +1,85 @@
+apply plugin: 'java'
+apply plugin: 'idea'
+apply plugin: 'application'
+
+defaultTasks 'deploy'
+
+version = '1.0'
+
+def deployDir = 'deploy'
+def buildProp = 'build'
+def buildProps = 'buildnumber.properties'
+def isRelease = 'release' in gradle.startParameter.taskNames
+
+mainClassName = 'net.thauvin.erik.httpstatus.Reasons'
+[compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	compile 'servletapi:servlet-api:+'
+	compile 'javax.servlet.jsp:jsp-api:+'
+	testCompile 'org.testng:testng:+'
+}
+
+test {
+	useTestNG()
+}
+
+compileJava {
+	doFirst {
+		if (isRelease)
+		{
+			ant.propertyfile(file: buildProps) {
+				entry(key: buildProp,
+				      type: 'int',
+				      default: '-1',
+				      operation: '+')
+			}
+		}
+	}
+	//options.compilerArgs << "-Xlint:unchecked" << "-Xlint:deprecation"
+}
+
+
+jar {
+	doFirst {
+		def props = new Properties()
+		file(buildProps).withInputStream { stream -> props.load(stream) }
+		version = version + '.' + props.get(buildProp)
+	}
+	archiveName = archiveName.toLowerCase()
+	manifest.attributes('Main-Class': mainClassName)
+}
+
+clean {
+	delete deployDir
+}
+
+task wrapper(type: Wrapper) {
+	gradleVersion = gradle.gradleVersion
+}
+
+task copyToDeploy(type: Copy) {
+	from(configurations.runtime) {
+		exclude 'servlet-api-*.jar'
+		exclude 'jsp-api-*.jar'
+	}
+	from jar
+	into deployDir
+}
+
+task deploy(dependsOn: ['build', 'copyToDeploy']) {
+	description = "Copies all needed files to the ${deployDir} directory."
+	group = "Publishing"
+	outputs.dir deployDir
+	inputs.files copyToDeploy
+	mustRunAfter clean
+}
+
+task release(dependsOn: ['deploy', 'wrapper']) {
+	group = "Publishing"
+	description = "Releases new version."
+}

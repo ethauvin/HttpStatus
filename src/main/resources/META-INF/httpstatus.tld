@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<taglib xmlns="http://java.sun.com/xml/ns/javaee"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-jsptaglibrary_2_1.xsd"
+        version="2.1">
+
+    <description>HttpStatus JSP Tag Library</description>
+    <display-name>HttpStatus JSP Tags</display-name>
+    <tlib-version>1.0</tlib-version>
+    <short-name>hs</short-name>
+    <uri>http://erik.thauvin.net/taglibs/httpstatus</uri>
+
+    <tag>
+        <description>
+            Returns the Reason Phrase for the current (or specified) HTTP Status Error Code.
+        </description>
+        <name>reason</name>
+        <tag-class>net.thauvin.erik.httpstatus.taglibs.ReasonTag</tag-class>
+        <body-content>empty</body-content>
+        <attribute>
+            <description>
+                Default value if the resulting reason is null.
+            </description>
+            <name>default</name>
+            <required>false</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
+            <description>
+                HTTP Status Error Code to be looked up.
+            </description>
+            <name>statusCode</name>
+            <required>false</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+    </tag>
+
+</taglib>

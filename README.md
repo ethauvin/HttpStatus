@@ -1,6 +1,6 @@
 #  HttpStatus JSP Tag Library
 
-A simple JSP Tag Library to display the reason of [HTTP status codes](http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html) in JSP error pages.
+A simple JSP Tag Library to display the [code](#hscode), [reason](#hsreason) and/or [cause](#hscode) for [HTTP status codes](http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html) in JSP error pages.
 
 ----
 
@@ -43,7 +43,7 @@ Optional attributes are:
 Attribute   | Description
 ----------- | -------------------------------------------------------------------------------------------
 `default`   | The fallback value to output, if no cause is available.
-`escapeXml` | Converts &lt;,&gt;,&amp;,'," to their corresponding [entity codes](http://dev.w3.org/html5/html-author/charref). Value is true by default.
+`escapeXml` | Converts &lt;,&gt;,&amp;,'," to their corresponding [entity codes](http://dev.w3.org/html5/html-author/charref). Value is `true` by default.
 
 ## hs:code
 The `<hs:code/>` tag displays the current HTTP status code, if any. A shorthand for:
@@ -60,7 +60,7 @@ Attribute   | Description
 ----------- | -------------------------------------------------------------------------------------------
 `code`      | The HTTP status error code. If not specified the current status code is used.
 `default`   | The fallback value to output, if no reason is available.
-`escapeXml` | Converts &lt;,&gt;,&amp;,'," to their corresponding [entity codes](http://dev.w3.org/html5/html-author/charref). Value is true by default.
+`escapeXml` | Converts &lt;,&gt;,&amp;,'," to their corresponding [entity codes](http://dev.w3.org/html5/html-author/charref). Value is `true` by default.
 
 The reasons are defined in a [ResourceBundle](http://docs.oracle.com/javase/8/docs/api/java/util/ResourceBundle.html) properties as follows:
 

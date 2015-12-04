@@ -1,5 +1,5 @@
 /*
- * ReasonTag.java
+ * XmlSupport.java
  *
  * Copyright (c) 2015, Erik C. Thauvin (erik@thauvin.net)
  * All rights reserved.
@@ -33,62 +33,40 @@
  */
 package net.thauvin.erik.httpstatus.taglibs;
 
-import net.thauvin.erik.httpstatus.Reasons;
-import net.thauvin.erik.httpstatus.Utils;
-
-import javax.servlet.jsp.JspException;
-import javax.servlet.jsp.JspWriter;
-import javax.servlet.jsp.PageContext;
-import java.io.IOException;
+import javax.servlet.jsp.tagext.SimpleTagSupport;
 
 /**
- * The <code>ReasonTag</code> class.
+ * The <code>XmlSupport</code> class.
  *
  * @author <a href="mailto:erik@thauvin.net">Erik C. Thauvin</a>
- * @created 2015-12-02
+ * @created 2015-12-03
  * @since 1.0
  */
-public class ReasonTag extends XmlSupport
+public abstract class XmlSupport extends SimpleTagSupport
 {
-	private int statusCode;
+	protected String defaultValue;
 
-	@Override
-	public void doTag()
-			throws JspException, IOException
+	protected boolean escapeXml = true;
+
+	/**
+	 * Sets the default value.
+	 *
+	 * @param defaultValue The default value.
+	 */
+	@SuppressWarnings("unused")
+	public void setDefault(String defaultValue)
 	{
-		final PageContext pageContext = (PageContext) getJspContext();
-		final JspWriter out = pageContext.getOut();
-
-		try
-		{
-			if (statusCode > 0)
-			{
-				Utils.outWrite(out, Reasons.getReasonPhrase(statusCode), defaultValue, escapeXml);
-			}
-			else
-			{
-				Utils.outWrite(out,
-				               Reasons.getReasonPhrase(pageContext.getErrorData().getStatusCode()),
-				               defaultValue,
-				               escapeXml);
-			}
-		}
-		catch (IOException ignore)
-		{
-			// Ignore.
-		}
+		this.defaultValue = defaultValue;
 	}
 
 	/**
-	 * Sets the status code.
+	 * Sets the escapeXMl flag.
 	 *
-	 * @param statusCode The status code.
+	 * @param escapeXml <code>true</code> or <code>false</code>
 	 */
 	@SuppressWarnings("unused")
-	public void setCode(int statusCode)
+	public void setEscapeXml(boolean escapeXml)
 	{
-		this.statusCode = statusCode;
+		this.escapeXml = escapeXml;
 	}
-
-
 }

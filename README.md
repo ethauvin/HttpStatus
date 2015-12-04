@@ -10,9 +10,10 @@ For example:
 <%@ page isErrorPage="true" %>
 <%@ taglib prefix="hs" uri="http://erik.thauvin.net/taglibs/httpstatus" %>
 <html><head>
-<title>${pageContext.errorData.statusCode} <hs:reason default="Server Error"/></title>
+<title><hs:code/> <hs:reason default="Server Error"/></title>
 </head>
 <h1><hs:reason default="Server Error"/></h1>
+Cause: <pre><hs:cause default="Unable to complete your request."/></pre>
 ...
 ```
 
@@ -29,12 +30,37 @@ would display on a [501 status code](http://www.w3.org/Protocols/rfc2616/rfc2616
 
 ----
 
-The **<hs:reason>** tag attributes are:
+## hs:cause
 
-Attribute    | Description                                                                   | Required
------------- | ----------------------------------------------------------------------------- | --------
-`statusCode` | The HTTP status error code. If not specified the current status code is used. | No
-`default`    | The fallback value to output.                                                 | No
+The `<hs:cause/>` tag displays the cause of current HTTP status code, if any. A shorthand for:
+
+```jsp
+<%= pageContext.getErrorData().getThrowable().getCause().getLocalizedMessage() %>
+```
+
+Optional attributes are:
+
+Attribute   | Description
+----------- | -------------------------------------------------------------------------------------------
+`default`   | The fallback value to output, if no cause is available.
+`escapeXml` | Converts &lt;,&gt;,&amp;,'," to their corresponding [entity codes](http://dev.w3.org/html5/html-author/charref). Value is true by default.
+
+## hs:code
+The `<hs:code/>` tag displays the current HTTP status code, if any. A shorthand for:
+
+```jsp
+<%= pageContext.getErrorData().getStatusCode() %>
+```
+
+## hs:reason
+
+The `<hs:reason/>` tag displays the reason for a HTTP status code, if any. Optional attributes are:
+
+Attribute   | Description
+----------- | -------------------------------------------------------------------------------------------
+`code`      | The HTTP status error code. If not specified the current status code is used.
+`default`   | The fallback value to output, if no reason is available.
+`escapeXml` | Converts &lt;,&gt;,&amp;,'," to their corresponding [entity codes](http://dev.w3.org/html5/html-author/charref). Value is true by default.
 
 The reasons are defined in a [ResourceBundle](http://docs.oracle.com/javase/8/docs/api/java/util/ResourceBundle.html) properties as follows:
 

@@ -1,5 +1,5 @@
 /*
- * ReasonTag.java
+ * UtilsTest.java
  *
  * Copyright (c) 2015, Erik C. Thauvin (erik@thauvin.net)
  * All rights reserved.
@@ -31,64 +31,28 @@
  * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package net.thauvin.erik.httpstatus.taglibs;
+package net.thauvin.erik.httpstatus;
 
-import net.thauvin.erik.httpstatus.Reasons;
-import net.thauvin.erik.httpstatus.Utils;
-
-import javax.servlet.jsp.JspException;
-import javax.servlet.jsp.JspWriter;
-import javax.servlet.jsp.PageContext;
-import java.io.IOException;
+import org.testng.Assert;
+import org.testng.annotations.Test;
 
 /**
- * The <code>ReasonTag</code> class.
+ * The <code>UtilsTest</code> class.
  *
  * @author <a href="mailto:erik@thauvin.net">Erik C. Thauvin</a>
- * @created 2015-12-02
+ * @created 2015-12-03
  * @since 1.0
  */
-public class ReasonTag extends XmlSupport
+@SuppressWarnings("unused")
+public class UtilsTest
 {
-	private int statusCode;
-
-	@Override
-	public void doTag()
-			throws JspException, IOException
+	@Test
+	public void testEscapeXml()
+			throws Exception
 	{
-		final PageContext pageContext = (PageContext) getJspContext();
-		final JspWriter out = pageContext.getOut();
-
-		try
-		{
-			if (statusCode > 0)
-			{
-				Utils.outWrite(out, Reasons.getReasonPhrase(statusCode), defaultValue, escapeXml);
-			}
-			else
-			{
-				Utils.outWrite(out,
-				               Reasons.getReasonPhrase(pageContext.getErrorData().getStatusCode()),
-				               defaultValue,
-				               escapeXml);
-			}
-		}
-		catch (IOException ignore)
-		{
-			// Ignore.
-		}
+		Assert.assertEquals(
+				"This is a test. We wan&#039;t to make sure that everything is &lt;encoded&gt; according the &#034;encoding&#034; parameter &amp; value.",
+				Utils.escapeXml(
+						"This is a test. We wan't to make sure that everything is <encoded> according the \"encoding\" parameter & value."));
 	}
-
-	/**
-	 * Sets the status code.
-	 *
-	 * @param statusCode The status code.
-	 */
-	@SuppressWarnings("unused")
-	public void setCode(int statusCode)
-	{
-		this.statusCode = statusCode;
-	}
-
-
 }

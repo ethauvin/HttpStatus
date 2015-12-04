@@ -45,6 +45,40 @@
 
     <tag>
         <description>
+            Returns the cause (if any) for the current HTTP Status Error Code.
+        </description>
+        <name>cause</name>
+        <tag-class>net.thauvin.erik.httpstatus.taglibs.CauseTag</tag-class>
+        <body-content>empty</body-content>
+        <attribute>
+            <description>
+                Default value if the resulting cause is null.
+            </description>
+            <name>default</name>
+            <required>false</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
+            <description>
+                Converts &lt;,&gt;,&amp;,'," to their corresponding entity codes. Value is true by default.
+            </description>
+            <name>escapeXml</name>
+            <required>false</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+    </tag>
+
+    <tag>
+        <description>
+            Outputs the HTTP Status Error Code.
+        </description>
+        <name>code</name>
+        <tag-class>net.thauvin.erik.httpstatus.taglibs.CodeTag</tag-class>
+        <body-content>empty</body-content>
+    </tag>
+
+    <tag>
+        <description>
             Returns the Reason Phrase for the current (or specified) HTTP Status Error Code.
         </description>
         <name>reason</name>
@@ -62,7 +96,15 @@
             <description>
                 HTTP Status Error Code to be looked up.
             </description>
-            <name>statusCode</name>
+            <name>code</name>
+            <required>false</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
+            <description>
+                Converts &lt;,&gt;,&amp;,'," to their corresponding entity codes. Value is true by default.
+            </description>
+            <name>escapeXml</name>
             <required>false</required>
             <rtexprvalue>true</rtexprvalue>
         </attribute>

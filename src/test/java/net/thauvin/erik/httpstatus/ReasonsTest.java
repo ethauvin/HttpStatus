@@ -46,6 +46,7 @@ import java.util.ResourceBundle;
  * @created 2015-12-03
  * @since 1.0
  */
+@SuppressWarnings("unused")
 public class ReasonsTest
 {
 	@DataProvider(name = "reasons")

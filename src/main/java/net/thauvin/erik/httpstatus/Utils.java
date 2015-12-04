@@ -1,5 +1,5 @@
 /*
- * ReasonTag.java
+ * Utils.java
  *
  * Copyright (c) 2015, Erik C. Thauvin (erik@thauvin.net)
  * All rights reserved.
@@ -31,64 +31,104 @@
  * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package net.thauvin.erik.httpstatus.taglibs;
+package net.thauvin.erik.httpstatus;
 
-import net.thauvin.erik.httpstatus.Reasons;
-import net.thauvin.erik.httpstatus.Utils;
-
-import javax.servlet.jsp.JspException;
-import javax.servlet.jsp.JspWriter;
-import javax.servlet.jsp.PageContext;
 import java.io.IOException;
+import java.io.Writer;
 
 /**
- * The <code>ReasonTag</code> class.
+ * The <code>Utils</code> class.
  *
  * @author <a href="mailto:erik@thauvin.net">Erik C. Thauvin</a>
- * @created 2015-12-02
+ * @created 2015-12-03
  * @since 1.0
  */
-public class ReasonTag extends XmlSupport
+public class Utils
 {
-	private int statusCode;
 
-	@Override
-	public void doTag()
-			throws JspException, IOException
+	/**
+	 * Disables the default constructor.
+	 *
+	 * @throws UnsupportedOperationException if an error occurred. if the constructor is called.
+	 */
+	private Utils()
+			throws UnsupportedOperationException
 	{
-		final PageContext pageContext = (PageContext) getJspContext();
-		final JspWriter out = pageContext.getOut();
+		throw new UnsupportedOperationException("Illegal constructor call.");
+	}
 
-		try
+	/**
+	 * Writes a string value.
+	 *
+	 * @param out The writer to output the value to.
+	 * @param value The string value.
+	 * @param defaultValue The default value.
+	 * @param xml The xml flag.
+	 */
+	public static void outWrite(Writer out, String value, String defaultValue, boolean xml)
+			throws IOException
+	{
+		if (xml)
 		{
-			if (statusCode > 0)
+			if (value != null)
 			{
-				Utils.outWrite(out, Reasons.getReasonPhrase(statusCode), defaultValue, escapeXml);
+				out.write(escapeXml(value));
 			}
-			else
+			else if (defaultValue != null)
 			{
-				Utils.outWrite(out,
-				               Reasons.getReasonPhrase(pageContext.getErrorData().getStatusCode()),
-				               defaultValue,
-				               escapeXml);
+				out.write(escapeXml(defaultValue));
 			}
 		}
-		catch (IOException ignore)
+		else
 		{
-			// Ignore.
+			if (value != null)
+			{
+				out.write(value);
+			}
+			else if (defaultValue != null)
+			{
+				out.write(defaultValue);
+			}
 		}
 	}
 
 	/**
-	 * Sets the status code.
+	 * Escapes a string value.
 	 *
-	 * @param statusCode The status code.
+	 * @param value The string value to escape.
+	 *
+	 * @return The escaped string value.
 	 */
-	@SuppressWarnings("unused")
-	public void setCode(int statusCode)
+	public static String escapeXml(String value)
 	{
-		this.statusCode = statusCode;
+		final StringBuilder escaped = new StringBuilder();
+
+		for (int i = 0; i < value.length(); i++)
+		{
+			final char c = value.charAt(i);
+			switch (c)
+			{
+				case '<':
+					escaped.append("&lt;");
+					break;
+				case '>':
+					escaped.append("&gt;");
+					break;
+				case '&':
+					escaped.append("&amp;");
+					break;
+				case '\'':
+					escaped.append("&#039;");
+					break;
+				case '"':
+					escaped.append("&#034;");
+					break;
+				default:
+					escaped.append(c);
+					break;
+			}
+		}
+
+		return escaped.toString();
 	}
-
-
 }

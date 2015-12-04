@@ -1,5 +1,5 @@
 /*
- * ReasonTag.java
+ * CauseTag.java
  *
  * Copyright (c) 2015, Erik C. Thauvin (erik@thauvin.net)
  * All rights reserved.
@@ -33,7 +33,6 @@
  */
 package net.thauvin.erik.httpstatus.taglibs;
 
-import net.thauvin.erik.httpstatus.Reasons;
 import net.thauvin.erik.httpstatus.Utils;
 
 import javax.servlet.jsp.JspException;
@@ -42,16 +41,14 @@ import javax.servlet.jsp.PageContext;
 import java.io.IOException;
 
 /**
- * The <code>ReasonTag</code> class.
+ * The <code>CauseTag</code> class.
  *
  * @author <a href="mailto:erik@thauvin.net">Erik C. Thauvin</a>
- * @created 2015-12-02
+ * @created 2015-12-03
  * @since 1.0
  */
-public class ReasonTag extends XmlSupport
+public class CauseTag extends XmlSupport
 {
-	private int statusCode;
-
 	@Override
 	public void doTag()
 			throws JspException, IOException
@@ -59,36 +56,17 @@ public class ReasonTag extends XmlSupport
 		final PageContext pageContext = (PageContext) getJspContext();
 		final JspWriter out = pageContext.getOut();
 
+		String cause;
+
 		try
 		{
-			if (statusCode > 0)
-			{
-				Utils.outWrite(out, Reasons.getReasonPhrase(statusCode), defaultValue, escapeXml);
-			}
-			else
-			{
-				Utils.outWrite(out,
-				               Reasons.getReasonPhrase(pageContext.getErrorData().getStatusCode()),
-				               defaultValue,
-				               escapeXml);
-			}
+			cause = pageContext.getErrorData().getThrowable().getCause().getLocalizedMessage();
 		}
-		catch (IOException ignore)
+		catch (NullPointerException ignore)
 		{
-			// Ignore.
+			cause = defaultValue;
 		}
+
+		Utils.outWrite(out, cause, defaultValue, escapeXml);
 	}
-
-	/**
-	 * Sets the status code.
-	 *
-	 * @param statusCode The status code.
-	 */
-	@SuppressWarnings("unused")
-	public void setCode(int statusCode)
-	{
-		this.statusCode = statusCode;
-	}
-
-
 }

@@ -52,7 +52,7 @@ public class ReasonsTest
 	@DataProvider(name = "reasons")
 	public Object[][] reasons()
 	{
-		final ResourceBundle bundle = ResourceBundle.getBundle("net.thauvin.erik.httpstatus.reasons");
+		final ResourceBundle bundle = ResourceBundle.getBundle(Reasons.BUNDLE_BASENAME);
 		final Object[][] reasons = new String[bundle.keySet().size()][2];
 		int i = 0;
 		for (final String key : bundle.keySet())

@@ -47,6 +47,11 @@ import java.util.TreeMap;
 public class Reasons
 {
 	/**
+	 * The resource bundle base name.
+	 */
+	public static final String BUNDLE_BASENAME = "net.thauvin.erik.httpstatus.reasons";
+
+	/**
 	 * The reason phrases map.
 	 */
 	private static final Map<String, String> REASON_PHRASES = new TreeMap<String, String>();
@@ -93,7 +98,7 @@ public class Reasons
 	 */
 	static
 	{
-		final ResourceBundle bundle = ResourceBundle.getBundle("net.thauvin.erik.httpstatus.reasons");
+		final ResourceBundle bundle = ResourceBundle.getBundle(BUNDLE_BASENAME);
 		for (final String key : bundle.keySet())
 		{
 			REASON_PHRASES.put(key, bundle.getString(key));

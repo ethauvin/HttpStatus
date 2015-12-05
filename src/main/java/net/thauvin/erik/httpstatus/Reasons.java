@@ -63,7 +63,7 @@ public class Reasons
 	 *
 	 * @return The reason phrase, or <code>null</code>.
 	 */
-	public static String getReasonPhrase(int statusCode)
+	public static String getReasonPhrase(final int statusCode)
 	{
 		return getReasonPhrase(Integer.toString(statusCode));
 	}
@@ -75,7 +75,7 @@ public class Reasons
 	 *
 	 * @return The reason phrase, or <code>null</code>.
 	 */
-	public static String getReasonPhrase(String statusCode)
+	public static String getReasonPhrase(final String statusCode)
 	{
 		return REASON_PHRASES.get(statusCode);
 	}
@@ -85,12 +85,14 @@ public class Reasons
 	 *
 	 * @param args The command line arguments.
 	 */
-	public static void main(String[] args)
+	public static void main(final String... args)
 	{
 		for (final Map.Entry<String, String> entry : REASON_PHRASES.entrySet())
 		{
 			System.out.println(entry.getKey() + ": " + entry.getValue());
 		}
+
+		System.out.println("Total: " + REASON_PHRASES.entrySet().size());
 	}
 
 	/**

@@ -43,7 +43,7 @@ import java.io.Writer;
  * @created 2015-12-03
  * @since 1.0
  */
-public class Utils
+public final class Utils
 {
 
 	/**

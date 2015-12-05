@@ -61,7 +61,7 @@ public class ReasonTag extends XmlSupport
 
 		try
 		{
-			if (statusCode > 0)
+			if (statusCode >= 0)
 			{
 				Utils.outWrite(out, Reasons.getReasonPhrase(statusCode), defaultValue, escapeXml);
 			}

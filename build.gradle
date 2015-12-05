@@ -87,17 +87,18 @@ task release(dependsOn: ['deploy', 'pandoc', 'wrapper']) {
 
 task pandoc(type: Exec) {
 	group = "Documentation"
-	def pandoc_cmd = 'pandoc --from markdown_github --to html5 -s -o README.html README.md';
-	if (Os.isFamily(Os.FAMILY_WINDOWS)) {
-		commandLine 'cmd', '/c', pandoc_cmd
+	def pandoc_args = ['--from', 'markdown_github', '--to', 'html5', '-s', '-o', 'README.html', 'README.md']
+	if (Os.isFamily(Os.FAMILY_WINDOWS))
+	{
+		commandLine(['cmd', '/c', 'pandoc'] + pandoc_args)
 	}
-	else {
-		commandLine pandoc_cmd
+	else
+	{
+		executable '/usr/local/bin/pandoc'
+		args pandoc_args
 	}
 	standardOutput = new ByteArrayOutputStream()
 	ext.output = {
 		return standardOutput.toString()
 	}
 }
-	
-	

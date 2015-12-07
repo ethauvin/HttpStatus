@@ -41,7 +41,7 @@ import javax.servlet.jsp.PageContext;
 import java.io.IOException;
 
 /**
- * The <code>CauseTag</code> class.
+ * The <code>&lt;hs:cause&gt;</code> tag returns the cause (if any) for the current HTTP Status Error Code.
  *
  * @author <a href="mailto:erik@thauvin.net">Erik C. Thauvin</a>
  * @created 2015-12-03

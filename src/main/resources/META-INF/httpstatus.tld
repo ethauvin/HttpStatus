@@ -60,7 +60,7 @@
         </attribute>
         <attribute>
             <description>
-                Converts &lt;,&gt;,&amp;,'," to their corresponding entity codes. Value is true by default.
+                Converts &lt;, &gt; ,&amp; ,' ," to their corresponding entity codes. Value is true by default.
             </description>
             <name>escapeXml</name>
             <required>false</required>
@@ -70,7 +70,7 @@
 
     <tag>
         <description>
-            Outputs the HTTP Status Error Code.
+            Returns the HTTP Status Error Code.
         </description>
         <name>code</name>
         <tag-class>net.thauvin.erik.httpstatus.taglibs.CodeTag</tag-class>
@@ -102,7 +102,7 @@
         </attribute>
         <attribute>
             <description>
-                Converts &lt;,&gt;,&amp;,'," to their corresponding entity codes. Value is true by default.
+                Converts &lt;, &gt;, &amp;, ', " to their corresponding entity codes. Value is true by default.
             </description>
             <name>escapeXml</name>
             <required>false</required>

@@ -42,7 +42,8 @@ import javax.servlet.jsp.PageContext;
 import java.io.IOException;
 
 /**
- * The <code>ReasonTag</code> class.
+ * The <code>&lt;hs:reason&gt;</code> tag returns the Reason Phrase for the current (or specified) HTTP Status Error
+ * Code.
  *
  * @author <a href="mailto:erik@thauvin.net">Erik C. Thauvin</a>
  * @created 2015-12-02
@@ -85,7 +86,7 @@ public class ReasonTag extends XmlSupport
 	 * @param statusCode The status code.
 	 */
 	@SuppressWarnings("unused")
-	public void setCode(int statusCode)
+	public void setCode(final int statusCode)
 	{
 		this.statusCode = statusCode;
 	}

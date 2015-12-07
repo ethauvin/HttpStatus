@@ -38,7 +38,8 @@ import java.util.ResourceBundle;
 import java.util.TreeMap;
 
 /**
- * The <code>Reasons</code> class.
+ * Populates the {@link #REASON_PHRASES reason phrases} map from {@link #BUNDLE_BASENAME bundle properties}, and
+ * implements accessor methods.
  *
  * @author <a href="mailto:erik@thauvin.net">Erik C. Thauvin</a>
  * @created 2015-12-02
@@ -57,7 +58,7 @@ public class Reasons
 	private static final Map<String, String> REASON_PHRASES = new TreeMap<String, String>();
 
 	/**
-	 * Gets the reason phrase for the specified status code.
+	 * Returns the reason phrase for the specified status code.
 	 *
 	 * @param statusCode The status code.
 	 *
@@ -69,7 +70,7 @@ public class Reasons
 	}
 
 	/**
-	 * Gets the reason phrase for the specified status code.
+	 * Returns the reason phrase for the specified status code.
 	 *
 	 * @param statusCode The status code.
 	 *
@@ -81,7 +82,7 @@ public class Reasons
 	}
 
 	/**
-	 * Outputs the status codes and reason phrases.
+	 * Prints the status codes and reason phrases.
 	 *
 	 * @param args The command line arguments.
 	 */

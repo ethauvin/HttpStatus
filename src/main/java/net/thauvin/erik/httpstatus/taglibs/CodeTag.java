@@ -40,7 +40,7 @@ import javax.servlet.jsp.tagext.SimpleTagSupport;
 import java.io.IOException;
 
 /**
- * The <code>CodeTag</code> class.
+ * The <code>&lt;hs:code&gt;</code> tag returns the HTTP Status Error Code.
  *
  * @author <a href="mailto:erik@thauvin.net">Erik C. Thauvin</a>
  * @created 2015-12-03

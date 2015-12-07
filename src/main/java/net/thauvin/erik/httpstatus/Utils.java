@@ -49,7 +49,7 @@ public final class Utils
 	/**
 	 * Disables the default constructor.
 	 *
-	 * @throws UnsupportedOperationException if an error occurred. if the constructor is called.
+	 * @throws UnsupportedOperationException If the constructor is called.
 	 */
 	private Utils()
 			throws UnsupportedOperationException
@@ -58,14 +58,14 @@ public final class Utils
 	}
 
 	/**
-	 * Writes a string value.
+	 * Writes a string value to the specified writer. The default value is used when the actual value is null.
 	 *
 	 * @param out The writer to output the value to.
 	 * @param value The string value.
 	 * @param defaultValue The default value.
-	 * @param xml The xml flag.
+	 * @param xml The {@link #escapeXml(String) xml} flag.
 	 */
-	public static void outWrite(Writer out, String value, String defaultValue, boolean xml)
+	public static void outWrite(final Writer out, final String value, final String defaultValue, final boolean xml)
 			throws IOException
 	{
 		if (xml)
@@ -93,13 +93,14 @@ public final class Utils
 	}
 
 	/**
-	 * Escapes a string value.
+	 * Converts <code>&lt;</code>, <code>&gt;</code>, <code>&amp;</code>, <code>'</code>, <code>"</code>
+	 * to their corresponding entity codes.
 	 *
-	 * @param value The string value to escape.
+	 * @param value The string value to convert.
 	 *
-	 * @return The escaped string value.
+	 * @return The converted string value.
 	 */
-	public static String escapeXml(String value)
+	public static String escapeXml(final String value)
 	{
 		final StringBuilder escaped = new StringBuilder();
 

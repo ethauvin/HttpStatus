@@ -44,10 +44,12 @@ compileJava {
 
 
 jar {
-	def props = new Properties()
-	file(buildProps).withInputStream { stream -> props.load(stream) }
-	version = version + '.' + props.get(buildProp)
-	archiveName = archiveName.toLowerCase()
+    doFirst {
+		def props = new Properties()
+		file(buildProps).withInputStream { stream -> props.load(stream) }
+		project.version = version + '.' + props.get(buildProp)
+		archiveName = archiveName.toLowerCase()
+	}
 	manifest.attributes('Main-Class': mainClassName)
 }
 
@@ -83,6 +85,7 @@ task deploy(dependsOn: ['build', 'copyToDeploy']) {
 task release(dependsOn: ['deploy', 'pandoc', 'wrapper']) {
 	group = "Publishing"
 	description = "Releases new version."
+	isRelease = true
 }
 
 task pandoc(type: Exec) {

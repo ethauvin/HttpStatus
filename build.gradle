@@ -1,17 +1,40 @@
+plugins {
+	id "com.jfrog.bintray" version "1.5"
+}
 apply plugin: 'java'
 apply plugin: 'idea'
 apply plugin: 'application'
+apply plugin: 'maven'
+apply plugin: 'maven-publish'
 
 import org.apache.tools.ant.taskdefs.condition.Os
 
 defaultTasks 'deploy'
 
-version = '1.0'
-
 def deployDir = 'deploy'
-def buildProp = 'build'
-def buildProps = 'buildnumber.properties'
+def localProps = 'local.properties'
 def isRelease = 'release' in gradle.startParameter.taskNames
+def mavenGroupId = 'net.thauvin.erik.httpstatus'
+
+def getVersion(isIncrement = false)
+{
+	def propsFile = 'buildnumber.properties'
+	def key = 'build'
+	if (isIncrement)
+	{
+		ant.propertyfile(file: propsFile) {
+			entry(key: key,
+			      type: 'int',
+			      default: '-1',
+			      operation: '+')
+		}
+	}
+	def p = new Properties()
+	file(propsFile).withInputStream { stream -> p.load(stream) }
+	return '1.0.' + p.getProperty(key)
+}
+
+version = getVersion();
 
 mainClassName = 'net.thauvin.erik.httpstatus.Reasons'
 [compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
@@ -27,27 +50,81 @@ dependencies {
 	testCompile 'org.testng:testng:+'
 }
 
-compileJava {
-	doFirst {
-		if (isRelease)
-		{
-			ant.propertyfile(file: buildProps) {
-				entry(key: buildProp,
-				      type: 'int',
-				      default: '-1',
-				      operation: '+')
+bintray {
+	def p = new Properties()
+	file(localProps).withInputStream { stream -> p.load(stream) }
+	user = p.getProperty('bintrayUser');
+	key = p.getProperty('bintrayApiKey');
+	publications = ['MyPublication']
+	pkg {
+		repo = 'maven'
+		name = rootProject.name
+		licenses = ['BSD 3-Clause']
+		desc = 'HttpStatus JSP Tag Library'
+		websiteUrl = 'https://github.com/ethauvin/HttpStatus'
+		issueTrackerUrl = 'https://github.com/ethauvin/HttpStatus/issues'
+		vcsUrl = 'https://github.com/ethauvin/HttpStatus.git'
+		labels = ['jsp', 'tag library', 'http', 'status code', 'java']
+		publicDownloadNumbers = true
+		version {
+			name = project.version
+			desc = 'Version ' + project.version
+			vcsTag = project.version
+			gpg {
+				sign = true
 			}
 		}
+	}
+}
+
+publishing {
+	publications {
+		MyPublication(MavenPublication) {
+			from components.java
+			artifact sourcesJar
+			artifact javadocJar
+			groupId mavenGroupId
+			artifactId rootProject.name.toLowerCase()
+			version project.version
+		}
+	}
+}
+
+task javadocJar(type: Jar, dependsOn: javadoc) {
+	group = 'Build'
+	description = 'Builds an archive of the javadoc docs.'
+	classifier = 'javadoc'
+	from javadoc.destinationDir
+}
+
+task sourcesJar(type: Jar) {
+	group = 'Build'
+	description = 'Builds an archive of the source code.'
+	classifier = 'sources'
+	from sourceSets.main.allSource
+}
+
+artifacts {
+	archives javadocJar
+	archives sourcesJar
+
+}
+
+javadoc {
+	options.tags = ['created']
+	options.author = true
+}
+
+compileJava {
+	doFirst {
+		project.version = getVersion(isRelease)
 	}
 	//options.compilerArgs << "-Xlint:unchecked" << "-Xlint:deprecation"
 }
 
 
 jar {
-    doFirst {
-		def props = new Properties()
-		file(buildProps).withInputStream { stream -> props.load(stream) }
-		project.version = version + '.' + props.get(buildProp)
+	doFirst {
 		archiveName = archiveName.toLowerCase()
 	}
 	manifest.attributes('Main-Class': mainClassName)
@@ -82,7 +159,8 @@ task deploy(dependsOn: ['build', 'copyToDeploy']) {
 	mustRunAfter clean
 }
 
-task release(dependsOn: ['deploy', 'pandoc', 'wrapper']) {
+
+task release(dependsOn: ['deploy']) {
 	group = "Publishing"
 	description = "Releases new version."
 	isRelease = true

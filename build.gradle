@@ -18,12 +18,16 @@ def mavenGroupId = 'net.thauvin.erik.httpstatus'
 
 def getVersion(isIncrement = false)
 {
-	def propsFile = 'buildnumber.properties'
-	def key = 'build'
+	def propsFile = 'version.properties'
+	def majorKey = 'version.major'
+	def minorKey = 'version.minor'
+	def patchKey = 'version.patch'
+	def metaKey = 'version.buildmeta'
+	def preKey = 'version.prerelease'
 	if (isIncrement)
 	{
 		ant.propertyfile(file: propsFile) {
-			entry(key: key,
+			entry(key: patchKey,
 			      type: 'int',
 			      default: '-1',
 			      operation: '+')
@@ -31,7 +35,10 @@ def getVersion(isIncrement = false)
 	}
 	def p = new Properties()
 	file(propsFile).withInputStream { stream -> p.load(stream) }
-	return '1.0.' + p.getProperty(key)
+	def metadata = p.getProperty(metaKey, '')
+	def prerelease = p.getProperty(preKey, '')
+	return (p.getProperty(majorKey, '1') + '.' + p.getProperty(minorKey, '0') + '.' + p.getProperty(patchKey, '0') +
+	        (prerelease.length() > 0 ? '-' + prerelease : '') + (metadata.length() > 0 ? '+' + metadata : ''))
 }
 
 version = getVersion();
@@ -58,7 +65,7 @@ bintray {
 	publications = ['MyPublication']
 	pkg {
 		repo = 'maven'
-		name = rootProject.name
+		name = 'HttpStatus'
 		licenses = ['BSD 3-Clause']
 		desc = 'HttpStatus JSP Tag Library'
 		websiteUrl = 'https://github.com/ethauvin/HttpStatus'
@@ -84,7 +91,7 @@ publishing {
 			artifact sourcesJar
 			artifact javadocJar
 			groupId mavenGroupId
-			artifactId rootProject.name.toLowerCase()
+			artifactId rootProject.name
 			version project.version
 		}
 	}
@@ -107,7 +114,6 @@ task sourcesJar(type: Jar) {
 artifacts {
 	archives javadocJar
 	archives sourcesJar
-
 }
 
 javadoc {
@@ -124,9 +130,6 @@ compileJava {
 
 
 jar {
-	doFirst {
-		archiveName = archiveName.toLowerCase()
-	}
 	manifest.attributes('Main-Class': mainClassName)
 }
 
@@ -159,8 +162,7 @@ task deploy(dependsOn: ['build', 'copyToDeploy']) {
 	mustRunAfter clean
 }
 
-
-task release(dependsOn: ['deploy']) {
+task release(dependsOn: ['deploy', 'wrapper']) << {
 	group = "Publishing"
 	description = "Releases new version."
 	isRelease = true

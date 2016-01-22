@@ -144,3 +144,18 @@ Status Code | Reason
 `522`       | Origin Connection Time-out
 `598`       | Network Read Timeout Error
 `599`       | Network Connect Timeout Error
+
+----
+
+## Use with [Gradle](https://gradle.org/)
+Include the following in your `build.gradle` file:
+
+```gradle
+repositories {
+    jcenter()
+}
+
+dependencies {
+	compile 'net.thauvin.erik.httpstatus:httpstatus:1.0.2'
+}
+```

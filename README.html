@@ -447,14 +447,16 @@ Cause: &lt;pre&gt;<span class="kw">&lt;hs:cause</span><span class="ot"> default<
 </tbody>
 </table>
 <hr />
-<h2 id="use-with-gradle">Use with <a href="https://gradle.org/">Gradle</a></h2>
+<h2 id="use-with-gradle-or-maven">Use with <a href="https://gradle.org/">Gradle</a> or <a href="http://maven.apache.org/">Maven</a></h2>
 <p>Include the following in your <code>build.gradle</code> file:</p>
-<pre class="gradle"><code>repositories {
-    jcenter()
-}
-
-dependencies {
-    compile &#39;net.thauvin.erik.httpstatus:httpstatus:1.0.2&#39;
+<pre class="gradle"><code>dependencies {
+    compile &#39;net.thauvin.erik.httpstatus:httpstatus:1.0.3&#39;
 }</code></pre>
+<p>or as a Maven artifact:</p>
+<div class="sourceCode"><pre class="sourceCode xml"><code class="sourceCode xml"><span class="kw">&lt;dependency&gt;</span>
+    <span class="kw">&lt;groupId&gt;</span>net.thauvin.erik.httpstatus<span class="kw">&lt;/groupId&gt;</span>
+    <span class="kw">&lt;artifactId&gt;</span>httpstatus<span class="kw">&lt;/artifactId&gt;</span>
+    <span class="kw">&lt;version&gt;</span>1.0.3<span class="kw">&lt;/version&gt;</span>
+<span class="kw">&lt;/dependency&gt;</span></code></pre></div>
 </body>
 </html>

@@ -147,15 +147,21 @@ Status Code | Reason
 
 ----
 
-## Use with [Gradle](https://gradle.org/)
+## Use with [Gradle](https://gradle.org/) or [Maven](http://maven.apache.org/)
 Include the following in your `build.gradle` file:
 
 ```gradle
-repositories {
-    jcenter()
-}
-
 dependencies {
-	compile 'net.thauvin.erik.httpstatus:httpstatus:1.0.2'
+	compile 'net.thauvin.erik.httpstatus:httpstatus:1.0.3'
 }
+```
+
+or as a Maven artifact:
+
+```xml
+<dependency>
+    <groupId>net.thauvin.erik.httpstatus</groupId>
+    <artifactId>httpstatus</artifactId>
+    <version>1.0.3</version>
+</dependency>
 ```

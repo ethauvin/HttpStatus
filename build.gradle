@@ -14,7 +14,19 @@ defaultTasks 'deploy'
 def deployDir = 'deploy'
 def localProps = 'local.properties'
 def isRelease = 'release' in gradle.startParameter.taskNames
+
 def mavenGroupId = 'net.thauvin.erik.httpstatus'
+def mavenName = 'HttpStatus'
+def mavenDescription = 'HttpStatus JSP Tag Library'
+def mavenUrl = 'https://github.com/ethauvin/HttpStatus'
+def mavenLicense = 'The BSD 3-Clause License'
+def mavenLicenseUrl = 'http://opensource.org/licenses/BSD-3-Clause'
+def mavenScmCon = 'https://github.com/ethauvin/HttpStatus.git'
+def mavenScmDevCon = 'git@github.com:ethauvin/HttpStatus.git'
+
+def pkgLicenses = ['BSD 3-Clause']
+def pkgIssueTrackerUrl = mavenUrl + '/issues'
+def pkgLabels = ['jsp', 'tag library', 'http', 'status code', 'java']
 
 def getVersion(isIncrement = false)
 {
@@ -51,10 +63,10 @@ repositories {
 }
 
 dependencies {
-	compile 'servletapi:servlet-api:+'
-	compile 'javax.servlet.jsp:jsp-api:+'
+	compile 'javax.servlet:javax.servlet-api:3.1.0'
+	compile 'javax.servlet.jsp:jsp-api:2.2'
 
-	testCompile 'org.testng:testng:+'
+	testCompile 'org.testng:testng:6.9.10'
 }
 
 bintray {
@@ -65,13 +77,13 @@ bintray {
 	publications = ['MyPublication']
 	pkg {
 		repo = 'maven'
-		name = 'HttpStatus'
-		licenses = ['BSD 3-Clause']
-		desc = 'HttpStatus JSP Tag Library'
-		websiteUrl = 'https://github.com/ethauvin/HttpStatus'
-		issueTrackerUrl = 'https://github.com/ethauvin/HttpStatus/issues'
-		vcsUrl = 'https://github.com/ethauvin/HttpStatus.git'
-		labels = ['jsp', 'tag library', 'http', 'status code', 'java']
+		name = mavenName
+		licenses = pkgLicenses
+		desc = mavenDescription
+		websiteUrl = mavenUrl
+		issueTrackerUrl = pkgIssueTrackerUrl
+		vcsUrl = mavenScmCon
+		labels = pkgLabels
 		publicDownloadNumbers = true
 		version {
 			name = project.version
@@ -84,6 +96,28 @@ bintray {
 	}
 }
 
+def pomConfig = {
+    licenses {
+        license {
+            name mavenLicense
+            url mavenLicenseUrl
+            distribution 'repo'
+        }
+    }
+    developers {
+        developer {
+            id 'ethauvin'
+            name 'Erik C. Thauvin'
+            email 'erik@thauvin.net'
+        }
+    }
+	scm {
+        connection 'scm:git:' + mavenScmCon
+        developerConnection 'scm:git:' + mavenScmDevCon
+        url mavenScmCon    
+	}
+}
+
 publishing {
 	publications {
 		MyPublication(MavenPublication) {
@@ -93,6 +127,14 @@ publishing {
 			groupId mavenGroupId
 			artifactId rootProject.name
 			version project.version
+			
+            pom.withXml {
+                def root = asNode()
+				root.appendNode('name', mavenName)
+                root.appendNode('description', mavenDescription)
+				root.appendNode('url', mavenUrl)
+                root.children().last() + pomConfig
+            }
 		}
 	}
 }
@@ -125,7 +167,7 @@ compileJava {
 	doFirst {
 		project.version = getVersion(isRelease)
 	}
-	//options.compilerArgs << "-Xlint:unchecked" << "-Xlint:deprecation"
+	//options.compilerArgs << '-Xlint:unchecked' << '-Xlint:deprecation'
 }
 
 
@@ -147,7 +189,7 @@ task wrapper(type: Wrapper) {
 
 task copyToDeploy(type: Copy) {
 	from(configurations.runtime) {
-		exclude 'servlet-api-*.jar'
+		exclude 'javax.servlet-api-*.jar'
 		exclude 'jsp-api-*.jar'
 	}
 	from jar
@@ -155,21 +197,21 @@ task copyToDeploy(type: Copy) {
 }
 
 task deploy(dependsOn: ['build', 'copyToDeploy']) {
-	description = "Copies all needed files to the ${deployDir} directory."
-	group = "Publishing"
+	description = 'Copies all needed files to the ${deployDir} directory.'
+	group = 'Publishing'
 	outputs.dir deployDir
 	inputs.files copyToDeploy
 	mustRunAfter clean
 }
 
 task release(dependsOn: ['deploy', 'wrapper']) << {
-	group = "Publishing"
-	description = "Releases new version."
+	group = 'Publishing'
+	description = 'Releases new version.'
 	isRelease = true
 }
 
 task pandoc(type: Exec) {
-	group = "Documentation"
+	group = 'Documentation'
 	def pandoc_args = ['--from', 'markdown_github', '--to', 'html5', '-s', '-o', 'README.html', 'README.md']
 	if (Os.isFamily(Os.FAMILY_WINDOWS))
 	{

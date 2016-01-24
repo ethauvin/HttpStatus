@@ -66,15 +66,14 @@ dependencies {
 	compile 'javax.servlet:javax.servlet-api:3.1.0'
 	compile 'javax.servlet.jsp:jsp-api:2.2'
 
-	testCompile 'org.testng:testng:6.9.10'
+	testCompile 'org.testng:testng:+'
 }
 
 bintray {
-	def p = new Properties()
-	file(localProps).withInputStream { stream -> p.load(stream) }
-	user = p.getProperty('bintrayUser');
-	key = p.getProperty('bintrayApiKey');
+	user = project.hasProperty('bintrayUser') ? project.property('bintrayUser') : System.getenv('BINTRAY_USER')
+	key = project.hasProperty('bintrayApiKey') ? project.property('bintrayApiKey') : System.getenv('BINTRAY_API_KEY')
 	publications = ['MyPublication']
+	dryRun = false
 	pkg {
 		repo = 'maven'
 		name = mavenName
@@ -97,24 +96,24 @@ bintray {
 }
 
 def pomConfig = {
-    licenses {
-        license {
-            name mavenLicense
-            url mavenLicenseUrl
-            distribution 'repo'
-        }
-    }
-    developers {
-        developer {
-            id 'ethauvin'
-            name 'Erik C. Thauvin'
-            email 'erik@thauvin.net'
-        }
-    }
+	licenses {
+		license {
+			name mavenLicense
+			url mavenLicenseUrl
+			distribution 'repo'
+		}
+	}
+	developers {
+		developer {
+			id 'ethauvin'
+			name 'Erik C. Thauvin'
+			email 'erik@thauvin.net'
+		}
+	}
 	scm {
-        connection 'scm:git:' + mavenScmCon
-        developerConnection 'scm:git:' + mavenScmDevCon
-        url mavenScmCon    
+		connection 'scm:git:' + mavenScmCon
+		developerConnection 'scm:git:' + mavenScmDevCon
+		url mavenScmCon
 	}
 }
 
@@ -127,14 +126,14 @@ publishing {
 			groupId mavenGroupId
 			artifactId rootProject.name
 			version project.version
-			
-            pom.withXml {
-                def root = asNode()
+
+			pom.withXml {
+				def root = asNode()
 				root.appendNode('name', mavenName)
-                root.appendNode('description', mavenDescription)
+				root.appendNode('description', mavenDescription)
 				root.appendNode('url', mavenUrl)
-                root.children().last() + pomConfig
-            }
+				root.children().last() + pomConfig
+			}
 		}
 	}
 }
@@ -159,10 +158,16 @@ artifacts {
 }
 
 javadoc {
+	title = mavenDescription + ' ' + version
 	options.tags = ['created']
 	options.author = true
+	options.addStringOption('link', 'http://docs.oracle.com/javase/8/docs/api/')
+	options.addStringOption('sourcepath', project.hasProperty('jdkSrc') ? jdkSrc : "$System.env.JAVA_HOME/src.zip")
+	if (JavaVersion.current().isJava8Compatible())
+	{
+		options.addStringOption('Xdoclint:none', '-quiet')
+	}
 }
-
 compileJava {
 	doFirst {
 		project.version = getVersion(isRelease)

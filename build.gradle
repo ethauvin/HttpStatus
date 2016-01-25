@@ -66,7 +66,7 @@ dependencies {
 	compile 'javax.servlet:javax.servlet-api:3.1.0'
 	compile 'javax.servlet.jsp:jsp-api:2.2'
 
-	testCompile 'org.testng:testng:+'
+	testCompile 'org.testng:testng:6.9.10'
 }
 
 bintray {

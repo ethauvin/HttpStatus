@@ -1,5 +1,8 @@
 #  HttpStatus JSP Tag Library
 
+[![License (3-Clause BSD)](https://img.shields.io/badge/license-BSD%203--Clause-blue.svg?style=flat-square)](http://opensource.org/licenses/BSD-3-Clause) [![Dependency Status](https://www.versioneye.com/user/projects/56a6947a1b78fd002d00018a/badge.svg?style=flat)](https://www.versioneye.com/user/projects/56a6947a1b78fd002d00018a) [![Build Status](https://travis-ci.org/ethauvin/HttpStatus.svg?branch=master)](https://travis-ci.org/ethauvin/HttpStatus) [![Maven Central](https://maven-badges.herokuapp.com/maven-central/net.thauvin.erik.httpstatus/httpstatus/badge.svg)](https://maven-badges.herokuapp.com/maven-central/net.thauvin.erik.httpstatus/httpstatus)
+
+
 A simple [JSP](http://www.oracle.com/technetwork/java/javaee/jsp/index.html) Tag Library to display the [code](#hscode), [reason](#hsreason) and/or [cause](#hscode) for [HTTP status codes](http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html) in JSP error pages.
 
 ----
@@ -147,7 +150,7 @@ Status Code | Reason
 
 ----
 
-## Use with [Gradle](https://gradle.org/) or [Maven](http://maven.apache.org/)
+## Usage with [Gradle](https://gradle.org/) or [Maven](http://maven.apache.org/)
 Include the following in your `build.gradle` file:
 
 ```gradle

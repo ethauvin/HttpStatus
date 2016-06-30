@@ -58,6 +58,7 @@ mainClassName = 'net.thauvin.erik.httpstatus.Reasons'
 
 repositories {
 	mavenCentral()
+	jcenter()
 }
 
 dependencies {

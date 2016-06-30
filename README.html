@@ -6,95 +6,122 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
   <title></title>
   <style type="text/css">code{white-space: pre;}</style>
-  <!--[if lt IE 9]>
-    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
-  <![endif]-->
   <style type="text/css">
+div.sourceCode { overflow-x: auto; }
 table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
   margin: 0; padding: 0; vertical-align: baseline; border: none; }
 table.sourceCode { width: 100%; line-height: 100%; }
 td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
 td.sourceCode { padding-left: 5px; }
-code > span.kw { color: #007020; font-weight: bold; }
-code > span.dt { color: #902000; }
-code > span.dv { color: #40a070; }
-code > span.bn { color: #40a070; }
-code > span.fl { color: #40a070; }
-code > span.ch { color: #4070a0; }
-code > span.st { color: #4070a0; }
-code > span.co { color: #60a0b0; font-style: italic; }
-code > span.ot { color: #007020; }
-code > span.al { color: #ff0000; font-weight: bold; }
-code > span.fu { color: #06287e; }
-code > span.er { color: #ff0000; font-weight: bold; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
   </style>
+  <link rel="stylesheet" href="github-pandoc.css">
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
 </head>
 <body>
 <h1 id="httpstatus-jsp-tag-library">HttpStatus JSP Tag Library</h1>
-<p><a href="http://opensource.org/licenses/BSD-3-Clause"><embed src="https://img.shields.io/badge/license-BSD%203--Clause-blue.svg?style=flat-square" /></a> <a href="https://www.versioneye.com/user/projects/56a6947a1b78fd002d00018a"><embed src="https://www.versioneye.com/user/projects/56a6947a1b78fd002d00018a/badge.svg?style=flat" /></a> <a href="https://travis-ci.org/ethauvin/HttpStatus"><embed src="https://travis-ci.org/ethauvin/HttpStatus.svg?branch=master" /></a> <a href="https://ci.appveyor.com/project/ethauvin/httpstatus"><img src="https://ci.appveyor.com/api/projects/status/w5j4kul3w2rkigxb?svg=true" alt="Build status" /></a> <a href="https://github.com/ethauvin/httpstatus/releases/latest"><embed src="http://github-release-version.herokuapp.com/github/ethauvin/httpstatus/release.svg?style=flat" /></a> <a href="https://maven-badges.herokuapp.com/maven-central/net.thauvin.erik.httpstatus/httpstatus"><img src="https://maven-badges.herokuapp.com/maven-central/net.thauvin.erik.httpstatus/httpstatus/badge.svg" alt="Maven Central" /></a> <a href="https://bintray.com/ethauvin/maven/HttpStatus/_latestVersion"><img src="https://api.bintray.com/packages/ethauvin/maven/HttpStatus/images/download.svg" alt="Download" /></a></p>
+<p><a href="http://opensource.org/licenses/BSD-3-Clause"><img src="https://img.shields.io/badge/license-BSD%203--Clause-blue.svg?style=flat-square" alt="License (3-Clause BSD)" /></a> <a href="https://www.versioneye.com/user/projects/56a6947a1b78fd002d00018a"><img src="https://www.versioneye.com/user/projects/56a6947a1b78fd002d00018a/badge.svg?style=flat" alt="Dependency Status" /></a> <a href="https://travis-ci.org/ethauvin/HttpStatus"><img src="https://travis-ci.org/ethauvin/HttpStatus.svg?branch=master" alt="Build Status" /></a> <a href="https://ci.appveyor.com/project/ethauvin/httpstatus"><img src="https://ci.appveyor.com/api/projects/status/w5j4kul3w2rkigxb?svg=true" alt="Build status" /></a> <a href="https://github.com/ethauvin/httpstatus/releases/latest"><img src="http://github-release-version.herokuapp.com/github/ethauvin/httpstatus/release.svg?style=flat" alt="release" /></a> <a href="https://maven-badges.herokuapp.com/maven-central/net.thauvin.erik.httpstatus/httpstatus"><img src="https://maven-badges.herokuapp.com/maven-central/net.thauvin.erik.httpstatus/httpstatus/badge.svg" alt="Maven Central" /></a> <a href="https://bintray.com/ethauvin/maven/HttpStatus/_latestVersion"><img src="https://api.bintray.com/packages/ethauvin/maven/HttpStatus/images/download.svg" alt="Download" /></a></p>
 <p>A simple <a href="http://www.oracle.com/technetwork/java/javaee/jsp/index.html">JSP</a> Tag Library to display the <a href="#hscode">code</a>, <a href="#hsreason">reason</a> and/or <a href="#hscode">cause</a> for <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html">HTTP status codes</a> in JSP error pages.</p>
 <hr />
 <p>For example:</p>
-<pre class="sourceCode jsp"><code class="sourceCode jsp">&lt;%@ page<span class="ot"> isErrorPage</span>=<span class="st">&quot;true&quot;</span><span class="ot"> </span>%&gt;
+<div class="sourceCode"><pre class="sourceCode jsp"><code class="sourceCode jsp">&lt;%@ page<span class="ot"> isErrorPage</span>=<span class="st">&quot;true&quot;</span><span class="ot"> </span>%&gt;
 &lt;%@ taglib<span class="ot"> prefix</span>=<span class="st">&quot;hs&quot;</span><span class="ot"> uri</span>=<span class="st">&quot;http://erik.thauvin.net/taglibs/httpstatus&quot;</span><span class="ot"> </span>%&gt;
 &lt;html&gt;&lt;head&gt;
 &lt;title&gt;<span class="kw">&lt;hs:code/&gt;</span> <span class="kw">&lt;hs:reason</span><span class="ot"> default</span>=<span class="dt">&quot;Server Error&quot;</span><span class="kw">/&gt;</span>&lt;/title&gt;
 &lt;/head&gt;
 &lt;h1&gt;<span class="kw">&lt;hs:reason</span><span class="ot"> default</span>=<span class="dt">&quot;Server Error&quot;</span><span class="kw">/&gt;</span>&lt;/h1&gt;
 Cause: &lt;pre&gt;<span class="kw">&lt;hs:cause</span><span class="ot"> default</span>=<span class="dt">&quot;Unable to complete your request.&quot;</span><span class="kw">/&gt;</span>&lt;/pre&gt;
-...</code></pre>
+...</code></pre></div>
 <p>or</p>
-<pre class="sourceCode jsp"><code class="sourceCode jsp">&lt;%@ page<span class="ot"> isErrorPage</span>=<span class="st">&quot;true&quot;</span><span class="ot"> import</span>=<span class="st">&quot;net.thauvin.erik.httpstatus.Reasons&quot;</span><span class="ot"> </span>%&gt;
-&lt;%= Reasons.getReasonPhrase(pageContext.getErrorData().getStatusCode()) %&gt;</code></pre>
+<div class="sourceCode"><pre class="sourceCode jsp"><code class="sourceCode jsp">&lt;%@ page<span class="ot"> isErrorPage</span>=<span class="st">&quot;true&quot;</span><span class="ot"> import</span>=<span class="st">&quot;net.thauvin.erik.httpstatus.Reasons&quot;</span><span class="ot"> </span>%&gt;
+&lt;%= Reasons.getReasonPhrase(pageContext.getErrorData().getStatusCode()) %&gt;</code></pre></div>
 <p>would display on a <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.5.2">501 status code</a>:</p>
 <pre><code>Not Implemented</code></pre>
 <hr />
 <h2 id="hscause">hs:cause</h2>
 <p>The <code>&lt;hs:cause/&gt;</code> tag displays the cause of current HTTP status code, if any. A shorthand for:</p>
-<pre class="sourceCode jsp"><code class="sourceCode jsp">&lt;%= pageContext.getErrorData().getThrowable().getCause().getLocalizedMessage() %&gt;</code></pre>
+<div class="sourceCode"><pre class="sourceCode jsp"><code class="sourceCode jsp">&lt;%= pageContext.getErrorData().getThrowable().getCause().getLocalizedMessage() %&gt;</code></pre></div>
 <p>Optional attributes are:</p>
 <table>
+<colgroup>
+<col style="width: 11%" />
+<col style="width: 88%" />
+</colgroup>
 <thead>
 <tr class="header">
-<th style="text-align: left;">Attribute</th>
-<th style="text-align: left;">Description</th>
+<th>Attribute</th>
+<th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: left;"><code>default</code></td>
-<td style="text-align: left;">The fallback value to output, if no cause is available.</td>
+<td><code>default</code></td>
+<td>The fallback value to output, if no cause is available.</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;"><code>escapeXml</code></td>
-<td style="text-align: left;">Converts &lt;, &gt;, &amp;, ', &quot; to their corresponding <a href="http://dev.w3.org/html5/html-author/charref">entity codes</a>. Value is <code>true</code> by default.</td>
+<td><code>escapeXml</code></td>
+<td>Converts &lt;, &gt;, &amp;, ', &quot; to their corresponding <a href="http://dev.w3.org/html5/html-author/charref">entity codes</a>. Value is <code>true</code> by default.</td>
 </tr>
 </tbody>
 </table>
 <h2 id="hscode">hs:code</h2>
 <p>The <code>&lt;hs:code/&gt;</code> tag displays the current HTTP status code, if any. A shorthand for:</p>
-<pre class="sourceCode jsp"><code class="sourceCode jsp">&lt;%= pageContext.getErrorData().getStatusCode() %&gt;</code></pre>
+<div class="sourceCode"><pre class="sourceCode jsp"><code class="sourceCode jsp">&lt;%= pageContext.getErrorData().getStatusCode() %&gt;</code></pre></div>
 <h2 id="hsreason">hs:reason</h2>
 <p>The <code>&lt;hs:reason/&gt;</code> tag displays the reason for a HTTP status code, if any. Optional attributes are:</p>
 <table>
+<colgroup>
+<col style="width: 11%" />
+<col style="width: 88%" />
+</colgroup>
 <thead>
 <tr class="header">
-<th style="text-align: left;">Attribute</th>
-<th style="text-align: left;">Description</th>
+<th>Attribute</th>
+<th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: left;"><code>code</code></td>
-<td style="text-align: left;">The HTTP status error code. If not specified the current status code is used.</td>
+<td><code>code</code></td>
+<td>The HTTP status error code. If not specified the current status code is used.</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;"><code>default</code></td>
-<td style="text-align: left;">The fallback value to output, if no reason is available.</td>
+<td><code>default</code></td>
+<td>The fallback value to output, if no reason is available.</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;"><code>escapeXml</code></td>
-<td style="text-align: left;">Converts &lt;, &gt;, &amp;, ', &quot; to their corresponding <a href="http://dev.w3.org/html5/html-author/charref">entity codes</a>. Value is <code>true</code> by default.</td>
+<td><code>escapeXml</code></td>
+<td>Converts &lt;, &gt;, &amp;, ', &quot; to their corresponding <a href="http://dev.w3.org/html5/html-author/charref">entity codes</a>. Value is <code>true</code> by default.</td>
 </tr>
 </tbody>
 </table>
@@ -102,322 +129,322 @@ Cause: &lt;pre&gt;<span class="kw">&lt;hs:cause</span><span class="ot"> default<
 <table>
 <thead>
 <tr class="header">
-<th style="text-align: left;">Status Code</th>
-<th style="text-align: left;">Reason</th>
+<th>Status Code</th>
+<th>Reason</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: left;"><code>100</code></td>
-<td style="text-align: left;">Continue</td>
+<td><code>100</code></td>
+<td>Continue</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;"><code>101</code></td>
-<td style="text-align: left;">Switching Protocols</td>
+<td><code>101</code></td>
+<td>Switching Protocols</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;"><code>102</code></td>
-<td style="text-align: left;">Processing</td>
+<td><code>102</code></td>
+<td>Processing</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;"><code>200</code></td>
-<td style="text-align: left;">OK</td>
+<td><code>200</code></td>
+<td>OK</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;"><code>201</code></td>
-<td style="text-align: left;">Created</td>
+<td><code>201</code></td>
+<td>Created</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;"><code>202</code></td>
-<td style="text-align: left;">Accepted</td>
+<td><code>202</code></td>
+<td>Accepted</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;"><code>203</code></td>
-<td style="text-align: left;">Non-Authoritative Information</td>
+<td><code>203</code></td>
+<td>Non-Authoritative Information</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;"><code>204</code></td>
-<td style="text-align: left;">No Content</td>
+<td><code>204</code></td>
+<td>No Content</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;"><code>205</code></td>
-<td style="text-align: left;">Reset Content</td>
+<td><code>205</code></td>
+<td>Reset Content</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;"><code>206</code></td>
-<td style="text-align: left;">Partial Content</td>
+<td><code>206</code></td>
+<td>Partial Content</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;"><code>207</code></td>
-<td style="text-align: left;">Multi-Status</td>
+<td><code>207</code></td>
+<td>Multi-Status</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;"><code>208</code></td>
-<td style="text-align: left;">Already Reported</td>
+<td><code>208</code></td>
+<td>Already Reported</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;"><code>226</code></td>
-<td style="text-align: left;">IM Used</td>
+<td><code>226</code></td>
+<td>IM Used</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;"><code>300</code></td>
-<td style="text-align: left;">Multiple Choices</td>
+<td><code>300</code></td>
+<td>Multiple Choices</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;"><code>301</code></td>
-<td style="text-align: left;">Moved Permanently</td>
+<td><code>301</code></td>
+<td>Moved Permanently</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;"><code>302</code></td>
-<td style="text-align: left;">Moved Temporarily</td>
+<td><code>302</code></td>
+<td>Moved Temporarily</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;"><code>303</code></td>
-<td style="text-align: left;">See Other</td>
+<td><code>303</code></td>
+<td>See Other</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;"><code>304</code></td>
-<td style="text-align: left;">Not Modified</td>
+<td><code>304</code></td>
+<td>Not Modified</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;"><code>305</code></td>
-<td style="text-align: left;">Use Proxy</td>
+<td><code>305</code></td>
+<td>Use Proxy</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;"><code>306</code></td>
-<td style="text-align: left;">Switch Proxy</td>
+<td><code>306</code></td>
+<td>Switch Proxy</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;"><code>307</code></td>
-<td style="text-align: left;">Temporary Redirect</td>
+<td><code>307</code></td>
+<td>Temporary Redirect</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;"><code>308</code></td>
-<td style="text-align: left;">Permanent Redirect</td>
+<td><code>308</code></td>
+<td>Permanent Redirect</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;"><code>400</code></td>
-<td style="text-align: left;">Bad Request</td>
+<td><code>400</code></td>
+<td>Bad Request</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;"><code>401</code></td>
-<td style="text-align: left;">Unauthorized</td>
+<td><code>401</code></td>
+<td>Unauthorized</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;"><code>402</code></td>
-<td style="text-align: left;">Payment Required</td>
+<td><code>402</code></td>
+<td>Payment Required</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;"><code>403</code></td>
-<td style="text-align: left;">Forbidden</td>
+<td><code>403</code></td>
+<td>Forbidden</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;"><code>404</code></td>
-<td style="text-align: left;">Not Found</td>
+<td><code>404</code></td>
+<td>Not Found</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;"><code>405</code></td>
-<td style="text-align: left;">Method Not Allowed</td>
+<td><code>405</code></td>
+<td>Method Not Allowed</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;"><code>406</code></td>
-<td style="text-align: left;">Not Acceptable</td>
+<td><code>406</code></td>
+<td>Not Acceptable</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;"><code>407</code></td>
-<td style="text-align: left;">Proxy Authentication Required</td>
+<td><code>407</code></td>
+<td>Proxy Authentication Required</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;"><code>408</code></td>
-<td style="text-align: left;">Request Timeout</td>
+<td><code>408</code></td>
+<td>Request Timeout</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;"><code>409</code></td>
-<td style="text-align: left;">Conflict</td>
+<td><code>409</code></td>
+<td>Conflict</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;"><code>410</code></td>
-<td style="text-align: left;">Gone</td>
+<td><code>410</code></td>
+<td>Gone</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;"><code>411</code></td>
-<td style="text-align: left;">Length Required</td>
+<td><code>411</code></td>
+<td>Length Required</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;"><code>412</code></td>
-<td style="text-align: left;">Precondition Failed</td>
+<td><code>412</code></td>
+<td>Precondition Failed</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;"><code>413</code></td>
-<td style="text-align: left;">Request Entity Too Large</td>
+<td><code>413</code></td>
+<td>Request Entity Too Large</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;"><code>414</code></td>
-<td style="text-align: left;">Request-URI Too Long</td>
+<td><code>414</code></td>
+<td>Request-URI Too Long</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;"><code>415</code></td>
-<td style="text-align: left;">Unsupported Media Type</td>
+<td><code>415</code></td>
+<td>Unsupported Media Type</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;"><code>416</code></td>
-<td style="text-align: left;">Requested Range Not Satisfiable</td>
+<td><code>416</code></td>
+<td>Requested Range Not Satisfiable</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;"><code>417</code></td>
-<td style="text-align: left;">Expectation Failed</td>
+<td><code>417</code></td>
+<td>Expectation Failed</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;"><code>418</code></td>
-<td style="text-align: left;">I'm A Teapot</td>
+<td><code>418</code></td>
+<td>I'm A Teapot</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;"><code>419</code></td>
-<td style="text-align: left;">Insufficient Space on Resource</td>
+<td><code>419</code></td>
+<td>Insufficient Space on Resource</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;"><code>420</code></td>
-<td style="text-align: left;">Method Failure</td>
+<td><code>420</code></td>
+<td>Method Failure</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;"><code>421</code></td>
-<td style="text-align: left;">Misdirected Request</td>
+<td><code>421</code></td>
+<td>Misdirected Request</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;"><code>422</code></td>
-<td style="text-align: left;">Unprocessable Entity</td>
+<td><code>422</code></td>
+<td>Unprocessable Entity</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;"><code>423</code></td>
-<td style="text-align: left;">Locked</td>
+<td><code>423</code></td>
+<td>Locked</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;"><code>424</code></td>
-<td style="text-align: left;">Failed Dependency</td>
+<td><code>424</code></td>
+<td>Failed Dependency</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;"><code>426</code></td>
-<td style="text-align: left;">Upgrade Required</td>
+<td><code>426</code></td>
+<td>Upgrade Required</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;"><code>428</code></td>
-<td style="text-align: left;">Precondition Required</td>
+<td><code>428</code></td>
+<td>Precondition Required</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;"><code>429</code></td>
-<td style="text-align: left;">Too Many Requests</td>
+<td><code>429</code></td>
+<td>Too Many Requests</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;"><code>431</code></td>
-<td style="text-align: left;">Request Header Fields Too Large</td>
+<td><code>431</code></td>
+<td>Request Header Fields Too Large</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;"><code>440</code></td>
-<td style="text-align: left;">Login Timeout</td>
+<td><code>440</code></td>
+<td>Login Timeout</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;"><code>444</code></td>
-<td style="text-align: left;">No Response</td>
+<td><code>444</code></td>
+<td>No Response</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;"><code>449</code></td>
-<td style="text-align: left;">Retry With</td>
+<td><code>449</code></td>
+<td>Retry With</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;"><code>450</code></td>
-<td style="text-align: left;">Blocked by Windows Parental Controls</td>
+<td><code>450</code></td>
+<td>Blocked by Windows Parental Controls</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;"><code>451</code></td>
-<td style="text-align: left;">Unavailable For Legal Reasons</td>
+<td><code>451</code></td>
+<td>Unavailable For Legal Reasons</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;"><code>494</code></td>
-<td style="text-align: left;">Request Header Too Large</td>
+<td><code>494</code></td>
+<td>Request Header Too Large</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;"><code>495</code></td>
-<td style="text-align: left;">Cert Error</td>
+<td><code>495</code></td>
+<td>Cert Error</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;"><code>496</code></td>
-<td style="text-align: left;">No Cert</td>
+<td><code>496</code></td>
+<td>No Cert</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;"><code>497</code></td>
-<td style="text-align: left;">HTTP to HTTPS</td>
+<td><code>497</code></td>
+<td>HTTP to HTTPS</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;"><code>498</code></td>
-<td style="text-align: left;">Token Expired/Invalid</td>
+<td><code>498</code></td>
+<td>Token Expired/Invalid</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;"><code>499</code></td>
-<td style="text-align: left;">Client Closed Request</td>
+<td><code>499</code></td>
+<td>Client Closed Request</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;"><code>500</code></td>
-<td style="text-align: left;">Internal Server Error</td>
+<td><code>500</code></td>
+<td>Internal Server Error</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;"><code>501</code></td>
-<td style="text-align: left;">Not Implemented</td>
+<td><code>501</code></td>
+<td>Not Implemented</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;"><code>502</code></td>
-<td style="text-align: left;">Bad Gateway</td>
+<td><code>502</code></td>
+<td>Bad Gateway</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;"><code>503</code></td>
-<td style="text-align: left;">Service Unavailable</td>
+<td><code>503</code></td>
+<td>Service Unavailable</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;"><code>504</code></td>
-<td style="text-align: left;">Gateway Timeout</td>
+<td><code>504</code></td>
+<td>Gateway Timeout</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;"><code>505</code></td>
-<td style="text-align: left;">HTTP Version Not Supported</td>
+<td><code>505</code></td>
+<td>HTTP Version Not Supported</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;"><code>506</code></td>
-<td style="text-align: left;">Variant Also Negotiates</td>
+<td><code>506</code></td>
+<td>Variant Also Negotiates</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;"><code>507</code></td>
-<td style="text-align: left;">Insufficient Storage</td>
+<td><code>507</code></td>
+<td>Insufficient Storage</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;"><code>508</code></td>
-<td style="text-align: left;">Loop Detected</td>
+<td><code>508</code></td>
+<td>Loop Detected</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;"><code>509</code></td>
-<td style="text-align: left;">Bandwidth Limit Exceeded</td>
+<td><code>509</code></td>
+<td>Bandwidth Limit Exceeded</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;"><code>510</code></td>
-<td style="text-align: left;">Not Extended</td>
+<td><code>510</code></td>
+<td>Not Extended</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;"><code>511</code></td>
-<td style="text-align: left;">Network Authentication Required</td>
+<td><code>511</code></td>
+<td>Network Authentication Required</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;"><code>520</code></td>
-<td style="text-align: left;">Unknown Error</td>
+<td><code>520</code></td>
+<td>Unknown Error</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;"><code>522</code></td>
-<td style="text-align: left;">Origin Connection Time-out</td>
+<td><code>522</code></td>
+<td>Origin Connection Time-out</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;"><code>598</code></td>
-<td style="text-align: left;">Network Read Timeout Error</td>
+<td><code>598</code></td>
+<td>Network Read Timeout Error</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;"><code>599</code></td>
-<td style="text-align: left;">Network Connect Timeout Error</td>
+<td><code>599</code></td>
+<td>Network Connect Timeout Error</td>
 </tr>
 </tbody>
 </table>
@@ -428,10 +455,10 @@ Cause: &lt;pre&gt;<span class="kw">&lt;hs:cause</span><span class="ot"> default<
     compile &#39;net.thauvin.erik.httpstatus:httpstatus:1.0.3&#39;
 }</code></pre>
 <p>or as a Maven artifact:</p>
-<pre class="sourceCode xml"><code class="sourceCode xml"><span class="kw">&lt;dependency&gt;</span>
+<div class="sourceCode"><pre class="sourceCode xml"><code class="sourceCode xml"><span class="kw">&lt;dependency&gt;</span>
     <span class="kw">&lt;groupId&gt;</span>net.thauvin.erik.httpstatus<span class="kw">&lt;/groupId&gt;</span>
     <span class="kw">&lt;artifactId&gt;</span>httpstatus<span class="kw">&lt;/artifactId&gt;</span>
     <span class="kw">&lt;version&gt;</span>1.0.3<span class="kw">&lt;/version&gt;</span>
-<span class="kw">&lt;/dependency&gt;</span></code></pre>
+<span class="kw">&lt;/dependency&gt;</span></code></pre></div>
 </body>
 </html>

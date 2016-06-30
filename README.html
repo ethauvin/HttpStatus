@@ -6,76 +6,54 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
   <title></title>
   <style type="text/css">code{white-space: pre;}</style>
+  <!--[if lt IE 9]>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
   <style type="text/css">
-div.sourceCode { overflow-x: auto; }
 table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
   margin: 0; padding: 0; vertical-align: baseline; border: none; }
 table.sourceCode { width: 100%; line-height: 100%; }
 td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
 td.sourceCode { padding-left: 5px; }
-code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
-code > span.dt { color: #902000; } /* DataType */
-code > span.dv { color: #40a070; } /* DecVal */
-code > span.bn { color: #40a070; } /* BaseN */
-code > span.fl { color: #40a070; } /* Float */
-code > span.ch { color: #4070a0; } /* Char */
-code > span.st { color: #4070a0; } /* String */
-code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
-code > span.ot { color: #007020; } /* Other */
-code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code > span.fu { color: #06287e; } /* Function */
-code > span.er { color: #ff0000; font-weight: bold; } /* Error */
-code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
-code > span.cn { color: #880000; } /* Constant */
-code > span.sc { color: #4070a0; } /* SpecialChar */
-code > span.vs { color: #4070a0; } /* VerbatimString */
-code > span.ss { color: #bb6688; } /* SpecialString */
-code > span.im { } /* Import */
-code > span.va { color: #19177c; } /* Variable */
-code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-code > span.op { color: #666666; } /* Operator */
-code > span.bu { } /* BuiltIn */
-code > span.ex { } /* Extension */
-code > span.pp { color: #bc7a00; } /* Preprocessor */
-code > span.at { color: #7d9029; } /* Attribute */
-code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
-code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code > span.kw { color: #007020; font-weight: bold; }
+code > span.dt { color: #902000; }
+code > span.dv { color: #40a070; }
+code > span.bn { color: #40a070; }
+code > span.fl { color: #40a070; }
+code > span.ch { color: #4070a0; }
+code > span.st { color: #4070a0; }
+code > span.co { color: #60a0b0; font-style: italic; }
+code > span.ot { color: #007020; }
+code > span.al { color: #ff0000; font-weight: bold; }
+code > span.fu { color: #06287e; }
+code > span.er { color: #ff0000; font-weight: bold; }
   </style>
-  <!--[if lt IE 9]>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
-  <![endif]-->
 </head>
 <body>
 <h1 id="httpstatus-jsp-tag-library">HttpStatus JSP Tag Library</h1>
-<p><a href="http://opensource.org/licenses/BSD-3-Clause"><img src="https://img.shields.io/badge/license-BSD%203--Clause-blue.svg?style=flat-square" alt="License (3-Clause BSD)" /></a> <a href="https://www.versioneye.com/user/projects/56a6947a1b78fd002d00018a"><img src="https://www.versioneye.com/user/projects/56a6947a1b78fd002d00018a/badge.svg?style=flat" alt="Dependency Status" /></a> <a href="https://travis-ci.org/ethauvin/HttpStatus"><img src="https://travis-ci.org/ethauvin/HttpStatus.svg?branch=master" alt="Build Status" /></a> <a href="https://ci.appveyor.com/project/ethauvin/httpstatus"><img src="https://ci.appveyor.com/api/projects/status/w5j4kul3w2rkigxb?svg=true" alt="Build status" /></a> <a href="https://github.com/ethauvin/httpstatus/releases/latest"><img src="http://github-release-version.herokuapp.com/github/ethauvin/httpstatus/release.svg?style=flat" alt="release" /></a> <a href="https://maven-badges.herokuapp.com/maven-central/net.thauvin.erik.httpstatus/httpstatus"><img src="https://maven-badges.herokuapp.com/maven-central/net.thauvin.erik.httpstatus/httpstatus/badge.svg" alt="Maven Central" /></a> <a href="https://bintray.com/ethauvin/maven/HttpStatus/_latestVersion"><img src="https://api.bintray.com/packages/ethauvin/maven/HttpStatus/images/download.svg" alt="Download" /></a></p>
+<p><a href="http://opensource.org/licenses/BSD-3-Clause"><embed src="https://img.shields.io/badge/license-BSD%203--Clause-blue.svg?style=flat-square" /></a> <a href="https://www.versioneye.com/user/projects/56a6947a1b78fd002d00018a"><embed src="https://www.versioneye.com/user/projects/56a6947a1b78fd002d00018a/badge.svg?style=flat" /></a> <a href="https://travis-ci.org/ethauvin/HttpStatus"><embed src="https://travis-ci.org/ethauvin/HttpStatus.svg?branch=master" /></a> <a href="https://ci.appveyor.com/project/ethauvin/httpstatus"><img src="https://ci.appveyor.com/api/projects/status/w5j4kul3w2rkigxb?svg=true" alt="Build status" /></a> <a href="https://github.com/ethauvin/httpstatus/releases/latest"><embed src="http://github-release-version.herokuapp.com/github/ethauvin/httpstatus/release.svg?style=flat" /></a> <a href="https://maven-badges.herokuapp.com/maven-central/net.thauvin.erik.httpstatus/httpstatus"><img src="https://maven-badges.herokuapp.com/maven-central/net.thauvin.erik.httpstatus/httpstatus/badge.svg" alt="Maven Central" /></a> <a href="https://bintray.com/ethauvin/maven/HttpStatus/_latestVersion"><img src="https://api.bintray.com/packages/ethauvin/maven/HttpStatus/images/download.svg" alt="Download" /></a></p>
 <p>A simple <a href="http://www.oracle.com/technetwork/java/javaee/jsp/index.html">JSP</a> Tag Library to display the <a href="#hscode">code</a>, <a href="#hsreason">reason</a> and/or <a href="#hscode">cause</a> for <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html">HTTP status codes</a> in JSP error pages.</p>
 <hr />
 <p>For example:</p>
-<div class="sourceCode"><pre class="sourceCode jsp"><code class="sourceCode jsp">&lt;%@ page<span class="ot"> isErrorPage</span>=<span class="st">&quot;true&quot;</span><span class="ot"> </span>%&gt;
+<pre class="sourceCode jsp"><code class="sourceCode jsp">&lt;%@ page<span class="ot"> isErrorPage</span>=<span class="st">&quot;true&quot;</span><span class="ot"> </span>%&gt;
 &lt;%@ taglib<span class="ot"> prefix</span>=<span class="st">&quot;hs&quot;</span><span class="ot"> uri</span>=<span class="st">&quot;http://erik.thauvin.net/taglibs/httpstatus&quot;</span><span class="ot"> </span>%&gt;
 &lt;html&gt;&lt;head&gt;
 &lt;title&gt;<span class="kw">&lt;hs:code/&gt;</span> <span class="kw">&lt;hs:reason</span><span class="ot"> default</span>=<span class="dt">&quot;Server Error&quot;</span><span class="kw">/&gt;</span>&lt;/title&gt;
 &lt;/head&gt;
 &lt;h1&gt;<span class="kw">&lt;hs:reason</span><span class="ot"> default</span>=<span class="dt">&quot;Server Error&quot;</span><span class="kw">/&gt;</span>&lt;/h1&gt;
 Cause: &lt;pre&gt;<span class="kw">&lt;hs:cause</span><span class="ot"> default</span>=<span class="dt">&quot;Unable to complete your request.&quot;</span><span class="kw">/&gt;</span>&lt;/pre&gt;
-...</code></pre></div>
+...</code></pre>
 <p>or</p>
-<div class="sourceCode"><pre class="sourceCode jsp"><code class="sourceCode jsp">&lt;%@ page<span class="ot"> isErrorPage</span>=<span class="st">&quot;true&quot;</span><span class="ot"> import</span>=<span class="st">&quot;net.thauvin.erik.httpstatus.Reasons&quot;</span><span class="ot"> </span>%&gt;
-&lt;%= Reasons.getReasonPhrase(pageContext.getErrorData().getStatusCode()) %&gt;</code></pre></div>
+<pre class="sourceCode jsp"><code class="sourceCode jsp">&lt;%@ page<span class="ot"> isErrorPage</span>=<span class="st">&quot;true&quot;</span><span class="ot"> import</span>=<span class="st">&quot;net.thauvin.erik.httpstatus.Reasons&quot;</span><span class="ot"> </span>%&gt;
+&lt;%= Reasons.getReasonPhrase(pageContext.getErrorData().getStatusCode()) %&gt;</code></pre>
 <p>would display on a <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.5.2">501 status code</a>:</p>
 <pre><code>Not Implemented</code></pre>
 <hr />
 <h2 id="hscause">hs:cause</h2>
 <p>The <code>&lt;hs:cause/&gt;</code> tag displays the cause of current HTTP status code, if any. A shorthand for:</p>
-<div class="sourceCode"><pre class="sourceCode jsp"><code class="sourceCode jsp">&lt;%= pageContext.getErrorData().getThrowable().getCause().getLocalizedMessage() %&gt;</code></pre></div>
+<pre class="sourceCode jsp"><code class="sourceCode jsp">&lt;%= pageContext.getErrorData().getThrowable().getCause().getLocalizedMessage() %&gt;</code></pre>
 <p>Optional attributes are:</p>
-<table style="width:144%;">
-<colgroup>
-<col style="width: 16%" />
-<col style="width: 127%" />
-</colgroup>
+<table>
 <thead>
 <tr class="header">
 <th style="text-align: left;">Attribute</th>
@@ -95,14 +73,10 @@ Cause: &lt;pre&gt;<span class="kw">&lt;hs:cause</span><span class="ot"> default<
 </table>
 <h2 id="hscode">hs:code</h2>
 <p>The <code>&lt;hs:code/&gt;</code> tag displays the current HTTP status code, if any. A shorthand for:</p>
-<div class="sourceCode"><pre class="sourceCode jsp"><code class="sourceCode jsp">&lt;%= pageContext.getErrorData().getStatusCode() %&gt;</code></pre></div>
+<pre class="sourceCode jsp"><code class="sourceCode jsp">&lt;%= pageContext.getErrorData().getStatusCode() %&gt;</code></pre>
 <h2 id="hsreason">hs:reason</h2>
 <p>The <code>&lt;hs:reason/&gt;</code> tag displays the reason for a HTTP status code, if any. Optional attributes are:</p>
-<table style="width:144%;">
-<colgroup>
-<col style="width: 16%" />
-<col style="width: 127%" />
-</colgroup>
+<table>
 <thead>
 <tr class="header">
 <th style="text-align: left;">Attribute</th>
@@ -454,10 +428,10 @@ Cause: &lt;pre&gt;<span class="kw">&lt;hs:cause</span><span class="ot"> default<
     compile &#39;net.thauvin.erik.httpstatus:httpstatus:1.0.3&#39;
 }</code></pre>
 <p>or as a Maven artifact:</p>
-<div class="sourceCode"><pre class="sourceCode xml"><code class="sourceCode xml"><span class="kw">&lt;dependency&gt;</span>
+<pre class="sourceCode xml"><code class="sourceCode xml"><span class="kw">&lt;dependency&gt;</span>
     <span class="kw">&lt;groupId&gt;</span>net.thauvin.erik.httpstatus<span class="kw">&lt;/groupId&gt;</span>
     <span class="kw">&lt;artifactId&gt;</span>httpstatus<span class="kw">&lt;/artifactId&gt;</span>
     <span class="kw">&lt;version&gt;</span>1.0.3<span class="kw">&lt;/version&gt;</span>
-<span class="kw">&lt;/dependency&gt;</span></code></pre></div>
+<span class="kw">&lt;/dependency&gt;</span></code></pre>
 </body>
 </html>

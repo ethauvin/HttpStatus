@@ -223,7 +223,7 @@ task pandoc(type: Exec) {
 	}
 	else
 	{
-		executable '/usr/local/bin/pandoc'
+		executable 'pandoc'
 		args pandoc_args
 	}
 	standardOutput = new ByteArrayOutputStream()

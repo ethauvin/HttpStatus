@@ -57,7 +57,7 @@ mainClassName = 'net.thauvin.erik.httpstatus.Reasons'
 [compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
 
 repositories {
-	mavenCentral()
+	mavenLocal()
 	jcenter()
 }
 
@@ -209,7 +209,7 @@ task deploy(dependsOn: ['build', 'copyToDeploy']) {
 	mustRunAfter clean
 }
 
-task release(dependsOn: ['deploy', 'wrapper']) << {
+task release(dependsOn: ['wrapper', 'clean', 'deploy']) << {
 	group = 'Publishing'
 	description = 'Releases new version.'
 	isRelease = true

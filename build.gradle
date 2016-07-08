@@ -209,7 +209,7 @@ task deploy(dependsOn: ['build', 'copyToDeploy']) {
 	mustRunAfter clean
 }
 
-task release(dependsOn: ['deploy', 'wrapper']) << {
+task release(dependsOn: ['wrapper', 'clean', 'deploy']) << {
 	group = 'Publishing'
 	description = 'Releases new version.'
 	isRelease = true

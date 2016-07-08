@@ -9,9 +9,14 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="module" module-name="httpstatus_main" />
     <orderEntry type="library" name="Gradle: javax.servlet:javax.servlet-api:3.1.0" level="project" />
     <orderEntry type="library" name="Gradle: javax.servlet.jsp:jsp-api:2.2" level="project" />
     <orderEntry type="library" name="Gradle: org.testng:testng:6.9.12" level="project" />
+    <orderEntry type="library" name="Gradle: org.beanshell:bsh:2.0b4" level="project" />
+    <orderEntry type="library" name="Gradle: com.beust:jcommander:1.48" level="project" />
+    <orderEntry type="library" name="Gradle: org.apache.ant:ant:1.7.0" level="project" />
+    <orderEntry type="library" name="Gradle: org.apache.ant:ant-launcher:1.7.0" level="project" />
   </component>
   <component name="TestModuleProperties" production-module="httpstatus_main" />
 </module>

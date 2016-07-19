@@ -41,95 +41,78 @@ import java.io.Writer;
  * @created 2015-12-03
  * @since 1.0
  */
-public final class Utils
-{
+public final class Utils {
 
-	/**
-	 * Disables the default constructor.
-	 *
-	 * @throws UnsupportedOperationException If the constructor is called.
-	 */
-	private Utils()
-			throws UnsupportedOperationException
-	{
-		throw new UnsupportedOperationException("Illegal constructor call.");
-	}
+    /**
+     * Disables the default constructor.
+     *
+     * @throws UnsupportedOperationException If the constructor is called.
+     */
+    private Utils()
+            throws UnsupportedOperationException {
+        throw new UnsupportedOperationException("Illegal constructor call.");
+    }
 
-	/**
-	 * Writes a string value to the specified writer. The default value is used when the actual value is null.
-	 *
-	 * @param out The writer to output the value to.
-	 * @param value The string value.
-	 * @param defaultValue The default value.
-	 * @param xml The {@link #escapeXml(String) xml} flag.
-	 *
-	 * @throws IOException f an I/O error occurs.
-	 */
-	public static void outWrite(final Writer out, final String value, final String defaultValue, final boolean xml)
-			throws IOException
-	{
-		if (xml)
-		{
-			if (value != null)
-			{
-				out.write(escapeXml(value));
-			}
-			else if (defaultValue != null)
-			{
-				out.write(escapeXml(defaultValue));
-			}
-		}
-		else
-		{
-			if (value != null)
-			{
-				out.write(value);
-			}
-			else if (defaultValue != null)
-			{
-				out.write(defaultValue);
-			}
-		}
-	}
+    /**
+     * Converts <code>&lt;</code>, <code>&gt;</code>, <code>&amp;</code>, <code>'</code>, <code>"</code>
+     * to their corresponding entity codes.
+     *
+     * @param value The string value to convert.
+     * @return The converted string value.
+     */
+    public static String escapeXml(final String value) {
+        final StringBuilder escaped = new StringBuilder();
 
-	/**
-	 * Converts <code>&lt;</code>, <code>&gt;</code>, <code>&amp;</code>, <code>'</code>, <code>"</code>
-	 * to their corresponding entity codes.
-	 *
-	 * @param value The string value to convert.
-	 *
-	 * @return The converted string value.
-	 */
-	public static String escapeXml(final String value)
-	{
-		final StringBuilder escaped = new StringBuilder();
+        for (int i = 0; i < value.length(); i++) {
+            final char c = value.charAt(i);
+            switch (c) {
+                case '<':
+                    escaped.append("&lt;");
+                    break;
+                case '>':
+                    escaped.append("&gt;");
+                    break;
+                case '&':
+                    escaped.append("&amp;");
+                    break;
+                case '\'':
+                    escaped.append("&#039;");
+                    break;
+                case '"':
+                    escaped.append("&#034;");
+                    break;
+                default:
+                    escaped.append(c);
+                    break;
+            }
+        }
 
-		for (int i = 0; i < value.length(); i++)
-		{
-			final char c = value.charAt(i);
-			switch (c)
-			{
-				case '<':
-					escaped.append("&lt;");
-					break;
-				case '>':
-					escaped.append("&gt;");
-					break;
-				case '&':
-					escaped.append("&amp;");
-					break;
-				case '\'':
-					escaped.append("&#039;");
-					break;
-				case '"':
-					escaped.append("&#034;");
-					break;
-				default:
-					escaped.append(c);
-					break;
-			}
-		}
+        return escaped.toString();
+    }
 
-		return escaped.toString();
-	}
+    /**
+     * Writes a string value to the specified writer. The default value is used when the actual value is null.
+     *
+     * @param out          The writer to output the value to.
+     * @param value        The string value.
+     * @param defaultValue The default value.
+     * @param xml          The {@link #escapeXml(String) xml} flag.
+     * @throws IOException f an I/O error occurs.
+     */
+    public static void outWrite(final Writer out, final String value, final String defaultValue, final boolean xml)
+            throws IOException {
+        if (xml) {
+            if (value != null) {
+                out.write(escapeXml(value));
+            } else if (defaultValue != null) {
+                out.write(escapeXml(defaultValue));
+            }
+        } else {
+            if (value != null) {
+                out.write(value);
+            } else if (defaultValue != null) {
+                out.write(defaultValue);
+            }
+        }
+    }
 }

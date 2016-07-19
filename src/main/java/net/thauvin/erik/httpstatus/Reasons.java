@@ -43,66 +43,55 @@ import java.util.TreeMap;
  * @created 2015-12-02
  * @since 1.0
  */
-public class Reasons
-{
-	/**
-	 * The resource bundle base name.
-	 */
-	public static final String BUNDLE_BASENAME = "net.thauvin.erik.httpstatus.reasons";
+public class Reasons {
+    /**
+     * The resource bundle base name.
+     */
+    public static final String BUNDLE_BASENAME = "net.thauvin.erik.httpstatus.reasons";
 
-	/**
-	 * The reason phrases map.
-	 */
-	private static final Map<String, String> REASON_PHRASES = new TreeMap<String, String>();
+    /**
+     * The reason phrases map.
+     */
+    private static final Map<String, String> REASON_PHRASES = new TreeMap<String, String>();
 
-	/**
-	 * Returns the reason phrase for the specified status code.
-	 *
-	 * @param statusCode The status code.
-	 *
-	 * @return The reason phrase, or <code>null</code>.
-	 */
-	public static String getReasonPhrase(final int statusCode)
-	{
-		return getReasonPhrase(Integer.toString(statusCode));
-	}
+    // Initializes the reason phrases map.
+    static {
+        final ResourceBundle bundle = ResourceBundle.getBundle(BUNDLE_BASENAME);
+        for (final String key : bundle.keySet()) {
+            REASON_PHRASES.put(key, bundle.getString(key));
+        }
+    }
 
-	/**
-	 * Returns the reason phrase for the specified status code.
-	 *
-	 * @param statusCode The status code.
-	 *
-	 * @return The reason phrase, or <code>null</code>.
-	 */
-	public static String getReasonPhrase(final String statusCode)
-	{
-		return REASON_PHRASES.get(statusCode);
-	}
+    /**
+     * Returns the reason phrase for the specified status code.
+     *
+     * @param statusCode The status code.
+     * @return The reason phrase, or <code>null</code>.
+     */
+    public static String getReasonPhrase(final int statusCode) {
+        return getReasonPhrase(Integer.toString(statusCode));
+    }
 
-	/**
-	 * Prints the status codes and reason phrases.
-	 *
-	 * @param args The command line arguments.
-	 */
-	public static void main(final String... args)
-	{
-		for (final Map.Entry<String, String> entry : REASON_PHRASES.entrySet())
-		{
-			System.out.println(entry.getKey() + ": " + entry.getValue());
-		}
+    /**
+     * Returns the reason phrase for the specified status code.
+     *
+     * @param statusCode The status code.
+     * @return The reason phrase, or <code>null</code>.
+     */
+    public static String getReasonPhrase(final String statusCode) {
+        return REASON_PHRASES.get(statusCode);
+    }
 
-		System.out.println("Total: " + REASON_PHRASES.entrySet().size());
-	}
+    /**
+     * Prints the status codes and reason phrases.
+     *
+     * @param args The command line arguments.
+     */
+    public static void main(final String... args) {
+        for (final Map.Entry<String, String> entry : REASON_PHRASES.entrySet()) {
+            System.out.println(entry.getKey() + ": " + entry.getValue());
+        }
 
-	/**
-	 * Initializes the reason phrases map.
-	 */
-	static
-	{
-		final ResourceBundle bundle = ResourceBundle.getBundle(BUNDLE_BASENAME);
-		for (final String key : bundle.keySet())
-		{
-			REASON_PHRASES.put(key, bundle.getString(key));
-		}
-	}
+        System.out.println("Total: " + REASON_PHRASES.entrySet().size());
+    }
 }

@@ -45,29 +45,24 @@ import java.io.IOException;
  * @created 2015-12-03
  * @since 1.0
  */
-public class CauseTag extends XmlSupport
-{
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public void doTag()
-			throws JspException, IOException
-	{
-		final PageContext pageContext = (PageContext) getJspContext();
-		final JspWriter out = pageContext.getOut();
+public class CauseTag extends XmlSupport {
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void doTag()
+            throws JspException, IOException {
+        final PageContext pageContext = (PageContext) getJspContext();
+        final JspWriter out = pageContext.getOut();
 
-		String cause;
+        String cause;
 
-		try
-		{
-			cause = pageContext.getErrorData().getThrowable().getCause().getLocalizedMessage();
-		}
-		catch (NullPointerException ignore)
-		{
-			cause = defaultValue;
-		}
+        try {
+            cause = pageContext.getErrorData().getThrowable().getCause().getLocalizedMessage();
+        } catch (NullPointerException ignore) {
+            cause = defaultValue;
+        }
 
-		Utils.outWrite(out, cause, defaultValue, escapeXml);
-	}
+        Utils.outWrite(out, cause, defaultValue, escapeXml);
+    }
 }

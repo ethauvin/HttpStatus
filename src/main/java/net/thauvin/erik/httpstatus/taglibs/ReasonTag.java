@@ -47,50 +47,41 @@ import java.io.IOException;
  * @created 2015-12-02
  * @since 1.0
  */
-public class ReasonTag extends XmlSupport
-{
-	private int statusCode;
+public class ReasonTag extends XmlSupport {
+    private int statusCode;
 
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public void doTag()
-			throws JspException, IOException
-	{
-		final PageContext pageContext = (PageContext) getJspContext();
-		final JspWriter out = pageContext.getOut();
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void doTag()
+            throws JspException, IOException {
+        final PageContext pageContext = (PageContext) getJspContext();
+        final JspWriter out = pageContext.getOut();
 
-		try
-		{
-			if (statusCode >= 0)
-			{
-				Utils.outWrite(out, Reasons.getReasonPhrase(statusCode), defaultValue, escapeXml);
-			}
-			else
-			{
-				Utils.outWrite(out,
-				               Reasons.getReasonPhrase(pageContext.getErrorData().getStatusCode()),
-				               defaultValue,
-				               escapeXml);
-			}
-		}
-		catch (IOException ignore)
-		{
-			// Ignore.
-		}
-	}
+        try {
+            if (statusCode >= 0) {
+                Utils.outWrite(out, Reasons.getReasonPhrase(statusCode), defaultValue, escapeXml);
+            } else {
+                Utils.outWrite(out,
+                        Reasons.getReasonPhrase(pageContext.getErrorData().getStatusCode()),
+                        defaultValue,
+                        escapeXml);
+            }
+        } catch (IOException ignore) {
+            // Ignore.
+        }
+    }
 
-	/**
-	 * Sets the status code.
-	 *
-	 * @param statusCode The status code.
-	 */
-	@SuppressWarnings("unused")
-	public void setCode(final int statusCode)
-	{
-		this.statusCode = statusCode;
-	}
+    /**
+     * Sets the status code.
+     *
+     * @param statusCode The status code.
+     */
+    @SuppressWarnings("unused")
+    public void setCode(final int statusCode) {
+        this.statusCode = statusCode;
+    }
 
 
 }

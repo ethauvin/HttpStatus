@@ -44,18 +44,16 @@ import java.io.IOException;
  * @created 2015-12-03
  * @since 1.0
  */
-public class CodeTag extends SimpleTagSupport
-{
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public void doTag()
-			throws JspException, IOException
-	{
-		final PageContext pageContext = (PageContext) getJspContext();
-		final JspWriter out = pageContext.getOut();
+public class CodeTag extends SimpleTagSupport {
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void doTag()
+            throws JspException, IOException {
+        final PageContext pageContext = (PageContext) getJspContext();
+        final JspWriter out = pageContext.getOut();
 
-		out.write(String.valueOf(pageContext.getErrorData().getStatusCode()));
-	}
+        out.write(String.valueOf(pageContext.getErrorData().getStatusCode()));
+    }
 }

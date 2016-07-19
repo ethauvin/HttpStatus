@@ -40,37 +40,34 @@ import javax.servlet.jsp.tagext.SimpleTagSupport;
  * @created 2015-12-03
  * @since 1.0
  */
-public abstract class XmlSupport extends SimpleTagSupport
-{
-	/**
-	 * Default value string.
-	 */
-	protected String defaultValue;
+public abstract class XmlSupport extends SimpleTagSupport {
+    /**
+     * Default value string.
+     */
+    protected String defaultValue;
 
-	/**
-	 * Escape XML flag.
-	 */
-	protected boolean escapeXml = true;
+    /**
+     * Escape XML flag.
+     */
+    protected boolean escapeXml = true;
 
-	/**
-	 * Sets the default value.
-	 *
-	 * @param defaultValue The default value.
-	 */
-	@SuppressWarnings("unused")
-	public void setDefault(final String defaultValue)
-	{
-		this.defaultValue = defaultValue;
-	}
+    /**
+     * Sets the default value.
+     *
+     * @param defaultValue The default value.
+     */
+    @SuppressWarnings("unused")
+    public void setDefault(final String defaultValue) {
+        this.defaultValue = defaultValue;
+    }
 
-	/**
-	 * Sets the {@link net.thauvin.erik.httpstatus.Utils#escapeXml(String) xml} flag.
-	 *
-	 * @param escapeXml <code>true</code> or <code>false</code>
-	 */
-	@SuppressWarnings("unused")
-	public void setEscapeXml(final boolean escapeXml)
-	{
-		this.escapeXml = escapeXml;
-	}
+    /**
+     * Sets the {@link net.thauvin.erik.httpstatus.Utils#escapeXml(String) xml} flag.
+     *
+     * @param escapeXml <code>true</code> or <code>false</code>
+     */
+    @SuppressWarnings("unused")
+    public void setEscapeXml(final boolean escapeXml) {
+        this.escapeXml = escapeXml;
+    }
 }

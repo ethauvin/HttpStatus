@@ -40,7 +40,7 @@ import java.io.IOException;
 /**
  * The <code>&lt;hs:code&gt;</code> tag returns the HTTP Status Error Code.
  *
- * @author <a href="mailto:erik@thauvin.net">Erik C. Thauvin</a>
+ * @author <a href="mailto:erik@thauvin.net" target="_blank">Erik C. Thauvin</a>
  * @created 2015-12-03
  * @since 1.0
  */

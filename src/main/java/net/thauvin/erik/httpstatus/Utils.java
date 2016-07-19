@@ -37,7 +37,7 @@ import java.io.Writer;
 /**
  * The <code>Utils</code> class implements a collection of utility methods used throughout this project.
  *
- * @author <a href="mailto:erik@thauvin.net">Erik C. Thauvin</a>
+ * @author <a href="mailto:erik@thauvin.net" target="_blank">Erik C. Thauvin</a>
  * @created 2015-12-03
  * @since 1.0
  */

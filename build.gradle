@@ -160,7 +160,7 @@ javadoc {
     title = mavenDescription + ' ' + version
     options.tags = ['created']
     options.author = true
-    options.addStringOption('link', 'http://docs.oracle.com/javase/8/docs/api/')
+    options.links('https://docs.oracle.com/javaee/7/api/', 'http://docs.oracle.com/javase/8/docs/api/')
     options.addStringOption('sourcepath', project.hasProperty('jdkSrc') ? jdkSrc : "$System.env.JAVA_HOME/src.zip")
     if (JavaVersion.current().isJava8Compatible()) {
         options.addStringOption('Xdoclint:none', '-quiet')

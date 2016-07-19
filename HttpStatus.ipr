@@ -71,7 +71,7 @@
     </LanguageOptions>
   </component>
   <component name="DependencyValidationManager">
-    <scope name="Source" pattern="file[httpstatus]:src/main/java//*.java||file[httpstatus]:src/test/java//*.java" />
+    <scope name="Source" pattern="file[httpstatus]:src/main/java//*.java||file[httpstatus]:src/test/java//*.java||file:src/main/resources/META-INF/httpstatus.tld" />
   </component>
   <component name="Encoding">
     <file url="PROJECT" charset="UTF-8" />

@@ -1,5 +1,6 @@
 plugins {
-    id "com.jfrog.bintray" version "1.5"
+    id "com.jfrog.bintray" version "1.7.3"
+    id "com.github.ben-manes.versions" version "0.14.0"
 }
 apply plugin: 'java'
 apply plugin: 'idea'
@@ -65,7 +66,7 @@ dependencies {
     compile 'javax.servlet:javax.servlet-api:3.1.0'
     compile 'javax.servlet.jsp:jsp-api:2.2'
 
-    testCompile 'org.testng:testng:6.9.12'
+    testCompile 'org.testng:testng:6.11'
 }
 
 bintray {
@@ -161,7 +162,7 @@ javadoc {
     options.tags = ['created']
     options.author = true
     options.links('https://docs.oracle.com/javaee/7/api/', 'http://docs.oracle.com/javase/8/docs/api/')
-    options.addStringOption('sourcepath', project.hasProperty('jdkSrc') ? jdkSrc : "$System.env.JAVA_HOME/src.zip")
+    //options.addStringOption('sourcepath', project.hasProperty('jdkSrc') ? jdkSrc : "$System.env.JAVA_HOME/src.zip")
     if (JavaVersion.current().isJava8Compatible()) {
         options.addStringOption('Xdoclint:none', '-quiet')
     }
@@ -208,10 +209,12 @@ task deploy(dependsOn: ['build', 'copyToDeploy']) {
     mustRunAfter clean
 }
 
-task release(dependsOn: ['wrapper', 'clean', 'deploy']) << {
+task release(dependsOn: ['wrapper', 'clean', 'deploy']) {
     group = 'Publishing'
     description = 'Releases new version.'
-    isRelease = true
+    doLast {
+        isRelease = true
+    }
 }
 
 task pandoc(type: Exec) {

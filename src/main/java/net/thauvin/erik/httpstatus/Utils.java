@@ -97,7 +97,7 @@ public final class Utils {
      * @param value        The string value.
      * @param defaultValue The default value.
      * @param xml          The {@link #escapeXml(String) xml} flag.
-     * @throws IOException f an I/O error occurs.
+     * @throws IOException If an I/O error occurs.
      */
     public static void outWrite(final Writer out, final String value, final String defaultValue, final boolean xml)
             throws IOException {

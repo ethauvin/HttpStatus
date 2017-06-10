@@ -16,7 +16,6 @@ def deployDir = 'deploy'
 def localProps = 'local.properties'
 def isRelease = 'release' in gradle.startParameter.taskNames
 
-def mavenGroupId = 'net.thauvin.erik.httpstatus'
 def mavenName = 'HttpStatus'
 def mavenDescription = 'HttpStatus JSP Tag Library'
 def mavenUrl = 'https://github.com/ethauvin/HttpStatus'
@@ -53,6 +52,7 @@ def getVersion(isIncrement = false) {
 }
 
 version = getVersion();
+group = 'net.thauvin.erik.httpstatus'
 
 mainClassName = 'net.thauvin.erik.httpstatus.Reasons'
 [compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
@@ -123,7 +123,7 @@ publishing {
             from components.java
             artifact sourcesJar
             artifact javadocJar
-            groupId mavenGroupId
+            groupId project.group
             artifactId rootProject.name
             version project.version
 
@@ -212,7 +212,7 @@ task deploy(dependsOn: ['build', 'copyToDeploy']) {
 task release(dependsOn: ['wrapper', 'clean', 'deploy']) {
     group = 'Publishing'
     description = 'Releases new version.'
-    doLast {
+    doFirst {
         isRelease = true
     }
 }

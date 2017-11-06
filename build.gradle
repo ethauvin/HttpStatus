@@ -55,6 +55,8 @@ version = getVersion();
 group = 'net.thauvin.erik.httpstatus'
 
 mainClassName = 'net.thauvin.erik.httpstatus.Reasons'
+sourceCompatibility = 1.7
+targetCompatibility = 1.7
 [compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
 
 repositories {

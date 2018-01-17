@@ -1,5 +1,5 @@
 plugins {
-    id "com.jfrog.bintray" version "1.7.3"
+    id "com.jfrog.bintray" version "1.8.0"
     id "com.github.ben-manes.versions" version "0.17.0"
 }
 apply plugin: 'java'
@@ -68,7 +68,7 @@ dependencies {
     compile 'javax.servlet:javax.servlet-api:3.1.0'
     compile 'javax.servlet.jsp:jsp-api:2.2'
 
-    testCompile 'org.testng:testng:6.12'
+    testCompile 'org.testng:testng:6.13.1'
 }
 
 bintray {
@@ -237,4 +237,14 @@ task pandoc(type: Exec) {
     ext.output = {
         return standardOutput.toString()
     }
+}
+
+task pom2xml {
+    pom {
+        project {
+            groupId project.group
+            artifactId rootProject.name
+            version project.version
+        }
+    }.writeTo("pom.xml")
 }

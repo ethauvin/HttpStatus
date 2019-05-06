@@ -32,8 +32,12 @@
 
 package net.thauvin.erik.httpstatus;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 import java.util.Map;
 import java.util.ResourceBundle;
+import java.util.SortedSet;
+import java.util.TreeSet;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
@@ -96,11 +100,21 @@ public final class Reasons {
      * @param args The command line arguments.
      */
     @SuppressWarnings("PMD.SystemPrintln")
+    @SuppressFBWarnings("MUI_CONTAINSKEY_BEFORE_GET")
     public static void main(final String... args) {
-        for (final Map.Entry<String, String> entry : REASON_PHRASES.entrySet()) {
-            System.out.println(entry.getKey() + ": " + entry.getValue());
-        }
+        if (args.length >= 1) {
+            for (final String key : args) {
+                if (REASON_PHRASES.containsKey(key)) {
+                    System.out.println(key + ": " + REASON_PHRASES.get(key));
+                }
+            }
+        } else {
+            final SortedSet<String> keys = new TreeSet<>(REASON_PHRASES.keySet());
+            for (final String key : keys) {
+                System.out.println(key + ": " + REASON_PHRASES.get(key));
+            }
 
-        System.out.println("Total: " + REASON_PHRASES.size());
+            System.out.println("Total: " + REASON_PHRASES.size());
+        }
     }
 }

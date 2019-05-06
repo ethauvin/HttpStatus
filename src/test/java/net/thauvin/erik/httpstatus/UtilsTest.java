@@ -46,15 +46,15 @@ import static org.testng.Assert.assertEquals;
  * @created 2015-12-03
  * @since 1.0
  */
-@SuppressWarnings("unused")
 public class UtilsTest {
     @Test
-    public void testEscapeXml()
-            throws Exception {
-        Assert.assertEquals(
-                "This is a test. We wan&#039;t to make sure that everything is &lt;encoded&gt; according the &#034;encoding&#034; parameter &amp; value.",
-                Utils.escapeXml(
-                        "This is a test. We wan't to make sure that everything is <encoded> according the \"encoding\" parameter & value."));
+    public void testEscapeXml() {
+        assertEquals(Utils.escapeXml(
+            "This is a test. We wan't to make sure that everything is <encoded> according the \"encoding\" parameter "
+            + "& value."), "This is a test. We wan&#039;t to make sure that everything is &lt;encoded&gt; according "
+                           + "the &#034;encoding&#034; parameter &amp; value.");
+    }
+
     @SuppressWarnings("PMD.AvoidDuplicateLiterals")
     @Test
     public void testOutWrite() throws IOException {

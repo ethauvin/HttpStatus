@@ -239,12 +239,3 @@ task pandoc(type: Exec) {
     }
 }
 
-task pom2xml {
-    pom {
-        project {
-            groupId project.group
-            artifactId rootProject.name
-            version project.version
-        }
-    }.writeTo("pom.xml")
-}

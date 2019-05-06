@@ -1,7 +1,9 @@
 #  HttpStatus JSP Tag Library
 
 [![License (3-Clause BSD)](https://img.shields.io/badge/license-BSD%203--Clause-blue.svg?style=flat-square)](http://opensource.org/licenses/BSD-3-Clause) [![release](https://img.shields.io/github/release/ethauvin/httpstatus.svg)](https://github.com/ethauvin/httpstatus/releases/latest) [![Maven Central](https://maven-badges.herokuapp.com/maven-central/net.thauvin.erik.httpstatus/httpstatus/badge.svg)](https://maven-badges.herokuapp.com/maven-central/net.thauvin.erik.httpstatus/httpstatus) [ ![Download](https://api.bintray.com/packages/ethauvin/maven/HttpStatus/images/download.svg) ](https://bintray.com/ethauvin/maven/HttpStatus/_latestVersion)  
-[![Known Vulnerabilities](https://snyk.io/test/github/ethauvin/httpstatus/badge.svg?targetFile=build.gradle)](https://snyk.io/test/github/ethauvin/httpstatus?targetFile=build.gradle) [![Build Status](https://travis-ci.org/ethauvin/HttpStatus.svg?branch=master)](https://travis-ci.org/ethauvin/HttpStatus) [![Build status](https://ci.appveyor.com/api/projects/status/w5j4kul3w2rkigxb?svg=true)](https://ci.appveyor.com/project/ethauvin/httpstatus) [![CircleCI](https://circleci.com/gh/ethauvin/HttpStatus/tree/master.svg?style=shield)](https://circleci.com/gh/ethauvin/HttpStatus/tree/master)
+[![Known Vulnerabilities](https://snyk.io/test/github/ethauvin/httpstatus/badge.svg?targetFile=build.gradle)](https://snyk.io/test/github/ethauvin/httpstatus?targetFile=build.gradle) [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=ethauvin_HttpStatus&metric=alert_status)](https://sonarcloud.io/dashboard?id=ethauvin_HttpStatus)  
+[![Build Status](https://travis-ci.org/ethauvin/HttpStatus.svg?branch=master)](https://travis-ci.org/ethauvin/HttpStatus) 
+[![Build status](https://ci.appveyor.com/api/projects/status/w5j4kul3w2rkigxb?svg=true)](https://ci.appveyor.com/project/ethauvin/httpstatus) [![CircleCI](https://circleci.com/gh/ethauvin/HttpStatus/tree/master.svg?style=shield)](https://circleci.com/gh/ethauvin/HttpStatus/tree/master)
 
 
 A simple [JSP](http://www.oracle.com/technetwork/java/javaee/jsp/index.html) Tag Library to display the [code](#hscode), [reason](#hsreason) and/or [cause](#hscode) for [HTTP status codes](http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html) in JSP error pages.
@@ -69,10 +71,11 @@ Attribute   | Description
 The reasons are defined in a [ResourceBundle](http://docs.oracle.com/javase/8/docs/api/java/util/ResourceBundle.html) properties as follows:
 
 Status Code | Reason
------------ | -------------------------------
+----------- | -----------------------------------
 `100`       | Continue
 `101`       | Switching Protocols
 `102`       | Processing
+`103`       | Early Hints
 `200`       | OK
 `201`       | Created
 `202`       | Accepted
@@ -85,7 +88,7 @@ Status Code | Reason
 `226`       | IM Used
 `300`       | Multiple Choices
 `301`       | Moved Permanently
-`302`       | Moved Temporarily
+`302`       | Found/Moved Temporarily
 `303`       | See Other
 `304`       | Not Modified
 `305`       | Use Proxy
@@ -105,7 +108,7 @@ Status Code | Reason
 `410`       | Gone
 `411`       | Length Required
 `412`       | Precondition Failed
-`413`       | Request Entity Too Large
+`413`       | Request Entity/Payload Too Large
 `414`       | Request-URI Too Long
 `415`       | Unsupported Media Type
 `416`       | Requested Range Not Satisfiable
@@ -156,7 +159,7 @@ Include the following in your `build.gradle` file:
 
 ```gradle
 dependencies {
-	compile 'net.thauvin.erik.httpstatus:httpstatus:1.0.3'
+	compile 'net.thauvin.erik.httpstatus:httpstatus:1.0.4'
 }
 ```
 
@@ -166,6 +169,6 @@ or as a Maven artifact:
 <dependency>
     <groupId>net.thauvin.erik.httpstatus</groupId>
     <artifactId>httpstatus</artifactId>
-    <version>1.0.3</version>
+    <version>1.0.4</version>
 </dependency>
 ```

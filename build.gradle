@@ -1,20 +1,25 @@
 plugins {
-    id "com.jfrog.bintray" version "1.8.0"
-    id "com.github.ben-manes.versions" version "0.17.0"
+    id 'checkstyle'
+    id 'java'
+    id 'jacoco'
+    id 'idea'
+    id 'application'
+    id 'maven'
+    id 'maven-publish'
+    id 'pmd'
+    id 'com.jfrog.bintray' version '1.8.4'
+    id 'com.github.ben-manes.versions' version '0.21.0'
+    id 'net.thauvin.erik.gradle.semver' version '1.0.0'
+    id 'com.github.spotbugs' version '1.7.1'
+    id 'org.sonarqube' version '2.7'
 }
-apply plugin: 'java'
-apply plugin: 'idea'
-apply plugin: 'application'
-apply plugin: 'maven'
-apply plugin: 'maven-publish'
 
+import com.github.spotbugs.SpotBugsTask
 import org.apache.tools.ant.taskdefs.condition.Os
 
 defaultTasks 'deploy'
 
 def deployDir = 'deploy'
-def localProps = 'local.properties'
-def isRelease = 'release' in gradle.startParameter.taskNames
 
 def mavenName = 'HttpStatus'
 def mavenDescription = 'HttpStatus JSP Tag Library'
@@ -28,30 +33,6 @@ def pkgLicenses = ['BSD 3-Clause']
 def pkgIssueTrackerUrl = mavenUrl + '/issues'
 def pkgLabels = ['jsp', 'tag library', 'http', 'status code', 'java']
 
-def getVersion(isIncrement = false) {
-    def propsFile = 'version.properties'
-    def majorKey = 'version.major'
-    def minorKey = 'version.minor'
-    def patchKey = 'version.patch'
-    def metaKey = 'version.buildmeta'
-    def preKey = 'version.prerelease'
-    if (isIncrement) {
-        ant.propertyfile(file: propsFile) {
-            entry(key: patchKey,
-                    type: 'int',
-                    default: '-1',
-                    operation: '+')
-        }
-    }
-    def p = new Properties()
-    file(propsFile).withInputStream { stream -> p.load(stream) }
-    def metadata = p.getProperty(metaKey, '')
-    def prerelease = p.getProperty(preKey, '')
-    return (p.getProperty(majorKey, '1') + '.' + p.getProperty(minorKey, '0') + '.' + p.getProperty(patchKey, '0') +
-            (prerelease.length() > 0 ? '-' + prerelease : '') + (metadata.length() > 0 ? '+' + metadata : ''))
-}
-
-version = getVersion();
 group = 'net.thauvin.erik.httpstatus'
 
 mainClassName = 'net.thauvin.erik.httpstatus.Reasons'
@@ -65,10 +46,66 @@ repositories {
 }
 
 dependencies {
-    compile 'javax.servlet:javax.servlet-api:4.0.0'
-    compile 'javax.servlet.jsp:jsp-api:2.2'
+    implementation 'javax.servlet:javax.servlet-api:4.0.1'
+    implementation 'javax.servlet.jsp:jsp-api:2.2.1-b03'
 
-    testCompile 'org.testng:testng:6.13.1'
+    spotbugsPlugins 'com.h3xstream.findsecbugs:findsecbugs-plugin:1.9.0'
+    spotbugsPlugins 'com.mebigfatguy.fb-contrib:fb-contrib:7.4.3.sb'
+
+    compileOnly 'com.github.spotbugs:spotbugs-annotations:3.1.12'
+    testCompileOnly 'com.github.spotbugs:spotbugs-annotations:3.1.12'
+
+    testImplementation 'org.testng:testng:6.14.3'
+}
+
+javadoc {
+    title = mavenDescription + ' ' + version
+    options.tags = ['created']
+    options.author = true
+    options.links('https://docs.oracle.com/javaee/7/api/', 'https://docs.oracle.com/javase/8/docs/api/')
+    //options.addStringOption('sourcepath', project.hasProperty('jdkSrc') ? jdkSrc : "$System.env.JAVA_HOME/src.zip")
+    if (JavaVersion.current().isJava8Compatible()) {
+        options.addStringOption('Xdoclint:none', '-quiet')
+    }
+}
+
+compileJava {
+    //options.compilerArgs << '-Xlint:unchecked' << '-Xlint:deprecation'
+}
+
+
+jar {
+    manifest.attributes('Main-Class': mainClassName)
+}
+
+clean {
+    doLast {
+        project.delete(fileTree(deployDir))
+    }
+}
+
+test {
+    useTestNG()
+}
+
+pmd {
+    ruleSetFiles = files("config/pmd.xml")
+    ruleSets = []
+}
+
+tasks.withType(SpotBugsTask) {
+    reports {
+        xml.enabled = false
+        html.enabled = true
+    }
+    excludeFilter = file("$projectDir/config/spotbugs/excludeFilter.xml")
+}
+
+tasks.withType(Checkstyle) {
+    reports {
+        xml.enabled = false
+        html.enabled = true
+    }
 }
 
 bintray {
@@ -97,26 +134,23 @@ bintray {
     }
 }
 
-def pomConfig = {
-    licenses {
-        license {
-            name mavenLicense
-            url mavenLicenseUrl
-            distribution 'repo'
-        }
-    }
-    developers {
-        developer {
-            id 'ethauvin'
-            name 'Erik C. Thauvin'
-            email 'erik@thauvin.net'
-        }
-    }
-    scm {
-        connection 'scm:git:' + mavenScmCon
-        developerConnection 'scm:git:' + mavenScmDevCon
-        url mavenScmCon
-    }
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    group = 'Build'
+    description = 'Builds an archive of the javadoc docs.'
+    archiveClassifier = 'javadoc'
+    from javadoc.destinationDir
+}
+
+task sourcesJar(type: Jar) {
+    group = 'Build'
+    description = 'Builds an archive of the source code.'
+    archiveClassifier = 'sources'
+    from sourceSets.main.allSource
+}
+
+artifacts {
+    archives javadocJar
+    archives sourcesJar
 }
 
 publishing {
@@ -127,71 +161,33 @@ publishing {
             artifact javadocJar
             groupId project.group
             artifactId rootProject.name
-            version project.version
 
-            pom.withXml {
-                def root = asNode()
-                root.appendNode('name', mavenName)
-                root.appendNode('description', mavenDescription)
-                root.appendNode('url', mavenUrl)
-                root.children().last() + pomConfig
+            pom {
+                name = mavenName
+                description = mavenDescription
+                url = mavenUrl
+                licenses {
+                    license {
+                        name = mavenLicense
+                        url = mavenLicenseUrl
+                        distribution = 'repo'
+                    }
+                }
+                developers {
+                    developer {
+                        id = 'ethauvin'
+                        name = 'Erik C. Thauvin'
+                        email = 'erik@thauvin.net'
+                    }
+                }
+                scm {
+                    connection = 'scm:git:' + mavenScmCon
+                    developerConnection = 'scm:git:' + mavenScmDevCon
+                    url = mavenScmCon
+                }
             }
         }
     }
-}
-
-task javadocJar(type: Jar, dependsOn: javadoc) {
-    group = 'Build'
-    description = 'Builds an archive of the javadoc docs.'
-    classifier = 'javadoc'
-    from javadoc.destinationDir
-}
-
-task sourcesJar(type: Jar) {
-    group = 'Build'
-    description = 'Builds an archive of the source code.'
-    classifier = 'sources'
-    from sourceSets.main.allSource
-}
-
-artifacts {
-    archives javadocJar
-    archives sourcesJar
-}
-
-javadoc {
-    title = mavenDescription + ' ' + version
-    options.tags = ['created']
-    options.author = true
-    options.links('https://docs.oracle.com/javaee/7/api/', 'http://docs.oracle.com/javase/8/docs/api/')
-    //options.addStringOption('sourcepath', project.hasProperty('jdkSrc') ? jdkSrc : "$System.env.JAVA_HOME/src.zip")
-    if (JavaVersion.current().isJava8Compatible()) {
-        options.addStringOption('Xdoclint:none', '-quiet')
-    }
-}
-
-compileJava {
-    doFirst {
-        project.version = getVersion(isRelease)
-    }
-    //options.compilerArgs << '-Xlint:unchecked' << '-Xlint:deprecation'
-}
-
-
-jar {
-    manifest.attributes('Main-Class': mainClassName)
-}
-
-clean {
-    delete deployDir
-}
-
-test {
-    useTestNG()
-}
-
-task wrapper(type: Wrapper) {
-    gradleVersion = gradle.gradleVersion
 }
 
 task copyToDeploy(type: Copy) {
@@ -203,7 +199,7 @@ task copyToDeploy(type: Copy) {
     into deployDir
 }
 
-task deploy(dependsOn: ['build', 'copyToDeploy']) {
+task deploy(dependsOn: ['clean', 'build', 'copyToDeploy']) {
     description = 'Copies all needed files to the ${deployDir} directory.'
     group = 'Publishing'
     outputs.dir deployDir
@@ -211,18 +207,16 @@ task deploy(dependsOn: ['build', 'copyToDeploy']) {
     mustRunAfter clean
 }
 
-task release(dependsOn: ['wrapper', 'clean', 'deploy']) {
+task release(dependsOn: ['wrapper', 'deploy']) {
     group = 'Publishing'
     description = 'Releases new version.'
-    doFirst {
-        isRelease = true
-    }
 }
 
 task pandoc(type: Exec) {
     group = 'Documentation'
-    def pandoc_args = ['--from', 'markdown_github',
+    def pandoc_args = ['--from', 'gfm',
                        '--to', 'html5',
+                       '--metadata', "pagetitle=$mavenDescription",
                        '-s',
                        '-c', 'github-pandoc.css',
                        '-o', 'docs/README.html',
@@ -239,3 +233,13 @@ task pandoc(type: Exec) {
     }
 }
 
+sonarqube {
+    properties {
+        property("sonar.projectKey", "ethauvin_HttpStatus")
+        property("sonar.sourceEncoding", "UTF-8")
+    }
+}
+
+tasks.sonarqube {
+    dependsOn("jacocoTestReport")
+}

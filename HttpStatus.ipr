@@ -1,5 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="CheckStyle-IDEA">
+    <option name="configuration">
+      <map>
+        <entry key="active-configuration" value="LOCAL_FILE:K:/java/HttpStatus/config/checkstyle/checkstyle.xml:Erik's Checks" />
+        <entry key="checkstyle-version" value="8.19" />
+        <entry key="copy-libs" value="true" />
+        <entry key="location-0" value="BUNDLED:(bundled):Sun Checks" />
+        <entry key="location-1" value="BUNDLED:(bundled):Google Checks" />
+        <entry key="location-2" value="LOCAL_FILE:K:/java/HttpStatus/config/checkstyle/checkstyle.xml:Erik's Checks" />
+        <entry key="scan-before-checkin" value="false" />
+        <entry key="scanscope" value="JavaOnlyWithTests" />
+        <entry key="suppress-errors" value="false" />
+      </map>
+    </option>
+  </component>
   <component name="ClientPropertiesManager">
     <properties class="javax.swing.AbstractButton">
       <property name="hideActionText" class="java.lang.Boolean" />
@@ -159,6 +174,22 @@
       </MavenGeneralSettings>
     </option>
   </component>
+  <component name="PDMPlugin">
+    <option name="customRuleSets">
+      <list>
+        <option value="K:\java\HttpStatus\config\pmd.xml" />
+      </list>
+    </option>
+    <option name="options">
+      <map>
+        <entry key="Encoding" value="" />
+        <entry key="Target JDK" value="1.8" />
+      </map>
+    </option>
+  </component>
+  <component name="ProjectCodeStyleConfiguration">
+    <option name="PREFERRED_PROJECT_CODE_STYLE" value="Erik's Code Style" />
+  </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
     <entry key="Project Default">
       <profile-state>
@@ -191,10 +222,10 @@
   </component>
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/httpstatus.iml" filepath="$PROJECT_DIR$/.idea/modules/httpstatus.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/httpstatus.iml" filepath="$PROJECT_DIR$/.idea/modules/httpstatus.iml" group="httpstatus" />
     </modules>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" project-jdk-name="9.0.x" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" default="false" project-jdk-name="1.8" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="PropertiesComponent">
@@ -307,31 +338,58 @@
         <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.beust/jcommander/1.72/7ef123d5dfb6f839b41265648ff1be34982d50f8/jcommander-1.72-sources.jar!/" />
       </SOURCES>
     </library>
-    <library name="Gradle: javax.servlet.jsp:jsp-api:2.2">
+    <library name="Gradle: com.github.spotbugs:spotbugs-annotations:3.1.12">
       <CLASSES>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/javax.servlet.jsp/jsp-api/2.2/5bf0c26ef77df58c7c28be2d9d52246f2b437a54/jsp-api-2.2.jar!/" />
+        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.github.spotbugs/spotbugs-annotations/3.1.12/ba2c77a05091820668987292f245f3b089387bfa/spotbugs-annotations-3.1.12.jar!/" />
       </CLASSES>
       <JAVADOC />
       <SOURCES>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/javax.servlet.jsp/jsp-api/2.2/78bc1457a1fc2f8a7037cd2b247062ab3daac212/jsp-api-2.2-sources.jar!/" />
+        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.github.spotbugs/spotbugs-annotations/3.1.12/1d7b1099a4318469157e2172e0559ce0c5b2a85b/spotbugs-annotations-3.1.12-sources.jar!/" />
       </SOURCES>
     </library>
-    <library name="Gradle: javax.servlet:javax.servlet-api:3.1.0">
+    <library name="Gradle: com.google.code.findbugs:jsr305:3.0.2">
       <CLASSES>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/javax.servlet/javax.servlet-api/3.1.0/3cd63d075497751784b2fa84be59432f4905bf7c/javax.servlet-api-3.1.0.jar!/" />
+        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.google.code.findbugs/jsr305/3.0.2/25ea2e8b0c338a877313bd4672d3fe056ea78f0d/jsr305-3.0.2.jar!/" />
       </CLASSES>
       <JAVADOC />
       <SOURCES>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/javax.servlet/javax.servlet-api/3.1.0/ab3976d4574c48d22dc1abf6a9e8bd0fdf928223/javax.servlet-api-3.1.0-sources.jar!/" />
+        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.google.code.findbugs/jsr305/3.0.2/b19b5927c2c25b6c70f093767041e641ae0b1b35/jsr305-3.0.2-sources.jar!/" />
       </SOURCES>
     </library>
-    <library name="Gradle: org.testng:testng:6.13.1">
+    <library name="Gradle: javax.servlet.jsp:jsp-api:2.2.1-b03">
       <CLASSES>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.testng/testng/6.13.1/2495393a0b4b7d7a4b49ea1f8516376f70f482c/testng-6.13.1.jar!/" />
+        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/javax.servlet.jsp/jsp-api/2.2.1-b03/c7205b380e9ceb4b96745656755f31f76ae01b74/jsp-api-2.2.1-b03.jar!/" />
       </CLASSES>
       <JAVADOC />
       <SOURCES>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.testng/testng/6.13.1/a2b77dfee647263d2c1010215441bfa3e28c4b9c/testng-6.13.1-sources.jar!/" />
+        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/javax.servlet.jsp/jsp-api/2.2.1-b03/5ee3f521021fd5d8c0a89a208a228c1ab10ef854/jsp-api-2.2.1-b03-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Gradle: javax.servlet:javax.servlet-api:4.0.1">
+      <CLASSES>
+        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/javax.servlet/javax.servlet-api/4.0.1/a27082684a2ff0bf397666c3943496c44541d1ca/javax.servlet-api-4.0.1.jar!/" />
+      </CLASSES>
+      <JAVADOC />
+      <SOURCES>
+        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/javax.servlet/javax.servlet-api/4.0.1/49a9da44db6e6b5f44ce15ddfcfe2b6666151b25/javax.servlet-api-4.0.1-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Gradle: org.apache-extras.beanshell:bsh:2.0b6">
+      <CLASSES>
+        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.apache-extras.beanshell/bsh/2.0b6/fb418f9b33a0b951e9a2978b4b6ee93b2707e72f/bsh-2.0b6.jar!/" />
+      </CLASSES>
+      <JAVADOC />
+      <SOURCES>
+        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.apache-extras.beanshell/bsh/2.0b6/76a65f674e8f2df409934824c49ca338987c63ae/bsh-2.0b6-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Gradle: org.testng:testng:6.14.3">
+      <CLASSES>
+        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.testng/testng/6.14.3/d24515dc253e77e54b73df97e1fb2eb7faf34fdd/testng-6.14.3.jar!/" />
+      </CLASSES>
+      <JAVADOC />
+      <SOURCES>
+        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.testng/testng/6.14.3/bfd2538501a129a142fe8366169c48b91609dc0b/testng-6.14.3-sources.jar!/" />
       </SOURCES>
     </library>
   </component>

@@ -29,10 +29,15 @@
  * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
+
 package net.thauvin.erik.httpstatus;
 
-import org.testng.Assert;
 import org.testng.annotations.Test;
+
+import java.io.IOException;
+import java.io.StringWriter;
+
+import static org.testng.Assert.assertEquals;
 
 /**
  * The <code>UtilsTest</code> class.
@@ -50,5 +55,28 @@ public class UtilsTest {
                 "This is a test. We wan&#039;t to make sure that everything is &lt;encoded&gt; according the &#034;encoding&#034; parameter &amp; value.",
                 Utils.escapeXml(
                         "This is a test. We wan't to make sure that everything is <encoded> according the \"encoding\" parameter & value."));
+    @SuppressWarnings("PMD.AvoidDuplicateLiterals")
+    @Test
+    public void testOutWrite() throws IOException {
+        try (final StringWriter sw = new StringWriter()) {
+            Utils.outWrite(sw, null, "default", false);
+            assertEquals(sw.toString(), "default", "outWrite(default)");
+
+            sw.getBuffer().setLength(0);
+            Utils.outWrite(sw, "value", "default", false);
+            assertEquals(sw.toString(), "value", "outWrite(value)");
+
+            sw.getBuffer().setLength(0);
+            Utils.outWrite(sw, "wan't", "default", true);
+            assertEquals(sw.toString(), "wan&#039;t", "outWrite(wan't)");
+
+            sw.getBuffer().setLength(0);
+            Utils.outWrite(sw, null, "1 & 1", true);
+            assertEquals(sw.toString(), "1 &amp; 1", "outWrite(1 & 1)");
+
+            sw.getBuffer().setLength(0);
+            Utils.outWrite(sw, "", "default", true);
+            assertEquals(sw.toString(), "", "outWrite()");
+        }
     }
 }

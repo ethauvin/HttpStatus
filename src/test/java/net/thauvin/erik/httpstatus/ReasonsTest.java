@@ -29,10 +29,10 @@
  * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
+
 package net.thauvin.erik.httpstatus;
 
 import org.testng.Assert;
-import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import java.util.ResourceBundle;
@@ -44,24 +44,13 @@ import java.util.ResourceBundle;
  * @created 2015-12-03
  * @since 1.0
  */
-@SuppressWarnings("unused")
 public class ReasonsTest {
-    @DataProvider(name = "reasons")
-    public Object[][] reasons() {
+    @Test
+    public void testGetReasonPhrase() {
         final ResourceBundle bundle = ResourceBundle.getBundle(Reasons.BUNDLE_BASENAME);
-        final Object[][] reasons = new String[bundle.keySet().size()][2];
-        int i = 0;
         for (final String key : bundle.keySet()) {
-            reasons[i][0] = key;
-            reasons[i][1] = bundle.getString(key);
-            i++;
+            Assert.assertEquals(bundle.getString(key), Reasons.getReasonPhrase(key), "getReasonPhrase(" + key + ')');
         }
-        return reasons;
-    }
 
-    @Test(dataProvider = "reasons")
-    public void testGetReasonPhrase(String code, String reason)
-            throws Exception {
-        Assert.assertEquals(reason, Reasons.getReasonPhrase(code));
     }
 }

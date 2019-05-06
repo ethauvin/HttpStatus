@@ -29,11 +29,11 @@
  * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
+
 package net.thauvin.erik.httpstatus.taglibs;
 
 import net.thauvin.erik.httpstatus.Utils;
 
-import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.JspWriter;
 import javax.servlet.jsp.PageContext;
 import java.io.IOException;
@@ -50,8 +50,7 @@ public class CauseTag extends XmlSupport {
      * {@inheritDoc}
      */
     @Override
-    public void doTag()
-            throws JspException, IOException {
+    public void doTag() throws IOException {
         final PageContext pageContext = (PageContext) getJspContext();
         final JspWriter out = pageContext.getOut();
 

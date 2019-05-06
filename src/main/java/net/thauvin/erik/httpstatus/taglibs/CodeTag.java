@@ -29,9 +29,9 @@
  * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
+
 package net.thauvin.erik.httpstatus.taglibs;
 
-import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.JspWriter;
 import javax.servlet.jsp.PageContext;
 import javax.servlet.jsp.tagext.SimpleTagSupport;
@@ -49,8 +49,7 @@ public class CodeTag extends SimpleTagSupport {
      * {@inheritDoc}
      */
     @Override
-    public void doTag()
-            throws JspException, IOException {
+    public void doTag() throws IOException {
         final PageContext pageContext = (PageContext) getJspContext();
         final JspWriter out = pageContext.getOut();
 

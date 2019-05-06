@@ -29,6 +29,7 @@
  * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
+
 package net.thauvin.erik.httpstatus.taglibs;
 
 import javax.servlet.jsp.tagext.SimpleTagSupport;
@@ -44,12 +45,12 @@ public abstract class XmlSupport extends SimpleTagSupport {
     /**
      * Default value string.
      */
-    protected String defaultValue;
+    String defaultValue;
 
     /**
      * Escape XML flag.
      */
-    protected boolean escapeXml = true;
+    boolean escapeXml = true;
 
     /**
      * Sets the default value.

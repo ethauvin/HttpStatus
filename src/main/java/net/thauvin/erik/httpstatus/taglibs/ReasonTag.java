@@ -29,12 +29,12 @@
  * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
+
 package net.thauvin.erik.httpstatus.taglibs;
 
 import net.thauvin.erik.httpstatus.Reasons;
 import net.thauvin.erik.httpstatus.Utils;
 
-import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.JspWriter;
 import javax.servlet.jsp.PageContext;
 import java.io.IOException;
@@ -54,8 +54,7 @@ public class ReasonTag extends XmlSupport {
      * {@inheritDoc}
      */
     @Override
-    public void doTag()
-            throws JspException, IOException {
+    public void doTag() {
         final PageContext pageContext = (PageContext) getJspContext();
         final JspWriter out = pageContext.getOut();
 
@@ -63,10 +62,8 @@ public class ReasonTag extends XmlSupport {
             if (statusCode >= 0) {
                 Utils.outWrite(out, Reasons.getReasonPhrase(statusCode), defaultValue, escapeXml);
             } else {
-                Utils.outWrite(out,
-                        Reasons.getReasonPhrase(pageContext.getErrorData().getStatusCode()),
-                        defaultValue,
-                        escapeXml);
+                Utils.outWrite(out, Reasons.getReasonPhrase(pageContext.getErrorData().getStatusCode()), defaultValue,
+                               escapeXml);
             }
         } catch (IOException ignore) {
             // Ignore.

@@ -29,6 +29,7 @@
  * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
+
 package net.thauvin.erik.httpstatus;
 
 import java.io.IOException;
@@ -48,8 +49,7 @@ public final class Utils {
      *
      * @throws UnsupportedOperationException If the constructor is called.
      */
-    private Utils()
-            throws UnsupportedOperationException {
+    private Utils() {
         throw new UnsupportedOperationException("Illegal constructor call.");
     }
 
@@ -100,7 +100,7 @@ public final class Utils {
      * @throws IOException If an I/O error occurs.
      */
     public static void outWrite(final Writer out, final String value, final String defaultValue, final boolean xml)
-            throws IOException {
+        throws IOException {
         if (xml) {
             if (value != null) {
                 out.write(escapeXml(value));

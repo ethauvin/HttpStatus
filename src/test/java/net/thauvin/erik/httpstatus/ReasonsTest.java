@@ -32,10 +32,11 @@
 
 package net.thauvin.erik.httpstatus;
 
-import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import java.util.ResourceBundle;
+
+import static org.testng.Assert.assertEquals;
 
 /**
  * The <code>ReasonsTest</code> class.
@@ -49,7 +50,9 @@ public class ReasonsTest {
     public void testGetReasonPhrase() {
         final ResourceBundle bundle = ResourceBundle.getBundle(Reasons.BUNDLE_BASENAME);
         for (final String key : bundle.keySet()) {
-            Assert.assertEquals(bundle.getString(key), Reasons.getReasonPhrase(key), "getReasonPhrase(" + key + ')');
+            assertEquals(bundle.getString(key), Reasons.getReasonPhrase(key), "getReasonPhrase(" + key + ')');
+            assertEquals(bundle.getString(key), Reasons.getReasonPhrase(Integer.parseInt(key)),
+                                "getReasonPhrase(int: " + key + ')');
         }
 
     }

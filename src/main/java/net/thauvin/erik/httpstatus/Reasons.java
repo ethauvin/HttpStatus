@@ -29,11 +29,12 @@
  * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
+
 package net.thauvin.erik.httpstatus;
 
 import java.util.Map;
 import java.util.ResourceBundle;
-import java.util.TreeMap;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Populates the {@link #REASON_PHRASES reason phrases} map from {@link #BUNDLE_BASENAME bundle properties}, and
@@ -43,16 +44,15 @@ import java.util.TreeMap;
  * @created 2015-12-02
  * @since 1.0
  */
-public class Reasons {
+public final class Reasons {
     /**
      * The resource bundle base name.
      */
-    public static final String BUNDLE_BASENAME = "net.thauvin.erik.httpstatus.reasons";
-
+    static final String BUNDLE_BASENAME = "net.thauvin.erik.httpstatus.reasons";
     /**
      * The reason phrases map.
      */
-    private static final Map<String, String> REASON_PHRASES = new TreeMap<String, String>();
+    private static final Map<String, String> REASON_PHRASES = new ConcurrentHashMap<>();
 
     // Initializes the reason phrases map.
     static {
@@ -60,6 +60,13 @@ public class Reasons {
         for (final String key : bundle.keySet()) {
             REASON_PHRASES.put(key, bundle.getString(key));
         }
+    }
+
+    /**
+     * Disables the default constructor.
+     */
+    private Reasons() {
+        throw new UnsupportedOperationException("Illegal constructor call.");
     }
 
     /**
@@ -78,6 +85,7 @@ public class Reasons {
      * @param statusCode The status code.
      * @return The reason phrase, or <code>null</code>.
      */
+    @SuppressWarnings({"WeakerAccess"})
     public static String getReasonPhrase(final String statusCode) {
         return REASON_PHRASES.get(statusCode);
     }
@@ -87,11 +95,12 @@ public class Reasons {
      *
      * @param args The command line arguments.
      */
+    @SuppressWarnings("PMD.SystemPrintln")
     public static void main(final String... args) {
         for (final Map.Entry<String, String> entry : REASON_PHRASES.entrySet()) {
             System.out.println(entry.getKey() + ": " + entry.getValue());
         }
 
-        System.out.println("Total: " + REASON_PHRASES.entrySet().size());
+        System.out.println("Total: " + REASON_PHRASES.size());
     }
 }

@@ -32,6 +32,7 @@
 
 package net.thauvin.erik.httpstatus;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import org.testng.annotations.Test;
 
 import java.io.IOException;
@@ -56,11 +57,20 @@ public class UtilsTest {
     }
 
     @SuppressWarnings("PMD.AvoidDuplicateLiterals")
+    @SuppressFBWarnings("CE_CLASS_ENVY")
     @Test
     public void testOutWrite() throws IOException {
         try (final StringWriter sw = new StringWriter()) {
             Utils.outWrite(sw, null, "default", false);
             assertEquals(sw.toString(), "default", "outWrite(default)");
+
+            sw.getBuffer().setLength(0);
+            Utils.outWrite(sw, "", "default", false);
+            assertEquals(sw.toString(), "", "outWrite(value empty)");
+
+            sw.getBuffer().setLength(0);
+            Utils.outWrite(sw, null, null, true);
+            assertEquals(sw.toString(), "", "outWrite(null)");
 
             sw.getBuffer().setLength(0);
             Utils.outWrite(sw, "value", "default", false);
@@ -76,7 +86,15 @@ public class UtilsTest {
 
             sw.getBuffer().setLength(0);
             Utils.outWrite(sw, "", "default", true);
-            assertEquals(sw.toString(), "", "outWrite()");
+            assertEquals(sw.toString(), "", "outWrite(value empty, xml)");
+
+            sw.getBuffer().setLength(0);
+            Utils.outWrite(sw, null, "", true);
+            assertEquals(sw.toString(), "", "outWrite(default empty)");
+
+            sw.getBuffer().setLength(0);
+            Utils.outWrite(sw, null, null, true);
+            assertEquals(sw.toString(), "", "outWrite(null, xml)");
         }
     }
 }

@@ -8,8 +8,6 @@
 
 A simple [JSP](http://www.oracle.com/technetwork/java/javaee/jsp/index.html) Tag Library to display the [code](#hscode), [reason](#hsreason) and/or [cause](#hscode) for [HTTP status codes](http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html) in JSP error pages.
 
-----
-
 For example:
 
 ```jsp
@@ -33,8 +31,6 @@ or
 would display on a [501 status code](http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.5.2):
 
     Not Implemented
-
-----
 
 ## hs:cause
 
@@ -152,14 +148,12 @@ Status Code | Reason
 `598`       | Network Read Timeout Error
 `599`       | Network Connect Timeout Error
 
-----
-
 ## Usage with [Gradle](https://gradle.org/) or [Maven](http://maven.apache.org/)
 Include the following in your `build.gradle` file:
 
 ```gradle
 dependencies {
-	compile 'net.thauvin.erik.httpstatus:httpstatus:1.0.4'
+    compile 'net.thauvin.erik.httpstatus:httpstatus:1.0.4'
 }
 ```
 
@@ -171,4 +165,34 @@ or as a Maven artifact:
     <artifactId>httpstatus</artifactId>
     <version>1.0.4</version>
 </dependency>
+```
+
+## Command Line Usage
+You can query the reason phrase for status code(s) as follows:
+
+```sh
+$ java -jar httpstatus-1.0.4.jar 404 500
+404: Not Found
+500: Internal Server Error
+```
+
+If no status code is specified, all status codes will be printed:
+
+```sh
+$ java -jar httpstatus-1.0.4.jar
+100: Continue
+101: Switching Protocols
+102: Processing
+103: Early Hints
+200: OK
+201: Created
+202: Accepted
+203: Non-Authoritative Information
+204: No Content
+205: Reset Content
+206: Partial Content
+207: Multi-Status
+208: Already Reported
+226: IM Used
+...
 ```

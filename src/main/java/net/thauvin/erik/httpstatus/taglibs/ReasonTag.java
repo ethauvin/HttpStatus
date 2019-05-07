@@ -48,7 +48,7 @@ import java.io.IOException;
  * @since 1.0
  */
 public class ReasonTag extends XmlSupport {
-    private int statusCode;
+    private int statusCode = -1;
 
     /**
      * {@inheritDoc}
@@ -59,7 +59,7 @@ public class ReasonTag extends XmlSupport {
         final JspWriter out = pageContext.getOut();
 
         try {
-            if (statusCode >= 0) {
+            if (statusCode > -1) {
                 Utils.outWrite(out, Reasons.getReasonPhrase(statusCode), defaultValue, escapeXml);
             } else {
                 Utils.outWrite(out, Reasons.getReasonPhrase(pageContext.getErrorData().getStatusCode()), defaultValue,

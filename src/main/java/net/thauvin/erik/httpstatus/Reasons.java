@@ -95,9 +95,9 @@ public final class Reasons {
     }
 
     /**
-     * Prints the status codes and reason phrases.
+     * Prints the reason phrase for the given status code(s).
      *
-     * @param args The command line arguments.
+     * @param args The status code(s), prints all if none.
      */
     @SuppressWarnings("PMD.SystemPrintln")
     @SuppressFBWarnings("MUI_CONTAINSKEY_BEFORE_GET")

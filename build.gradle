@@ -36,8 +36,8 @@ def pkgLabels = ['jsp', 'tag library', 'http', 'status code', 'java']
 group = 'net.thauvin.erik.httpstatus'
 
 mainClassName = 'net.thauvin.erik.httpstatus.Reasons'
-sourceCompatibility = 1.7
-targetCompatibility = 1.7
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
 [compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
 
 repositories {
@@ -60,13 +60,11 @@ dependencies {
 
 javadoc {
     title = mavenDescription + ' ' + version
+    options.source = 8
     options.tags = ['created']
     options.author = true
-    options.links('https://docs.oracle.com/javaee/7/api/', 'https://docs.oracle.com/javase/8/docs/api/')
-    //options.addStringOption('sourcepath', project.hasProperty('jdkSrc') ? jdkSrc : "$System.env.JAVA_HOME/src.zip")
-    if (JavaVersion.current().isJava8Compatible()) {
-        options.addStringOption('Xdoclint:none', '-quiet')
-    }
+    options.links('https://docs.oracle.com/javase/8/docs/api/')
+    options.addStringOption('Xdoclint:none', '-quiet')
 }
 
 compileJava {

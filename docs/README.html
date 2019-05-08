@@ -85,7 +85,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <a href="https://snyk.io/test/github/ethauvin/httpstatus?targetFile=build.gradle"><img src="https://snyk.io/test/github/ethauvin/httpstatus/badge.svg?targetFile=build.gradle" alt="Known Vulnerabilities" /></a> <a href="https://sonarcloud.io/dashboard?id=ethauvin_HttpStatus"><img src="https://sonarcloud.io/api/project_badges/measure?project=ethauvin_HttpStatus&amp;metric=alert_status" alt="Quality Gate Status" /></a><br />
 <a href="https://travis-ci.org/ethauvin/HttpStatus"><img src="https://travis-ci.org/ethauvin/HttpStatus.svg?branch=master" alt="Build Status" /></a> <a href="https://ci.appveyor.com/project/ethauvin/httpstatus"><img src="https://ci.appveyor.com/api/projects/status/w5j4kul3w2rkigxb?svg=true" alt="Build status" /></a> <a href="https://circleci.com/gh/ethauvin/HttpStatus/tree/master"><img src="https://circleci.com/gh/ethauvin/HttpStatus/tree/master.svg?style=shield" alt="CircleCI" /></a></p>
 <p>A simple <a href="http://www.oracle.com/technetwork/java/javaee/jsp/index.html">JSP</a> Tag Library to display the <a href="#hscode">code</a>, <a href="#hsreason">reason</a> and/or <a href="#hscode">cause</a> for <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html">HTTP status codes</a> in JSP error pages.</p>
-<hr />
 <p>For example:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode jsp"><code class="sourceCode jsp"><a class="sourceLine" id="cb1-1" title="1">&lt;%@ page<span class="ot"> isErrorPage</span>=<span class="st">&quot;true&quot;</span><span class="ot"> </span>%&gt;</a>
 <a class="sourceLine" id="cb1-2" title="2">&lt;%@ taglib<span class="ot"> prefix</span>=<span class="st">&quot;hs&quot;</span><span class="ot"> uri</span>=<span class="st">&quot;http://erik.thauvin.net/taglibs/httpstatus&quot;</span><span class="ot"> </span>%&gt;</a>
@@ -101,7 +100,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>would display on a <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.5.2">501 status code</a>:</p>
 <pre><code>Not Implemented
 </code></pre>
-<hr />
 <h2 id="hscause">hs:cause</h2>
 <p>The <code>&lt;hs:cause/&gt;</code> tag displays the cause of current HTTP status code, if any. A shorthand for:</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode jsp"><code class="sourceCode jsp"><a class="sourceLine" id="cb4-1" title="1">&lt;%= pageContext.getErrorData().getThrowable().getCause().getLocalizedMessage() %&gt;</a></code></pre></div>
@@ -478,7 +476,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </tr>
 </tbody>
 </table>
-<hr />
 <h2 id="usage-with-gradle-or-maven">Usage with <a href="https://gradle.org/">Gradle</a> or <a href="http://maven.apache.org/">Maven</a></h2>
 <p>Include the following in your <code>build.gradle</code> file:</p>
 <pre class="gradle"><code>dependencies {
@@ -491,5 +488,27 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <a class="sourceLine" id="cb7-3" title="3">    <span class="kw">&lt;artifactId&gt;</span>httpstatus<span class="kw">&lt;/artifactId&gt;</span></a>
 <a class="sourceLine" id="cb7-4" title="4">    <span class="kw">&lt;version&gt;</span>1.0.4<span class="kw">&lt;/version&gt;</span></a>
 <a class="sourceLine" id="cb7-5" title="5"><span class="kw">&lt;/dependency&gt;</span></a></code></pre></div>
+<h2 id="command-line-usage">Command Line Usage</h2>
+<p>You can query the reason phrase for status code(s) as follows:</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode sh"><code class="sourceCode bash"><a class="sourceLine" id="cb8-1" title="1">$ <span class="ex">java</span> -jar httpstatus-1.0.4.jar 404 500</a>
+<a class="sourceLine" id="cb8-2" title="2"><span class="ex">404</span>: Not Found</a>
+<a class="sourceLine" id="cb8-3" title="3"><span class="ex">500</span>: Internal Server Error</a></code></pre></div>
+<p>If no status code is specified, all status codes will be printed:</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode sh"><code class="sourceCode bash"><a class="sourceLine" id="cb9-1" title="1">$ <span class="ex">java</span> -jar httpstatus-1.0.4.jar</a>
+<a class="sourceLine" id="cb9-2" title="2"><span class="ex">100</span>: Continue</a>
+<a class="sourceLine" id="cb9-3" title="3"><span class="ex">101</span>: Switching Protocols</a>
+<a class="sourceLine" id="cb9-4" title="4"><span class="ex">102</span>: Processing</a>
+<a class="sourceLine" id="cb9-5" title="5"><span class="ex">103</span>: Early Hints</a>
+<a class="sourceLine" id="cb9-6" title="6"><span class="ex">200</span>: OK</a>
+<a class="sourceLine" id="cb9-7" title="7"><span class="ex">201</span>: Created</a>
+<a class="sourceLine" id="cb9-8" title="8"><span class="ex">202</span>: Accepted</a>
+<a class="sourceLine" id="cb9-9" title="9"><span class="ex">203</span>: Non-Authoritative Information</a>
+<a class="sourceLine" id="cb9-10" title="10"><span class="ex">204</span>: No Content</a>
+<a class="sourceLine" id="cb9-11" title="11"><span class="ex">205</span>: Reset Content</a>
+<a class="sourceLine" id="cb9-12" title="12"><span class="ex">206</span>: Partial Content</a>
+<a class="sourceLine" id="cb9-13" title="13"><span class="ex">207</span>: Multi-Status</a>
+<a class="sourceLine" id="cb9-14" title="14"><span class="ex">208</span>: Already Reported</a>
+<a class="sourceLine" id="cb9-15" title="15"><span class="ex">226</span>: IM Used</a>
+<a class="sourceLine" id="cb9-16" title="16"><span class="ex">...</span></a></code></pre></div>
 </body>
 </html>

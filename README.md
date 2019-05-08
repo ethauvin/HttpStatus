@@ -1,9 +1,8 @@
 #  HttpStatus JSP Tag Library
 
-[![release](https://img.shields.io/github/release/ethauvin/httpstatus.svg)](https://github.com/ethauvin/httpstatus/releases/latest) [![Maven Central](https://maven-badges.herokuapp.com/maven-central/net.thauvin.erik.httpstatus/httpstatus/badge.svg)](https://maven-badges.herokuapp.com/maven-central/net.thauvin.erik.httpstatus/httpstatus) [ ![Download](https://api.bintray.com/packages/ethauvin/maven/HttpStatus/images/download.svg) ](https://bintray.com/ethauvin/maven/HttpStatus/_latestVersion)  
+[![release](https://img.shields.io/github/release/ethauvin/httpstatus.svg)](https://github.com/ethauvin/httpstatus/releases/latest) [![Maven Central](https://maven-badges.herokuapp.com/maven-central/net.thauvin.erik.httpstatus/httpstatus/badge.svg)](https://maven-badges.herokuapp.com/maven-central/net.thauvin.erik.httpstatus/httpstatus) [![Download](https://api.bintray.com/packages/ethauvin/maven/HttpStatus/images/download.svg)](https://bintray.com/ethauvin/maven/HttpStatus/_latestVersion)  
 [![License (3-Clause BSD)](https://img.shields.io/badge/license-BSD%203--Clause-blue.svg?style=flat-square)](http://opensource.org/licenses/BSD-3-Clause) [![Known Vulnerabilities](https://snyk.io/test/github/ethauvin/httpstatus/badge.svg?targetFile=build.gradle)](https://snyk.io/test/github/ethauvin/httpstatus?targetFile=build.gradle) [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=ethauvin_HttpStatus&metric=alert_status)](https://sonarcloud.io/dashboard?id=ethauvin_HttpStatus)  
-[![Build Status](https://travis-ci.org/ethauvin/HttpStatus.svg?branch=master)](https://travis-ci.org/ethauvin/HttpStatus) 
-[![Build status](https://ci.appveyor.com/api/projects/status/w5j4kul3w2rkigxb?svg=true)](https://ci.appveyor.com/project/ethauvin/httpstatus) [![CircleCI](https://circleci.com/gh/ethauvin/HttpStatus/tree/master.svg?style=shield)](https://circleci.com/gh/ethauvin/HttpStatus/tree/master)
+[![Build Status](https://travis-ci.org/ethauvin/HttpStatus.svg?branch=master)](https://travis-ci.org/ethauvin/HttpStatus) [![Build status](https://ci.appveyor.com/api/projects/status/w5j4kul3w2rkigxb?svg=true)](https://ci.appveyor.com/project/ethauvin/httpstatus) [![CircleCI](https://circleci.com/gh/ethauvin/HttpStatus/tree/master.svg?style=shield)](https://circleci.com/gh/ethauvin/HttpStatus/tree/master)
 
 
 A simple [JSP](http://www.oracle.com/technetwork/java/javaee/jsp/index.html) Tag Library to display the [code](#hscode), [reason](#hsreason) and/or [cause](#hscode) for [HTTP status codes](http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html) in JSP error pages.
@@ -168,7 +167,7 @@ or as a Maven artifact:
 ```
 
 ## Command Line Usage
-You can query the reason phrase for status code(s) as follows:
+You can query the reason phrase for status codes as follows:
 
 ```sh
 $ java -jar httpstatus-1.0.4.jar 404 500
@@ -176,7 +175,7 @@ $ java -jar httpstatus-1.0.4.jar 404 500
 500: Internal Server Error
 ```
 
-If no status code is specified, all status codes will be printed:
+If no status code is specified, all will be printed:
 
 ```sh
 $ java -jar httpstatus-1.0.4.jar

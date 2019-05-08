@@ -2,7 +2,7 @@
 <!--
   ~ httpstatus.tld
   ~
-  ~ Copyright (c) 2015-2016, Erik C. Thauvin (erik@thauvin.net)
+  ~ Copyright (c) 2015-2019, Erik C. Thauvin (erik@thauvin.net)
   ~ All rights reserved.
   ~
   ~ Redistribution and use in source and binary forms, with or without
@@ -37,7 +37,7 @@
 
     <description>HttpStatus JSP Tag Library</description>
     <display-name>HttpStatus JSP Tags</display-name>
-    <tlib-version>1.0</tlib-version>
+    <tlib-version>1.0.4</tlib-version>
     <short-name>hs</short-name>
     <uri>http://erik.thauvin.net/taglibs/httpstatus</uri>
 
@@ -107,5 +107,4 @@
             <rtexprvalue>true</rtexprvalue>
         </attribute>
     </tag>
-
 </taglib>

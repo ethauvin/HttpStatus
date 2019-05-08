@@ -122,14 +122,18 @@ bintray {
         labels = pkgLabels
         publicDownloadNumbers = true
         version {
-            name = project.version
-            desc = 'Version ' + project.version
-            vcsTag = project.version
             gpg {
                 sign = true
             }
         }
     }
+}
+
+bintrayUpload {
+    versionName = "$project.version"
+    versionDesc = "$mavenName $project.version"
+    versionVcsTag = "$project.version"
+    versionReleased = new Date()
 }
 
 task javadocJar(type: Jar, dependsOn: javadoc) {

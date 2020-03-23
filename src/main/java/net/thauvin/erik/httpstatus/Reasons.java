@@ -1,7 +1,7 @@
 /*
  * Reasons.java
  *
- * Copyright (c) 2015-2016, Erik C. Thauvin (erik@thauvin.net)
+ * Copyright (c) 2015-2020, Erik C. Thauvin (erik@thauvin.net)
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -31,8 +31,6 @@
  */
 
 package net.thauvin.erik.httpstatus;
-
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 import java.util.Map;
 import java.util.ResourceBundle;
@@ -89,7 +87,7 @@ public final class Reasons {
      * @param statusCode The status code.
      * @return The reason phrase, or <code>null</code>.
      */
-    @SuppressWarnings({"WeakerAccess"})
+    @SuppressWarnings({ "WeakerAccess" })
     public static String getReasonPhrase(final String statusCode) {
         return REASON_PHRASES.get(statusCode);
     }
@@ -100,18 +98,21 @@ public final class Reasons {
      * @param args The status code(s), prints all if none.
      */
     @SuppressWarnings("PMD.SystemPrintln")
-    @SuppressFBWarnings("MUI_CONTAINSKEY_BEFORE_GET")
     public static void main(final String... args) {
         if (args.length >= 1) {
             for (final String key : args) {
-                if (REASON_PHRASES.containsKey(key)) {
-                    System.out.println(key + ": " + REASON_PHRASES.get(key));
+                final String value = REASON_PHRASES.get(key);
+                if (value != null) {
+                    System.out.println(key + ": " + value);
                 }
             }
         } else {
             final SortedSet<String> keys = new TreeSet<>(REASON_PHRASES.keySet());
             for (final String key : keys) {
-                System.out.println(key + ": " + REASON_PHRASES.get(key));
+                final String value = REASON_PHRASES.get(key);
+                if (value != null) {
+                    System.out.println(key + ": " + value);
+                }
             }
 
             System.out.println("Total: " + REASON_PHRASES.size());

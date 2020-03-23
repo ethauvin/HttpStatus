@@ -1,7 +1,7 @@
 /*
  * Utils.java
  *
- * Copyright (c) 2015-2016, Erik C. Thauvin (erik@thauvin.net)
+ * Copyright (c) 2015-2020, Erik C. Thauvin (erik@thauvin.net)
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -100,7 +100,7 @@ public final class Utils {
      * @throws IOException If an I/O error occurs.
      */
     public static void outWrite(final Writer out, final String value, final String defaultValue, final boolean xml)
-        throws IOException {
+            throws IOException {
         if (xml) {
             if (value != null) {
                 out.write(escapeXml(value));

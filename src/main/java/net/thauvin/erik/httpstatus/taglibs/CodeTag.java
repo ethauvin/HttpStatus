@@ -1,7 +1,7 @@
 /*
  * CodeTag.java
  *
- * Copyright (c) 2015-2016, Erik C. Thauvin (erik@thauvin.net)
+ * Copyright (c) 2015-2020, Erik C. Thauvin (erik@thauvin.net)
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -51,6 +51,7 @@ public class CodeTag extends SimpleTagSupport {
     @Override
     public void doTag() throws IOException {
         final PageContext pageContext = (PageContext) getJspContext();
+        @SuppressWarnings("PMD.CloseResource")
         final JspWriter out = pageContext.getOut();
 
         out.write(String.valueOf(pageContext.getErrorData().getStatusCode()));

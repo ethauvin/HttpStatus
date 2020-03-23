@@ -1,7 +1,7 @@
 /*
  * CauseTag.java
  *
- * Copyright (c) 2015-2016, Erik C. Thauvin (erik@thauvin.net)
+ * Copyright (c) 2015-2020, Erik C. Thauvin (erik@thauvin.net)
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -52,6 +52,7 @@ public class CauseTag extends XmlSupport {
     @Override
     public void doTag() throws IOException {
         final PageContext pageContext = (PageContext) getJspContext();
+        @SuppressWarnings("PMD.CloseResource")
         final JspWriter out = pageContext.getOut();
 
         String cause;
@@ -63,5 +64,7 @@ public class CauseTag extends XmlSupport {
         }
 
         Utils.outWrite(out, cause, defaultValue, escapeXml);
+
+
     }
 }

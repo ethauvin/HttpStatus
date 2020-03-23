@@ -1,7 +1,7 @@
 /*
- * TestMain.java
+ * ReasonsMainTest.java
  *
- * Copyright (c) 2015-2019, Erik C. Thauvin (erik@thauvin.net)
+ * Copyright (c) 2015-2020, Erik C. Thauvin (erik@thauvin.net)
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -49,7 +49,7 @@ import static org.testng.Assert.assertTrue;
  * @created 2019-05-06
  * @since 1.0
  */
-@SuppressFBWarnings({"DM_DEFAULT_ENCODING", "ITU_INAPPROPRIATE_TOSTRING_USE"})
+@SuppressFBWarnings({ "DM_DEFAULT_ENCODING", "ITU_INAPPROPRIATE_TOSTRING_USE" })
 public class ReasonsMainTest {
     private final PrintStream originalOut = System.out;
     private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();

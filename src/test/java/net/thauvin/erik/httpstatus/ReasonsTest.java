@@ -1,7 +1,7 @@
 /*
  * ReasonsTest.java
  *
- * Copyright (c) 2015-2016, Erik C. Thauvin (erik@thauvin.net)
+ * Copyright (c) 2015-2020, Erik C. Thauvin (erik@thauvin.net)
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -52,7 +52,7 @@ public class ReasonsTest {
         for (final String key : bundle.keySet()) {
             assertEquals(bundle.getString(key), Reasons.getReasonPhrase(key), "getReasonPhrase(" + key + ')');
             assertEquals(bundle.getString(key), Reasons.getReasonPhrase(Integer.parseInt(key)),
-                                "getReasonPhrase(int: " + key + ')');
+                         "getReasonPhrase(int: " + key + ')');
         }
 
     }

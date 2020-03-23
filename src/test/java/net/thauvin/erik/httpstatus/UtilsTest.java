@@ -1,7 +1,7 @@
 /*
  * UtilsTest.java
  *
- * Copyright (c) 2015-2016, Erik C. Thauvin (erik@thauvin.net)
+ * Copyright (c) 2015-2020, Erik C. Thauvin (erik@thauvin.net)
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -51,9 +51,10 @@ public class UtilsTest {
     @Test
     public void testEscapeXml() {
         assertEquals(Utils.escapeXml(
-            "This is a test. We wan't to make sure that everything is <encoded> according the \"encoding\" parameter "
-            + "& value."), "This is a test. We wan&#039;t to make sure that everything is &lt;encoded&gt; according "
-                           + "the &#034;encoding&#034; parameter &amp; value.");
+                "This is a test. We wan't to make sure that everything is <encoded> according the \"encoding\" "
+                + "parameter & value."),
+                     "This is a test. We wan&#039;t to make sure that everything is &lt;encoded&gt; according the "
+                     + "&#034;encoding&#034; parameter &amp; value.");
     }
 
     @SuppressWarnings("PMD.AvoidDuplicateLiterals")

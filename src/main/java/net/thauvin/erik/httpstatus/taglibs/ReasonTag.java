@@ -1,7 +1,7 @@
 /*
  * ReasonTag.java
  *
- * Copyright (c) 2015-2016, Erik C. Thauvin (erik@thauvin.net)
+ * Copyright (c) 2015-2020, Erik C. Thauvin (erik@thauvin.net)
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -56,6 +56,7 @@ public class ReasonTag extends XmlSupport {
     @Override
     public void doTag() {
         final PageContext pageContext = (PageContext) getJspContext();
+        @SuppressWarnings("PMD.CloseResource")
         final JspWriter out = pageContext.getOut();
 
         try {

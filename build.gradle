@@ -215,7 +215,7 @@ task deploy(dependsOn: ['clean', 'build', 'copyToDeploy']) {
     mustRunAfter clean
 }
 
-task release(dependsOn: ['wrapper', 'deploy', 'publishToMavenLocal']) {
+task release(dependsOn: ['wrapper', 'deploy', 'pandoc', 'publishToMavenLocal']) {
     group = 'Publishing'
     description = 'Releases new version.'
 }
@@ -238,6 +238,12 @@ task pandoc(type: Exec) {
     standardOutput = new ByteArrayOutputStream()
     ext.output = {
         return standardOutput.toString()
+    }
+}
+
+jacocoTestReport {
+    reports {
+        xml.enabled true
     }
 }
 

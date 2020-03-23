@@ -2,7 +2,7 @@
 
 [![release](https://img.shields.io/github/release/ethauvin/httpstatus.svg)](https://github.com/ethauvin/httpstatus/releases/latest) [![Maven Central](https://maven-badges.herokuapp.com/maven-central/net.thauvin.erik.httpstatus/httpstatus/badge.svg)](https://maven-badges.herokuapp.com/maven-central/net.thauvin.erik.httpstatus/httpstatus) [![Download](https://api.bintray.com/packages/ethauvin/maven/HttpStatus/images/download.svg)](https://bintray.com/ethauvin/maven/HttpStatus/_latestVersion)  
 [![License (3-Clause BSD)](https://img.shields.io/badge/license-BSD%203--Clause-blue.svg?style=flat-square)](http://opensource.org/licenses/BSD-3-Clause) [![Known Vulnerabilities](https://snyk.io/test/github/ethauvin/httpstatus/badge.svg?targetFile=build.gradle)](https://snyk.io/test/github/ethauvin/httpstatus?targetFile=build.gradle) [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=ethauvin_HttpStatus&metric=alert_status)](https://sonarcloud.io/dashboard?id=ethauvin_HttpStatus)  
-[![Build Status](https://travis-ci.org/ethauvin/HttpStatus.svg?branch=master)](https://travis-ci.org/ethauvin/HttpStatus) [![Build status](https://ci.appveyor.com/api/projects/status/w5j4kul3w2rkigxb?svg=true)](https://ci.appveyor.com/project/ethauvin/httpstatus) [![CircleCI](https://circleci.com/gh/ethauvin/HttpStatus/tree/master.svg?style=shield)](https://circleci.com/gh/ethauvin/HttpStatus/tree/master)
+[![Build Status](https://travis-ci.com/ethauvin/HttpStatus.svg?branch=master)](https://travis-ci.com/ethauvin/HttpStatus) [![Build status](https://ci.appveyor.com/api/projects/status/w5j4kul3w2rkigxb?svg=true)](https://ci.appveyor.com/project/ethauvin/httpstatus) [![CircleCI](https://circleci.com/gh/ethauvin/HttpStatus/tree/master.svg?style=shield)](https://circleci.com/gh/ethauvin/HttpStatus/tree/master)
 
 
 A simple [JSP](http://www.oracle.com/technetwork/java/javaee/jsp/index.html) Tag Library to display the [code](#hscode), [reason](#hsreason) and/or [cause](#hscode) for [HTTP status codes](http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html) in JSP error pages.
@@ -80,6 +80,7 @@ Status Code | Reason
 `206`       | Partial Content
 `207`       | Multi-Status
 `208`       | Already Reported
+`218`       | This is fine
 `226`       | IM Used
 `300`       | Multiple Choices
 `301`       | Moved Permanently
@@ -118,16 +119,19 @@ Status Code | Reason
 `426`       | Upgrade Required
 `428`       | Precondition Required
 `429`       | Too Many Requests
+`430`       | Request Header Fields Too Large
 `431`       | Request Header Fields Too Large
 `440`       | Login Timeout
 `444`       | No Response
 `449`       | Retry With
 `450`       | Blocked by Windows Parental Controls
 `451`       | Unavailable For Legal Reasons
+`460`       | Client Closed Connection Before Load Balancer Idle Timeout
+`463`       | X-Forwarded-For Header with More than 30 IP Addresses
 `494`       | Request Header Too Large
-`495`       | Cert Error
-`496`       | No Cert
-`497`       | HTTP to HTTPS
+`495`       | SSL Certificate Error
+`496`       | No SSL Certificate
+`497`       | HTTP Request Sent to HTTPS Port
 `498`       | Token Expired/Invalid
 `499`       | Client Closed Request
 `500`       | Internal Server Error
@@ -143,7 +147,15 @@ Status Code | Reason
 `510`       | Not Extended
 `511`       | Network Authentication Required
 `520`       | Unknown Error
+`521`       | Web Server Is Down
 `522`       | Origin Connection Time-out
+`523`       | Origin Is Unreachable
+`524`       | A Timeout Occurred
+`525`       | SSL Handshake Failed
+`526`       | Invalid SSL Certificate
+`527`       | Railgun Error
+`529`       | Site is overloaded
+`530`       | Site is frozen
 `598`       | Network Read Timeout Error
 `599`       | Network Connect Timeout Error
 
@@ -152,7 +164,7 @@ Include the following in your `build.gradle` file:
 
 ```gradle
 dependencies {
-    compile 'net.thauvin.erik.httpstatus:httpstatus:1.0.4'
+    implementation 'net.thauvin.erik.httpstatus:httpstatus:1.0.5'
 }
 ```
 
@@ -162,7 +174,7 @@ or as a Maven artifact:
 <dependency>
     <groupId>net.thauvin.erik.httpstatus</groupId>
     <artifactId>httpstatus</artifactId>
-    <version>1.0.4</version>
+    <version>1.0.5</version>
 </dependency>
 ```
 
@@ -170,7 +182,7 @@ or as a Maven artifact:
 You can query the reason phrase for status codes as follows:
 
 ```sh
-$ java -jar httpstatus-1.0.4.jar 404 500
+$ java -jar httpstatus-1.0.5.jar 404 500
 404: Not Found
 500: Internal Server Error
 ```
@@ -178,7 +190,7 @@ $ java -jar httpstatus-1.0.4.jar 404 500
 If no status code is specified, all will be printed:
 
 ```sh
-$ java -jar httpstatus-1.0.4.jar
+$ java -jar httpstatus-1.0.5.jar
 100: Continue
 101: Switching Protocols
 102: Processing

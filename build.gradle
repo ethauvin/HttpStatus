@@ -6,8 +6,8 @@ plugins {
     id 'application'
     id 'maven'
     id 'maven-publish'
+    id 'signing'
     id 'pmd'
-    id 'com.jfrog.bintray' version '1.8.5'
     id 'com.github.ben-manes.versions' version '0.38.0'
     id 'net.thauvin.erik.gradle.semver' version '1.0.4'
     id 'com.github.spotbugs' version '4.7.0'
@@ -46,7 +46,6 @@ ext {
 repositories {
     mavenLocal()
     mavenCentral()
-    jcenter()
 }
 
 dependencies {
@@ -71,15 +70,20 @@ tasks.withType(JavaCompile) {
 java {
     sourceCompatibility = JavaVersion.VERSION_1_8
     targetCompatibility = JavaVersion.VERSION_1_8
+    withJavadocJar()
+    withSourcesJar()
 }
 
 javadoc {
-    title = mavenDescription + ' ' + version
+    doFirst {
+        title = mavenDescription + ' ' + project.version
+    }
     options.source = 8
     options.tags = ['created']
     options.author = true
     options.links('https://docs.oracle.com/javase/8/docs/api/')
     options.addStringOption('Xdoclint:none', '-quiet')
+   
 }
 
 jar {
@@ -115,61 +119,10 @@ tasks.withType(Checkstyle) {
     }
 }
 
-bintray {
-    user = project.hasProperty('bintrayUser') ? project.property('bintrayUser') : System.getenv('BINTRAY_USER')
-    key = project.hasProperty('bintrayApiKey') ? project.property('bintrayApiKey') : System.getenv('BINTRAY_API_KEY')
-    publications = ['MyPublication']
-    dryRun = false
-    pkg {
-        repo = 'maven'
-        name = mavenName
-        licenses = pkgLicenses
-        desc = mavenDescription
-        websiteUrl = mavenUrl
-        issueTrackerUrl = pkgIssueTrackerUrl
-        vcsUrl = mavenScmCon
-        labels = pkgLabels
-        publicDownloadNumbers = true
-        version {
-            gpg {
-                sign = true
-            }
-        }
-    }
-}
-
-bintrayUpload {
-    versionName = "$project.version"
-    versionDesc = "$mavenName $project.version"
-    versionVcsTag = "$project.version"
-    versionReleased = new Date()
-}
-
-task javadocJar(type: Jar, dependsOn: javadoc) {
-    group = 'Build'
-    description = 'Builds an archive of the javadoc docs.'
-    archiveClassifier = 'javadoc'
-    from javadoc.destinationDir
-}
-
-task sourcesJar(type: Jar) {
-    group = 'Build'
-    description = 'Builds an archive of the source code.'
-    archiveClassifier = 'sources'
-    from sourceSets.main.allSource
-}
-
-artifacts {
-    archives javadocJar
-    archives sourcesJar
-}
-
 publishing {
     publications {
-        MyPublication(MavenPublication) {
+        mavenJava(MavenPublication) {
             from components.java
-            artifact sourcesJar
-            artifact javadocJar
             groupId project.group
             artifactId rootProject.name
 
@@ -189,6 +142,7 @@ publishing {
                         id = 'ethauvin'
                         name = 'Erik C. Thauvin'
                         email = 'erik@thauvin.net'
+                        url = 'https://erik.thauvin.net/'
                     }
                 }
                 scm {
@@ -198,6 +152,20 @@ publishing {
                 }
             }
         }
+    }
+}
+
+uploadArchives {
+    repositories.mavenDeployer {
+        repository(url: "https://oss.sonatype.org/service/local/staging/deploy/maven2/") {
+            authentication(userName: ossrhUsername, password: ossrhPassword)
+        }
+    }
+}
+
+signing {
+    if (project.hasProperty('signing.keyId') && project.hasProperty('signing.password') && project.hasProperty('signing.secretKeyRingFile')) {
+        sign publishing.publications.mavenJava
     }
 }
 

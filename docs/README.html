@@ -5,13 +5,13 @@
   <meta name="generator" content="pandoc" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
   <title>HttpStatus JSP Tag Library</title>
-  <style>
+  <style type="text/css">
       code{white-space: pre-wrap;}
       span.smallcaps{font-variant: small-caps;}
       span.underline{text-decoration: underline;}
       div.column{display: inline-block; vertical-align: top; width: 50%;}
   </style>
-  <style>
+  <style type="text/css">
 a.sourceLine { display: inline-block; line-height: 1.25; }
 a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
 a.sourceLine:empty { height: 1.2em; }
@@ -75,15 +75,12 @@ code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
   </style>
   <link rel="stylesheet" href="github-pandoc.css" />
-  <!--[if lt IE 9]>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
-  <![endif]-->
 </head>
 <body>
 <h1 id="httpstatus-jsp-tag-library">HttpStatus JSP Tag Library</h1>
 <p><a href="https://github.com/ethauvin/httpstatus/releases/latest"><img src="https://img.shields.io/github/release/ethauvin/httpstatus.svg" alt="release" /></a> <a href="https://maven-badges.herokuapp.com/maven-central/net.thauvin.erik.httpstatus/httpstatus"><img src="https://maven-badges.herokuapp.com/maven-central/net.thauvin.erik.httpstatus/httpstatus/badge.svg" alt="Maven Central" /></a> <a href="https://bintray.com/ethauvin/maven/HttpStatus/_latestVersion"><img src="https://api.bintray.com/packages/ethauvin/maven/HttpStatus/images/download.svg" alt="Download" /></a><br />
 <a href="http://opensource.org/licenses/BSD-3-Clause"><img src="https://img.shields.io/badge/license-BSD%203--Clause-blue.svg?style=flat-square" alt="License (3-Clause BSD)" /></a> <a href="https://snyk.io/test/github/ethauvin/httpstatus?targetFile=build.gradle"><img src="https://snyk.io/test/github/ethauvin/httpstatus/badge.svg?targetFile=build.gradle" alt="Known Vulnerabilities" /></a> <a href="https://sonarcloud.io/dashboard?id=ethauvin_HttpStatus"><img src="https://sonarcloud.io/api/project_badges/measure?project=ethauvin_HttpStatus&amp;metric=alert_status" alt="Quality Gate Status" /></a><br />
-<a href="https://travis-ci.org/ethauvin/HttpStatus"><img src="https://travis-ci.org/ethauvin/HttpStatus.svg?branch=master" alt="Build Status" /></a> <a href="https://ci.appveyor.com/project/ethauvin/httpstatus"><img src="https://ci.appveyor.com/api/projects/status/w5j4kul3w2rkigxb?svg=true" alt="Build status" /></a> <a href="https://circleci.com/gh/ethauvin/HttpStatus/tree/master"><img src="https://circleci.com/gh/ethauvin/HttpStatus/tree/master.svg?style=shield" alt="CircleCI" /></a></p>
+<a href="https://travis-ci.com/ethauvin/HttpStatus"><img src="https://travis-ci.com/ethauvin/HttpStatus.svg?branch=master" alt="Build Status" /></a> <a href="https://ci.appveyor.com/project/ethauvin/httpstatus"><img src="https://ci.appveyor.com/api/projects/status/w5j4kul3w2rkigxb?svg=true" alt="Build status" /></a> <a href="https://circleci.com/gh/ethauvin/HttpStatus/tree/master"><img src="https://circleci.com/gh/ethauvin/HttpStatus/tree/master.svg?style=shield" alt="CircleCI" /></a></p>
 <p>A simple <a href="http://www.oracle.com/technetwork/java/javaee/jsp/index.html">JSP</a> Tag Library to display the <a href="#hscode">code</a>, <a href="#hsreason">reason</a> and/or <a href="#hscode">cause</a> for <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html">HTTP status codes</a> in JSP error pages.</p>
 <p>For example:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode jsp"><code class="sourceCode jsp"><a class="sourceLine" id="cb1-1" title="1">&lt;%@ page<span class="ot"> isErrorPage</span>=<span class="st">&quot;true&quot;</span><span class="ot"> </span>%&gt;</a>
@@ -125,6 +122,28 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h2 id="hscode">hs:code</h2>
 <p>The <code>&lt;hs:code/&gt;</code> tag displays the current HTTP status code, if any. A shorthand for:</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode jsp"><code class="sourceCode jsp"><a class="sourceLine" id="cb5-1" title="1">&lt;%= pageContext.getErrorData().getStatusCode() %&gt;</a></code></pre></div>
+<h2 id="hsmessage">hs:message</h2>
+<p>The <code>&lt;hs:message/&gt;</code> tag displays the cause of current error message, if any. A shorthand for:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode jsp"><code class="sourceCode jsp"><a class="sourceLine" id="cb6-1" title="1">&lt;%= request.getAttribute(<span class="st">&quot;javax.servlet.error.message&quot;</span>) %&gt;</a></code></pre></div>
+<p>Optional attributes are:</p>
+<table>
+<thead>
+<tr class="header">
+<th>Attribute</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>default</code></td>
+<td>The fallback value to output, if no error message is available.</td>
+</tr>
+<tr class="even">
+<td><code>escapeXml</code></td>
+<td>Converts &lt;, &gt;, &amp;, ', " to their corresponding <a href="http://dev.w3.org/html5/html-author/charref">entity codes</a>. Value is <code>true</code> by default.</td>
+</tr>
+</tbody>
+</table>
 <h2 id="hsreason">hs:reason</h2>
 <p>The <code>&lt;hs:reason/&gt;</code> tag displays the reason for a HTTP status code, if any. Optional attributes are:</p>
 <table>
@@ -211,156 +230,164 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <td>Already Reported</td>
 </tr>
 <tr class="even">
+<td><code>218</code></td>
+<td>This is fine</td>
+</tr>
+<tr class="odd">
 <td><code>226</code></td>
 <td>IM Used</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td><code>300</code></td>
 <td>Multiple Choices</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td><code>301</code></td>
 <td>Moved Permanently</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td><code>302</code></td>
 <td>Found/Moved Temporarily</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td><code>303</code></td>
 <td>See Other</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td><code>304</code></td>
 <td>Not Modified</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td><code>305</code></td>
 <td>Use Proxy</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td><code>306</code></td>
 <td>Switch Proxy</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td><code>307</code></td>
 <td>Temporary Redirect</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td><code>308</code></td>
 <td>Permanent Redirect</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td><code>400</code></td>
 <td>Bad Request</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td><code>401</code></td>
 <td>Unauthorized</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td><code>402</code></td>
 <td>Payment Required</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td><code>403</code></td>
 <td>Forbidden</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td><code>404</code></td>
 <td>Not Found</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td><code>405</code></td>
 <td>Method Not Allowed</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td><code>406</code></td>
 <td>Not Acceptable</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td><code>407</code></td>
 <td>Proxy Authentication Required</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td><code>408</code></td>
 <td>Request Timeout</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td><code>409</code></td>
 <td>Conflict</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td><code>410</code></td>
 <td>Gone</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td><code>411</code></td>
 <td>Length Required</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td><code>412</code></td>
 <td>Precondition Failed</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td><code>413</code></td>
 <td>Request Entity/Payload Too Large</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td><code>414</code></td>
 <td>Request-URI Too Long</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td><code>415</code></td>
 <td>Unsupported Media Type</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td><code>416</code></td>
 <td>Requested Range Not Satisfiable</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td><code>417</code></td>
 <td>Expectation Failed</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td><code>418</code></td>
 <td>I'm A Teapot</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td><code>419</code></td>
 <td>Insufficient Space on Resource</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td><code>420</code></td>
 <td>Method Failure</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td><code>421</code></td>
 <td>Misdirected Request</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td><code>422</code></td>
 <td>Unprocessable Entity</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td><code>423</code></td>
 <td>Locked</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td><code>424</code></td>
 <td>Failed Dependency</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td><code>426</code></td>
 <td>Upgrade Required</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td><code>428</code></td>
 <td>Precondition Required</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td><code>429</code></td>
 <td>Too Many Requests</td>
+</tr>
+<tr class="odd">
+<td><code>430</code></td>
+<td>Request Header Fields Too Large</td>
 </tr>
 <tr class="even">
 <td><code>431</code></td>
@@ -387,20 +414,28 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <td>Unavailable For Legal Reasons</td>
 </tr>
 <tr class="even">
+<td><code>460</code></td>
+<td>Client Closed Connection Before Load Balancer Idle Timeout</td>
+</tr>
+<tr class="odd">
+<td><code>463</code></td>
+<td>X-Forwarded-For Header with More than 30 IP Addresses</td>
+</tr>
+<tr class="even">
 <td><code>494</code></td>
 <td>Request Header Too Large</td>
 </tr>
 <tr class="odd">
 <td><code>495</code></td>
-<td>Cert Error</td>
+<td>SSL Certificate Error</td>
 </tr>
 <tr class="even">
 <td><code>496</code></td>
-<td>No Cert</td>
+<td>No SSL Certificate</td>
 </tr>
 <tr class="odd">
 <td><code>497</code></td>
-<td>HTTP to HTTPS</td>
+<td>HTTP Request Sent to HTTPS Port</td>
 </tr>
 <tr class="even">
 <td><code>498</code></td>
@@ -463,8 +498,40 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <td>Unknown Error</td>
 </tr>
 <tr class="odd">
+<td><code>521</code></td>
+<td>Web Server Is Down</td>
+</tr>
+<tr class="even">
 <td><code>522</code></td>
 <td>Origin Connection Time-out</td>
+</tr>
+<tr class="odd">
+<td><code>523</code></td>
+<td>Origin Is Unreachable</td>
+</tr>
+<tr class="even">
+<td><code>524</code></td>
+<td>A Timeout Occurred</td>
+</tr>
+<tr class="odd">
+<td><code>525</code></td>
+<td>SSL Handshake Failed</td>
+</tr>
+<tr class="even">
+<td><code>526</code></td>
+<td>Invalid SSL Certificate</td>
+</tr>
+<tr class="odd">
+<td><code>527</code></td>
+<td>Railgun Error</td>
+</tr>
+<tr class="even">
+<td><code>529</code></td>
+<td>Site is overloaded</td>
+</tr>
+<tr class="odd">
+<td><code>530</code></td>
+<td>Site is frozen</td>
 </tr>
 <tr class="even">
 <td><code>598</code></td>
@@ -479,36 +546,36 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h2 id="usage-with-gradle-or-maven">Usage with <a href="https://gradle.org/">Gradle</a> or <a href="http://maven.apache.org/">Maven</a></h2>
 <p>Include the following in your <code>build.gradle</code> file:</p>
 <pre class="gradle"><code>dependencies {
-    compile &#39;net.thauvin.erik.httpstatus:httpstatus:1.0.4&#39;
+    implementation &#39;net.thauvin.erik.httpstatus:httpstatus:1.0.5&#39;
 }
 </code></pre>
 <p>or as a Maven artifact:</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode xml"><code class="sourceCode xml"><a class="sourceLine" id="cb7-1" title="1"><span class="kw">&lt;dependency&gt;</span></a>
-<a class="sourceLine" id="cb7-2" title="2">    <span class="kw">&lt;groupId&gt;</span>net.thauvin.erik.httpstatus<span class="kw">&lt;/groupId&gt;</span></a>
-<a class="sourceLine" id="cb7-3" title="3">    <span class="kw">&lt;artifactId&gt;</span>httpstatus<span class="kw">&lt;/artifactId&gt;</span></a>
-<a class="sourceLine" id="cb7-4" title="4">    <span class="kw">&lt;version&gt;</span>1.0.4<span class="kw">&lt;/version&gt;</span></a>
-<a class="sourceLine" id="cb7-5" title="5"><span class="kw">&lt;/dependency&gt;</span></a></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode xml"><code class="sourceCode xml"><a class="sourceLine" id="cb8-1" title="1"><span class="kw">&lt;dependency&gt;</span></a>
+<a class="sourceLine" id="cb8-2" title="2">    <span class="kw">&lt;groupId&gt;</span>net.thauvin.erik.httpstatus<span class="kw">&lt;/groupId&gt;</span></a>
+<a class="sourceLine" id="cb8-3" title="3">    <span class="kw">&lt;artifactId&gt;</span>httpstatus<span class="kw">&lt;/artifactId&gt;</span></a>
+<a class="sourceLine" id="cb8-4" title="4">    <span class="kw">&lt;version&gt;</span>1.0.5<span class="kw">&lt;/version&gt;</span></a>
+<a class="sourceLine" id="cb8-5" title="5"><span class="kw">&lt;/dependency&gt;</span></a></code></pre></div>
 <h2 id="command-line-usage">Command Line Usage</h2>
 <p>You can query the reason phrase for status codes as follows:</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode sh"><code class="sourceCode bash"><a class="sourceLine" id="cb8-1" title="1">$ <span class="ex">java</span> -jar httpstatus-1.0.4.jar 404 500</a>
-<a class="sourceLine" id="cb8-2" title="2"><span class="ex">404</span>: Not Found</a>
-<a class="sourceLine" id="cb8-3" title="3"><span class="ex">500</span>: Internal Server Error</a></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode sh"><code class="sourceCode bash"><a class="sourceLine" id="cb9-1" title="1">$ <span class="ex">java</span> -jar httpstatus-1.0.5.jar 404 500</a>
+<a class="sourceLine" id="cb9-2" title="2"><span class="ex">404</span>: Not Found</a>
+<a class="sourceLine" id="cb9-3" title="3"><span class="ex">500</span>: Internal Server Error</a></code></pre></div>
 <p>If no status code is specified, all will be printed:</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode sh"><code class="sourceCode bash"><a class="sourceLine" id="cb9-1" title="1">$ <span class="ex">java</span> -jar httpstatus-1.0.4.jar</a>
-<a class="sourceLine" id="cb9-2" title="2"><span class="ex">100</span>: Continue</a>
-<a class="sourceLine" id="cb9-3" title="3"><span class="ex">101</span>: Switching Protocols</a>
-<a class="sourceLine" id="cb9-4" title="4"><span class="ex">102</span>: Processing</a>
-<a class="sourceLine" id="cb9-5" title="5"><span class="ex">103</span>: Early Hints</a>
-<a class="sourceLine" id="cb9-6" title="6"><span class="ex">200</span>: OK</a>
-<a class="sourceLine" id="cb9-7" title="7"><span class="ex">201</span>: Created</a>
-<a class="sourceLine" id="cb9-8" title="8"><span class="ex">202</span>: Accepted</a>
-<a class="sourceLine" id="cb9-9" title="9"><span class="ex">203</span>: Non-Authoritative Information</a>
-<a class="sourceLine" id="cb9-10" title="10"><span class="ex">204</span>: No Content</a>
-<a class="sourceLine" id="cb9-11" title="11"><span class="ex">205</span>: Reset Content</a>
-<a class="sourceLine" id="cb9-12" title="12"><span class="ex">206</span>: Partial Content</a>
-<a class="sourceLine" id="cb9-13" title="13"><span class="ex">207</span>: Multi-Status</a>
-<a class="sourceLine" id="cb9-14" title="14"><span class="ex">208</span>: Already Reported</a>
-<a class="sourceLine" id="cb9-15" title="15"><span class="ex">226</span>: IM Used</a>
-<a class="sourceLine" id="cb9-16" title="16"><span class="ex">...</span></a></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode sh"><code class="sourceCode bash"><a class="sourceLine" id="cb10-1" title="1">$ <span class="ex">java</span> -jar httpstatus-1.0.5.jar</a>
+<a class="sourceLine" id="cb10-2" title="2"><span class="ex">100</span>: Continue</a>
+<a class="sourceLine" id="cb10-3" title="3"><span class="ex">101</span>: Switching Protocols</a>
+<a class="sourceLine" id="cb10-4" title="4"><span class="ex">102</span>: Processing</a>
+<a class="sourceLine" id="cb10-5" title="5"><span class="ex">103</span>: Early Hints</a>
+<a class="sourceLine" id="cb10-6" title="6"><span class="ex">200</span>: OK</a>
+<a class="sourceLine" id="cb10-7" title="7"><span class="ex">201</span>: Created</a>
+<a class="sourceLine" id="cb10-8" title="8"><span class="ex">202</span>: Accepted</a>
+<a class="sourceLine" id="cb10-9" title="9"><span class="ex">203</span>: Non-Authoritative Information</a>
+<a class="sourceLine" id="cb10-10" title="10"><span class="ex">204</span>: No Content</a>
+<a class="sourceLine" id="cb10-11" title="11"><span class="ex">205</span>: Reset Content</a>
+<a class="sourceLine" id="cb10-12" title="12"><span class="ex">206</span>: Partial Content</a>
+<a class="sourceLine" id="cb10-13" title="13"><span class="ex">207</span>: Multi-Status</a>
+<a class="sourceLine" id="cb10-14" title="14"><span class="ex">208</span>: Already Reported</a>
+<a class="sourceLine" id="cb10-15" title="15"><span class="ex">226</span>: IM Used</a>
+<a class="sourceLine" id="cb10-16" title="16"><span class="ex">...</span></a></code></pre></div>
 </body>
 </html>

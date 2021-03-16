@@ -37,7 +37,7 @@
 
     <description>HttpStatus JSP Tag Library</description>
     <display-name>HttpStatus JSP Tags</display-name>
-    <tlib-version>1.0.4</tlib-version>
+    <tlib-version>1.0.5</tlib-version>
     <short-name>hs</short-name>
     <uri>http://erik.thauvin.net/taglibs/httpstatus</uri>
 
@@ -73,6 +73,31 @@
         <name>code</name>
         <tag-class>net.thauvin.erik.httpstatus.taglibs.CodeTag</tag-class>
         <body-content>empty</body-content>
+    </tag>
+
+    <tag>
+        <description>
+            Returns the message (if any) for the current error.
+        </description>
+        <name>message</name>
+        <tag-class>net.thauvin.erik.httpstatus.taglibs.MessageTag</tag-class>
+        <body-content>empty</body-content>
+        <attribute>
+            <description>
+                Default value if the resulting error message is null.
+            </description>
+            <name>default</name>
+            <required>false</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
+            <description>
+                Converts &lt;, &gt; ,&amp; ,' ," to their corresponding entity codes. Value is true by default.
+            </description>
+            <name>escapeXml</name>
+            <required>false</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
     </tag>
 
     <tag>

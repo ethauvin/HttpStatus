@@ -53,6 +53,21 @@ The `<hs:code/>` tag displays the current HTTP status code, if any. A shorthand 
 <%= pageContext.getErrorData().getStatusCode() %>
 ```
 
+## hs:message
+
+The `<hs:message/>` tag displays the cause of current error message, if any. A shorthand for:
+
+```jsp
+<%= request.getAttribute("javax.servlet.error.message") %>
+```
+
+Optional attributes are:
+
+Attribute   | Description
+----------- | -------------------------------------------------------------------------------------------
+`default`   | The fallback value to output, if no error message is available.
+`escapeXml` | Converts &lt;, &gt;, &amp;, ', " to their corresponding [entity codes](http://dev.w3.org/html5/html-author/charref). Value is `true` by default.
+
 ## hs:reason
 
 The `<hs:reason/>` tag displays the reason for a HTTP status code, if any. Optional attributes are:

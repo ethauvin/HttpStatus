@@ -34,12 +34,14 @@ package net.thauvin.erik.httpstatus;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import org.testng.annotations.AfterTest;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 
+import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 
 /**
@@ -55,7 +57,7 @@ public class ReasonsMainTest {
     private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
 
     @AfterTest
-    public void restoreStreams() {
+    public void restoreStreams() { 
         System.setOut(originalOut);
     }
 
@@ -64,15 +66,36 @@ public class ReasonsMainTest {
         System.setOut(new PrintStream(outContent));
     }
 
+    @BeforeMethod
+    public void resetStreams() {
+        outContent.reset();
+    }
+
     @Test
     public void testMain() {
         Reasons.main("401");
-        assertTrue(outContent.toString().contains(Reasons.getReasonPhrase("401")));
+        assertTrue(outContent.toString().contains(Reasons.getReasonPhrase("401")), "401");
+        assertFalse(outContent.toString().contains("500"), "401 no 500");
     }
 
     @Test
     public void testMainAll() {
         Reasons.main();
-        assertTrue(outContent.toString().contains(Reasons.getReasonPhrase(401)));
+        assertTrue(outContent.toString().contains(Reasons.getReasonPhrase(301)), "301");
+        assertTrue(outContent.toString().contains(Reasons.getReasonPhrase(404)), "404");
+    }
+
+    @Test
+    public void testMainArgs() {
+        Reasons.main("500", "302");
+        assertTrue(outContent.toString().contains(Reasons.getReasonPhrase("500")), "500 (302)");
+        assertTrue(outContent.toString().contains(Reasons.getReasonPhrase("302")), "(500) 302");
+        assertFalse(outContent.toString().contains("404"), "500/302 not 404");
+    }
+
+    @Test
+    public void testMainInvalid() {
+        Reasons.main("aaa");
+        assertTrue(outContent.toString().isEmpty(), "invalid argument: aaa");
     }
 }

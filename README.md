@@ -55,7 +55,7 @@ The `<hs:code/>` tag displays the current HTTP status code, if any. A shorthand 
 
 ## hs:message
 
-The `<hs:message/>` tag displays the cause of current error message, if any. A shorthand for:
+The `<hs:message/>` tag displays the current error message, if any. A shorthand for:
 
 ```jsp
 <%= request.getAttribute("javax.servlet.error.message") %>

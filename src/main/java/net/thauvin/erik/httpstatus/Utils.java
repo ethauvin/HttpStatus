@@ -101,18 +101,10 @@ public final class Utils {
      */
     public static void outWrite(final Writer out, final String value, final String defaultValue, final boolean xml)
             throws IOException {
-        if (xml) {
-            if (value != null) {
-                out.write(escapeXml(value));
-            } else if (defaultValue != null) {
-                out.write(escapeXml(defaultValue));
-            }
-        } else {
-            if (value != null) {
-                out.write(value);
-            } else if (defaultValue != null) {
-                out.write(defaultValue);
-            }
+        if (value != null) {
+            out.write(xml ? escapeXml(value) : value);
+        } else if (defaultValue != null) {
+            out.write(xml ? escapeXml(defaultValue) : defaultValue);
         }
     }
 }

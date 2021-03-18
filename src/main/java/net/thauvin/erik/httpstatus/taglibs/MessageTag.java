@@ -52,8 +52,7 @@ public class MessageTag extends XmlSupport {
     @Override
     public void doTag() throws IOException {
         final PageContext pageContext = (PageContext) getJspContext();
-        @SuppressWarnings("PMD.CloseResource")
-        final JspWriter out = pageContext.getOut();
+        @SuppressWarnings("PMD.CloseResource") final JspWriter out = pageContext.getOut();
 
         final String message = (String) pageContext.getRequest().getAttribute(
                 javax.servlet.RequestDispatcher.ERROR_MESSAGE);

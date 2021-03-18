@@ -52,7 +52,7 @@ public class ReasonsTest {
         for (final String key : bundle.keySet()) {
             assertEquals(bundle.getString(key), Reasons.getReasonPhrase(key), "getReasonPhrase(" + key + ')');
             assertEquals(bundle.getString(key), Reasons.getReasonPhrase(Integer.parseInt(key)),
-                         "getReasonPhrase(int: " + key + ')');
+                    "getReasonPhrase(int: " + key + ')');
         }
 
     }

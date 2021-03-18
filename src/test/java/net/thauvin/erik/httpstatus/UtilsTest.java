@@ -52,9 +52,9 @@ public class UtilsTest {
     public void testEscapeXml() {
         assertEquals(Utils.escapeXml(
                 "This is a test. We wan't to make sure that everything is <encoded> according the \"encoding\" "
-                + "parameter & value."),
-                     "This is a test. We wan&#039;t to make sure that everything is &lt;encoded&gt; according the "
-                     + "&#034;encoding&#034; parameter &amp; value.");
+                        + "parameter & value."),
+                "This is a test. We wan&#039;t to make sure that everything is &lt;encoded&gt; according the "
+                        + "&#034;encoding&#034; parameter &amp; value.");
     }
 
     @SuppressWarnings("PMD.AvoidDuplicateLiterals")

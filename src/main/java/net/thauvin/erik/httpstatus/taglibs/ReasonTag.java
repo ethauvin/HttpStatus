@@ -56,15 +56,14 @@ public class ReasonTag extends XmlSupport {
     @Override
     public void doTag() {
         final PageContext pageContext = (PageContext) getJspContext();
-        @SuppressWarnings("PMD.CloseResource")
-        final JspWriter out = pageContext.getOut();
+        @SuppressWarnings("PMD.CloseResource") final JspWriter out = pageContext.getOut();
 
         try {
             if (statusCode > -1) {
                 Utils.outWrite(out, Reasons.getReasonPhrase(statusCode), defaultValue, escapeXml);
             } else {
                 Utils.outWrite(out, Reasons.getReasonPhrase(pageContext.getErrorData().getStatusCode()), defaultValue,
-                               escapeXml);
+                        escapeXml);
             }
         } catch (IOException ignore) {
             // Ignore.

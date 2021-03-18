@@ -87,7 +87,7 @@ public final class Reasons {
      * @param statusCode The status code.
      * @return The reason phrase, or <code>null</code>.
      */
-    @SuppressWarnings({ "WeakerAccess" })
+    @SuppressWarnings({"WeakerAccess"})
     public static String getReasonPhrase(final String statusCode) {
         return REASON_PHRASES.get(statusCode);
     }

@@ -118,6 +118,10 @@ tasks.withType(Checkstyle) {
     }
 }
 
+artifacts {
+	archives javadocJar, sourcesJar
+}
+
 publishing {
     publications {
         mavenJava(MavenPublication) {

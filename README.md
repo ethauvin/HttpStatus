@@ -5,7 +5,7 @@
 [![Build Status](https://travis-ci.com/ethauvin/HttpStatus.svg?branch=master)](https://travis-ci.com/ethauvin/HttpStatus) [![Build status](https://ci.appveyor.com/api/projects/status/w5j4kul3w2rkigxb?svg=true)](https://ci.appveyor.com/project/ethauvin/httpstatus) [![CircleCI](https://circleci.com/gh/ethauvin/HttpStatus/tree/master.svg?style=shield)](https://circleci.com/gh/ethauvin/HttpStatus/tree/master)
 
 
-A simple [JSP](http://www.oracle.com/technetwork/java/javaee/jsp/index.html) Tag Library to display the [code](#hscode), [reason](#hsreason) and/or [cause](#hscode) for [HTTP status codes](http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html) in JSP error pages.
+A simple [JSP](http://www.oracle.com/technetwork/java/javaee/jsp/index.html) Tag Library to display the [code](#hscode), [reason](#hsreason), [cause](#hscode) and/or [message](#hsmessage) for [HTTP status codes](http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html) in JSP error pages.
 
 For example:
 
@@ -17,6 +17,7 @@ For example:
 </head>
 <h1><hs:reason default="Server Error"/></h1>
 Cause: <pre><hs:cause default="Unable to complete your request."/></pre>
+Message: <pre><hs:message default="A server error has occured."/></pre>
 ...
 ```
 

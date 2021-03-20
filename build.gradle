@@ -4,7 +4,6 @@ plugins {
     id 'jacoco'
     id 'idea'
     id 'application'
-    id 'maven'
     id 'maven-publish'
     id 'signing'
     id 'pmd'
@@ -156,14 +155,11 @@ publishing {
             }
         }
     }
-}
-
-uploadArchives {
-    repositories.mavenDeployer {
-        repository(url: "https://oss.sonatype.org/service/local/staging/deploy/maven2/") {
-            if (project.hasProperty('ossrhUsername') && project.hasProperty('ossrhPassword')) {
-                authentication(userName: ossrhUsername, password: ossrhPassword)
-            }
+    repositories {
+        maven {
+            name = "ossrh"
+            url = "https://oss.sonatype.org/service/local/staging/deploy/maven2/"
+            credentials(PasswordCredentials)
         }
     }
 }

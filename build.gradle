@@ -118,7 +118,7 @@ tasks.withType(Checkstyle) {
 }
 
 artifacts {
-	archives javadocJar, sourcesJar
+    archives javadocJar, sourcesJar
 }
 
 publishing {

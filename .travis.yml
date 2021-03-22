@@ -3,6 +3,7 @@ dist: trusty
 
 jdk:
   - oraclejdk8
+  - openjdk14
 
 addons:
   sonarcloud:
@@ -13,6 +14,6 @@ before_install:
 
 after_success:
   - |
-    if [ "${TRAVIS_TEST_RESULT}" == 0 ]; then
+    if [ "${TRAVIS_TEST_RESULT}" == 0 ] && [ "$TRAVIS_JDK_VERSION" == "openjdk14" ]; then
       ./gradlew sonarqube
     fi

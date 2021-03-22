@@ -28,10 +28,6 @@ def mavenLicenseUrl = 'http://opensource.org/licenses/BSD-3-Clause'
 def mavenScmCon = 'https://github.com/ethauvin/HttpStatus.git'
 def mavenScmDevCon = 'git@github.com:ethauvin/HttpStatus.git'
 
-def pkgLicenses = ['BSD 3-Clause']
-def pkgIssueTrackerUrl = mavenUrl + '/issues'
-def pkgLabels = ['jsp', 'tag library', 'http', 'status code', 'java']
-
 group = 'net.thauvin.erik.httpstatus'
 
 mainClassName = 'net.thauvin.erik.httpstatus.Reasons'
@@ -117,10 +113,6 @@ tasks.withType(Checkstyle) {
     }
 }
 
-artifacts {
-    archives javadocJar, sourcesJar
-}
-
 publishing {
     publications {
         mavenJava(MavenPublication) {
@@ -136,7 +128,6 @@ publishing {
                     license {
                         name = mavenLicense
                         url = mavenLicenseUrl
-                        distribution = 'repo'
                     }
                 }
                 developers {
@@ -150,7 +141,7 @@ publishing {
                 scm {
                     connection = 'scm:git:' + mavenScmCon
                     developerConnection = 'scm:git:' + mavenScmDevCon
-                    url = mavenScmCon
+                    url = mavenUrl
                 }
             }
         }

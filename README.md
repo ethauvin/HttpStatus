@@ -180,7 +180,7 @@ Include the following in your `build.gradle` file:
 
 ```gradle
 dependencies {
-    implementation 'net.thauvin.erik.httpstatus:httpstatus:1.0.5'
+    implementation 'net.thauvin.erik.httpstatus:httpstatus:1.0.6'
 }
 ```
 
@@ -190,7 +190,7 @@ or as a Maven artifact:
 <dependency>
     <groupId>net.thauvin.erik.httpstatus</groupId>
     <artifactId>httpstatus</artifactId>
-    <version>1.0.5</version>
+    <version>1.0.6</version>
 </dependency>
 ```
 
@@ -198,7 +198,7 @@ or as a Maven artifact:
 You can query the reason phrase for status codes as follows:
 
 ```sh
-$ java -jar httpstatus-1.0.5.jar 404 500
+$ java -jar httpstatus-1.0.6.jar 404 500
 404: Not Found
 500: Internal Server Error
 ```
@@ -206,7 +206,7 @@ $ java -jar httpstatus-1.0.5.jar 404 500
 If no status code is specified, all will be printed:
 
 ```sh
-$ java -jar httpstatus-1.0.5.jar
+$ java -jar httpstatus-1.0.6.jar
 100: Continue
 101: Switching Protocols
 102: Processing

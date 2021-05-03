@@ -149,7 +149,11 @@ publishing {
     repositories {
         maven {
             name = "ossrh"
-            url = "https://oss.sonatype.org/service/local/staging/deploy/maven2/"
+            project.afterEvaluate {
+                url = project.version.contains("SNAPSHOT")
+                        ? "https://oss.sonatype.org/content/repositories/snapshots/"
+                        : "https://oss.sonatype.org/service/local/staging/deploy/maven2/"
+                }
             credentials(PasswordCredentials)
         }
     }

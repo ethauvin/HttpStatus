@@ -221,7 +221,7 @@ jacocoTestReport {
 sonarqube {
     properties {
         property "sonar.organization", "ethauvin-github"
-        property "sonar.projectKey", "ethauvin_httpstatus"
+        property "sonar.projectKey", "ethauvin_HttpStatus"
         property "sonar.host.url", "https://sonarcloud.io"
         property("sonar.sourceEncoding", "UTF-8")
     }

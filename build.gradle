@@ -93,6 +93,7 @@ clean {
 test {
     testLogging {
         exceptionFormat "full"
+        events "passed", "skipped", "failed"
     }
 
     useTestNG()
@@ -178,7 +179,7 @@ task copyToDeploy(type: Copy) {
 }
 
 task deploy(dependsOn: ['clean', 'build', 'copyToDeploy']) {
-    description = 'Copies all needed files to the ${deployDir} directory.'
+    description = "Copies all needed files to the ${deployDir} directory."
     group = 'Publishing'
     outputs.dir deployDir
     inputs.files copyToDeploy
@@ -219,7 +220,9 @@ jacocoTestReport {
 
 sonarqube {
     properties {
-        property("sonar.projectKey", "ethauvin_HttpStatus")
+        property "sonar.organization", "ethauvin-github"
+        property "sonar.projectKey", "ethauvin_semver"
+        property "sonar.host.url", "https://sonarcloud.io"
         property("sonar.sourceEncoding", "UTF-8")
     }
 }

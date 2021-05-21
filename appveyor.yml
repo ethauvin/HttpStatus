@@ -1,3 +1,6 @@
+image:
+    - Visual Studio 2019
+
 version: "{branch} {build}"
 skip_tags: true
 

@@ -61,7 +61,7 @@ public class UtilsTest {
     @SuppressFBWarnings("CE_CLASS_ENVY")
     @Test
     public void testOutWrite() throws IOException {
-        try (final StringWriter sw = new StringWriter()) {
+        try (StringWriter sw = new StringWriter()) {
             Utils.outWrite(sw, null, "default", false);
             assertEquals(sw.toString(), "default", "outWrite(default)");
 

@@ -80,7 +80,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h1 id="httpstatus-jsp-tag-library">HttpStatus JSP Tag Library</h1>
 <p><a href="https://github.com/ethauvin/httpstatus/releases/latest"><img src="https://img.shields.io/github/release/ethauvin/httpstatus.svg" alt="Release" /></a> <a href="https://search.maven.org/search?q=g:%22net.thauvin.erik.httpstatus%22%20AND%20a:%22httpstatus%22"><img src="https://img.shields.io/maven-central/v/net.thauvin.erik.httpstatus/httpstatus.svg?label=maven%20central" alt="Maven Central" /></a><br />
 <a href="http://opensource.org/licenses/BSD-3-Clause"><img src="https://img.shields.io/badge/license-BSD%203--Clause-blue.svg?style=flat-square" alt="License (3-Clause BSD)" /></a> <a href="https://snyk.io/test/github/ethauvin/httpstatus?targetFile=build.gradle"><img src="https://snyk.io/test/github/ethauvin/httpstatus/badge.svg?targetFile=build.gradle" alt="Known Vulnerabilities" /></a> <a href="https://sonarcloud.io/dashboard?id=ethauvin_HttpStatus"><img src="https://sonarcloud.io/api/project_badges/measure?project=ethauvin_HttpStatus&amp;metric=alert_status" alt="Quality Gate Status" /></a><br />
-<a href="https://travis-ci.com/ethauvin/HttpStatus"><img src="https://travis-ci.com/ethauvin/HttpStatus.svg?branch=master" alt="Build Status" /></a> <a href="https://ci.appveyor.com/project/ethauvin/httpstatus"><img src="https://ci.appveyor.com/api/projects/status/w5j4kul3w2rkigxb?svg=true" alt="Build status" /></a> <a href="https://circleci.com/gh/ethauvin/HttpStatus/tree/master"><img src="https://circleci.com/gh/ethauvin/HttpStatus/tree/master.svg?style=shield" alt="CircleCI" /></a></p>
+<a href="https://github.com/ethauvin/httpstatus/actions/workflows/gradle.yml"><img src="https://github.com/ethauvin/httpstatus/actions/workflows/gradle.yml/badge.svg" alt="GitHub CI" /></a> <a href="https://ci.appveyor.com/project/ethauvin/httpstatus"><img src="https://ci.appveyor.com/api/projects/status/w5j4kul3w2rkigxb?svg=true" alt="Build status" /></a> <a href="https://circleci.com/gh/ethauvin/HttpStatus/tree/master"><img src="https://circleci.com/gh/ethauvin/HttpStatus/tree/master.svg?style=shield" alt="CircleCI" /></a></p>
 <p>A simple <a href="http://www.oracle.com/technetwork/java/javaee/jsp/index.html">JSP</a> Tag Library to display the <a href="#hscode">code</a>, <a href="#hsreason">reason</a>, <a href="#hscode">cause</a> and/or <a href="#hsmessage">message</a> for <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html">HTTP status codes</a> in JSP error pages.</p>
 <p>For example:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode jsp"><code class="sourceCode jsp"><a class="sourceLine" id="cb1-1" title="1">&lt;%@ page<span class="ot"> isErrorPage</span>=<span class="st">&quot;true&quot;</span><span class="ot"> </span>%&gt;</a>
@@ -547,22 +547,22 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h2 id="usage-with-gradle-or-maven">Usage with <a href="https://gradle.org/">Gradle</a> or <a href="http://maven.apache.org/">Maven</a></h2>
 <p>Include the following in your <code>build.gradle</code> file:</p>
 <pre class="gradle"><code>dependencies {
-    implementation &#39;net.thauvin.erik.httpstatus:httpstatus:1.0.5&#39;
+    implementation &#39;net.thauvin.erik.httpstatus:httpstatus:1.0.6&#39;
 }
 </code></pre>
 <p>or as a Maven artifact:</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode xml"><code class="sourceCode xml"><a class="sourceLine" id="cb8-1" title="1"><span class="kw">&lt;dependency&gt;</span></a>
 <a class="sourceLine" id="cb8-2" title="2">    <span class="kw">&lt;groupId&gt;</span>net.thauvin.erik.httpstatus<span class="kw">&lt;/groupId&gt;</span></a>
 <a class="sourceLine" id="cb8-3" title="3">    <span class="kw">&lt;artifactId&gt;</span>httpstatus<span class="kw">&lt;/artifactId&gt;</span></a>
-<a class="sourceLine" id="cb8-4" title="4">    <span class="kw">&lt;version&gt;</span>1.0.5<span class="kw">&lt;/version&gt;</span></a>
+<a class="sourceLine" id="cb8-4" title="4">    <span class="kw">&lt;version&gt;</span>1.0.6<span class="kw">&lt;/version&gt;</span></a>
 <a class="sourceLine" id="cb8-5" title="5"><span class="kw">&lt;/dependency&gt;</span></a></code></pre></div>
 <h2 id="command-line-usage">Command Line Usage</h2>
 <p>You can query the reason phrase for status codes as follows:</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode sh"><code class="sourceCode bash"><a class="sourceLine" id="cb9-1" title="1">$ <span class="ex">java</span> -jar httpstatus-1.0.5.jar 404 500</a>
+<div class="sourceCode" id="cb9"><pre class="sourceCode sh"><code class="sourceCode bash"><a class="sourceLine" id="cb9-1" title="1">$ <span class="ex">java</span> -jar httpstatus-1.0.6.jar 404 500</a>
 <a class="sourceLine" id="cb9-2" title="2"><span class="ex">404</span>: Not Found</a>
 <a class="sourceLine" id="cb9-3" title="3"><span class="ex">500</span>: Internal Server Error</a></code></pre></div>
 <p>If no status code is specified, all will be printed:</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode sh"><code class="sourceCode bash"><a class="sourceLine" id="cb10-1" title="1">$ <span class="ex">java</span> -jar httpstatus-1.0.5.jar</a>
+<div class="sourceCode" id="cb10"><pre class="sourceCode sh"><code class="sourceCode bash"><a class="sourceLine" id="cb10-1" title="1">$ <span class="ex">java</span> -jar httpstatus-1.0.6.jar</a>
 <a class="sourceLine" id="cb10-2" title="2"><span class="ex">100</span>: Continue</a>
 <a class="sourceLine" id="cb10-3" title="3"><span class="ex">101</span>: Switching Protocols</a>
 <a class="sourceLine" id="cb10-4" title="4"><span class="ex">102</span>: Processing</a>

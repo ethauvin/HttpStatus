@@ -98,6 +98,58 @@ Attribute   | Description
 `default`   | The fallback value to output, if no reason is available.
 `escapeXml` | Converts &lt;, &gt;, &amp;, ', " to their corresponding [entity codes](http://dev.w3.org/html5/html-author/charref). Value is `true` by default.
 
+## StatusCode Bean
+
+The `StatusCode` bean can be used to check the class of the status code error. For example, using the JSTL:
+
+```jsp
+<%@ taglib prefix="hs" uri="http://erik.thauvin.net/taglibs/httpstatus" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
+<jsp:useBean id="statusCode" class="net.thauvin.erik.httpstatus.StatusCode"/>
+<c:set target="${statusCode}" property="code"><hs:code/></c:set>
+<c:choose>
+    <c:when test="${statusCode.isClientError()}">
+        An error occurred on your side. (<hs:reason/>)
+    </c:when>
+    <c:otherwise>
+        An error occurred on our side. (<hs:message/>)
+    </c:otherwise>
+</c:choose>
+```
+
+or in a Servlet:
+
+```java
+import net.thauvin.erik.httpstatus.StatusCode;
+
+// ---
+
+StatusCode statusCode = new StatusCode((Integer) request.getAttribute("javax.servlet.error.status_code"));
+if (statusCode.isError()) {
+    if (statusCode.isServerError()) {
+        String reason = statusCode.getReason();
+    } else {
+        // ...
+    }
+}
+```
+
+The `StatusCode` bean methods are:
+
+Method            | Description
+----------------- | --------------------------------------------------------------------
+`getReason`       | Returns the reason for the status code (eg: `Internal Server Error`)
+`isClientError`   | Checks if the status code is a client error.
+`isError`         | Checks if the status code is a server or client error.
+`isInfo`          | Checks if the status code is informational.
+`isRedirect`      | Checks if the status code is a redirect.
+`isServerError`   | Checks if the status code is a server error.
+`isSuccess`       | Checks if the status code is a success. (`OK`)
+`isValid`         | Checks if the status code is valid.
+
+## Reasons
+
 The reasons are defined in a [ResourceBundle](http://docs.oracle.com/javase/8/docs/api/java/util/ResourceBundle.html) properties as follows:
 
 Status Code | Reason
@@ -193,56 +245,6 @@ Status Code | Reason
 `530`       | Site is frozen
 `598`       | Network Read Timeout Error
 `599`       | Network Connect Timeout Error
-
-## StatusCode Bean
-
-The `StatusCode` bean can be used to check the class of the status code error. For example, using the JSTL:
-
-```jsp
-<%@ taglib prefix="hs" uri="http://erik.thauvin.net/taglibs/httpstatus" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
-<jsp:useBean id="statusCode" class="net.thauvin.erik.httpstatus.StatusCode"/>
-<c:set target="${statusCode}" property="code"><hs:code/></c:set>
-<c:choose>
-    <c:when test="${statusCode.isClientError()}">
-        An error occurred on your side. (<hs:reason/>)
-    </c:when>
-    <c:otherwise>
-        An error occurred on our side. (<hs:message/>)
-    </c:otherwise>
-</c:choose>
-```
-
-or in a Servlet:
-
-```java
-import net.thauvin.erik.httpstatus.StatusCode;
-
-// ---
-
-final StatusCode statusCode = new StatusCode((Integer) request.getAttribute("javax.servlet.error.status_code"));
-if (statusCode.isError()) {
-    if (statusCode.isServerError()) {
-        final String reason = statusCode.getReason();
-    } else {
-        // ...
-    }
-}
-```
-
-The `StatusCode` bean methods are:
-
-Method            | Description
------------------ | ------------------------------------------------------------------
-`getReason`       | Returns the reason for the status code (eg: Internal Server Error)
-'isClientError'   | Checks if the status code is a client error.
-`isError`         | Checks if the status code is a server or client error.
-`isInfo`          | Checks if the status code is informational.
-`isRedirect`      | Checks if the status code is a redirect.
-`isServerError'   | Checks if the status code is a server error.
-`isSuccess`       | Checks if the status code is a success. (`OK`)
-`isValid`         | Checks if the status code is valid.
 
 ## Command Line Usage
 You can query the reason phrase for status codes as follows:

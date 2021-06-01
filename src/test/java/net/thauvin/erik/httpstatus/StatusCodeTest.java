@@ -48,12 +48,12 @@ import static org.testng.Assert.assertTrue;
 public class StatusCodeTest {
     @Test
     void testStatusCode() {
-        final StatusCode statusCode = new StatusCode(100);
-
+        StatusCode statusCode = new StatusCode();
+        statusCode.setCode(100);
         assertEquals(statusCode.getCode(), 100, "100 is 100");
         assertTrue(statusCode.isInfo(), "100 is informational");
 
-        statusCode.setCode(200);
+        statusCode = new StatusCode(200);
         assertEquals(statusCode.getCode(), 200, "200 is 200");
         assertTrue(statusCode.isSuccess(), "200 is OK");
 

@@ -41,7 +41,7 @@ import java.io.StringWriter;
 import static org.testng.Assert.assertEquals;
 
 /**
- * The <code>UtilsTest</code> class.
+ * Utils Tests.
  *
  * @author <a href="mailto:erik@thauvin.net" target="_blank">Erik C. Thauvin</a>
  * @created 2015-12-03

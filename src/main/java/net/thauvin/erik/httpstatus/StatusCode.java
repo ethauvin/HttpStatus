@@ -76,7 +76,7 @@ public class StatusCode implements Serializable {
     }
 
     /**
-     * Checks if the status code is a client error.
+     * Checks if the status code is a client error. (eg: <code>Interal Server Error</code>)
      *
      * @return <code>true</code> if the status code is a client error, <code>false</code> otherwise.
      */

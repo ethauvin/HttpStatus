@@ -45,7 +45,7 @@ import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 
 /**
- * The <code>TestMain</code> class.
+ * Main Class Tests.
  *
  * @author <a href="https://erik.thauvin.net/" target="_blank">Erik C. Thauvin</a>
  * @created 2019-05-06

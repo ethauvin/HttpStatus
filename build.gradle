@@ -103,6 +103,7 @@ test {
 spotbugs {
     toolVersion = versions.spotbugs
     excludeFilter = file("$projectDir/config/spotbugs/excludeFilter.xml")
+
 }
 
 pmd {
@@ -114,6 +115,13 @@ pmd {
 }
 
 tasks.withType(Checkstyle) {
+    reports {
+        xml.enabled = false
+        html.enabled = true
+    }
+}
+
+tasks.withType(SpotBugsTask) {
     reports {
         xml.enabled = false
         html.enabled = true

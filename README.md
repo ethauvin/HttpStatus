@@ -32,6 +32,25 @@ would display on a [501 status code](http://www.w3.org/Protocols/rfc2616/rfc2616
 
     Not Implemented
 
+## Usage with [Gradle](https://gradle.org/) or [Maven](http://maven.apache.org/)
+Include the following in your `build.gradle` file:
+
+```gradle
+dependencies {
+    implementation 'net.thauvin.erik.httpstatus:httpstatus:1.0.6'
+}
+```
+
+or as a Maven artifact:
+
+```xml
+<dependency>
+    <groupId>net.thauvin.erik.httpstatus</groupId>
+    <artifactId>httpstatus</artifactId>
+    <version>1.0.6</version>
+</dependency>
+```
+
 ## hs:cause
 
 The `<hs:cause/>` tag displays the cause of current HTTP status code, if any. A shorthand for:
@@ -175,24 +194,55 @@ Status Code | Reason
 `598`       | Network Read Timeout Error
 `599`       | Network Connect Timeout Error
 
-## Usage with [Gradle](https://gradle.org/) or [Maven](http://maven.apache.org/)
-Include the following in your `build.gradle` file:
+## StatusCode Bean
 
-```gradle
-dependencies {
-    implementation 'net.thauvin.erik.httpstatus:httpstatus:1.0.6'
+The `StatusCode` bean can be used to check the class of the status code error. For example, using the JSTL:
+
+```jsp
+<%@ taglib prefix="hs" uri="http://erik.thauvin.net/taglibs/httpstatus" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
+<jsp:useBean id="statusCode" class="net.thauvin.erik.httpstatus.StatusCode"/>
+<c:set target="${statusCode}" property="code"><hs:code/></c:set>
+<c:choose>
+    <c:when test="${statusCode.isClientError()}">
+        An error occurred on your side. (<hs:reason/>)
+    </c:when>
+    <c:otherwise>
+        An error occurred on our side. (<hs:message/>)
+    </c:otherwise>
+</c:choose>
+```
+
+or in a Servlet:
+
+```java
+import net.thauvin.erik.httpstatus.StatusCode;
+
+// ---
+
+final StatusCode statusCode = new StatusCode((Integer) request.getAttribute("javax.servlet.error.status_code"));
+if (statusCode.isError()) {
+    if (statusCode.isServerError()) {
+        final String reason = statusCode.getReason();
+    } else {
+        // ...
+    }
 }
 ```
 
-or as a Maven artifact:
+The `StatusCode` bean methods are:
 
-```xml
-<dependency>
-    <groupId>net.thauvin.erik.httpstatus</groupId>
-    <artifactId>httpstatus</artifactId>
-    <version>1.0.6</version>
-</dependency>
-```
+Method            | Description
+----------------- | ------------------------------------------------------------------
+`getReason`       | Returns the reason for the status code (eg: Internal Server Error)
+'isClientError'   | Checks if the status code is a client error.
+`isError`         | Checks if the status code is a server or client error.
+`isInfo`          | Checks if the status code is informational.
+`isRedirect`      | Checks if the status code is a redirect.
+`isServerError'   | Checks if the status code is a server error.
+`isSuccess`       | Checks if the status code is a success. (`OK`)
+`isValid`         | Checks if the status code is valid.
 
 ## Command Line Usage
 You can query the reason phrase for status codes as follows:

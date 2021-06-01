@@ -1,5 +1,5 @@
 /*
- * ReasonTag.java
+ * StatusCodeTest.java
  *
  * Copyright (c) 2015-2021, Erik C. Thauvin (erik@thauvin.net)
  * All rights reserved.
@@ -30,53 +30,47 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package net.thauvin.erik.httpstatus.taglibs;
+package net.thauvin.erik.httpstatus;
 
-import net.thauvin.erik.httpstatus.Reasons;
-import net.thauvin.erik.httpstatus.Utils;
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+import org.testng.annotations.Test;
 
-import javax.servlet.jsp.JspWriter;
-import javax.servlet.jsp.PageContext;
-import java.io.IOException;
+import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertFalse;
+import static org.testng.Assert.assertTrue;
 
 /**
- * The <code>&lt;hs:reason&gt;</code> tag returns the Reason Phrase for the current (or specified) HTTP Status Error
- * Code.
+ * StatusCode Tests.
  *
  * @author <a href="mailto:erik@thauvin.net" target="_blank">Erik C. Thauvin</a>
- * @created 2015-12-02
- * @since 1.0
  */
-public class ReasonTag extends XmlSupport {
-    private int statusCode = -1;
+@SuppressFBWarnings("CE_CLASS_ENVY")
+public class StatusCodeTest {
+    @Test
+    void testStatusCode() {
+        final StatusCode statusCode = new StatusCode(100);
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void doTag() {
-        final PageContext pageContext = (PageContext) getJspContext();
-        @SuppressWarnings("PMD.CloseResource") final JspWriter out = pageContext.getOut();
+        assertEquals(statusCode.getCode(), 100, "100 is 100");
+        assertTrue(statusCode.isInfo(), "100 is informational");
 
-        try {
-            if (statusCode > -1) {
-                Utils.outWrite(out, Reasons.getReasonPhrase(statusCode), defaultValue, escapeXml);
-            } else {
-                Utils.outWrite(out, Reasons.getReasonPhrase(pageContext.getErrorData().getStatusCode()), defaultValue,
-                        escapeXml);
-            }
-        } catch (IOException ignore) {
-            // Ignore.
-        }
-    }
+        statusCode.setCode(200);
+        assertEquals(statusCode.getCode(), 200, "200 is 200");
+        assertTrue(statusCode.isSuccess(), "200 is OK");
 
-    /**
-     * Sets the status code.
-     *
-     * @param statusCode The status code.
-     */
-    @SuppressWarnings("unused")
-    public void setCode(final int statusCode) {
-        this.statusCode = statusCode;
+        statusCode.setCode(300);
+        assertTrue(statusCode.isRedirect(), "300 is redirect");
+
+        statusCode.setCode(400);
+        assertTrue(statusCode.isClientError(), "400 is client error");
+        assertTrue(statusCode.isError(), "400 is error");
+
+        statusCode.setCode(500);
+        assertTrue(statusCode.isServerError(), "500 is server error");
+        assertTrue(statusCode.isError(), "500 is error");
+        assertEquals(statusCode.getReason(), Reasons.getReasonPhrase(500), "500 reason phrase");
+        assertTrue(statusCode.isValid(), "500 is valid");
+
+        statusCode.setCode(600);
+        assertFalse(statusCode.isValid(), "600 is invalid()");
     }
 }

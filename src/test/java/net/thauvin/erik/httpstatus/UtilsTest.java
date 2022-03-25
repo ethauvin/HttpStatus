@@ -53,8 +53,8 @@ public class UtilsTest {
         assertEquals(Utils.escapeXml(
                 "This is a test. We wan't to make sure that everything is <encoded> according the \"encoding\" "
                         + "parameter & value."),
-                "This is a test. We wan&#039;t to make sure that everything is &lt;encoded&gt; according the "
-                        + "&#034;encoding&#034; parameter &amp; value.");
+                "This is a test. We wan&apos;t to make sure that everything is &lt;encoded&gt; according the "
+                        + "&quot;encoding&quot; parameter &amp; value.");
     }
 
     @SuppressWarnings("PMD.AvoidDuplicateLiterals")
@@ -79,7 +79,7 @@ public class UtilsTest {
 
             sw.getBuffer().setLength(0);
             Utils.outWrite(sw, "wan't", "default", true);
-            assertEquals(sw.toString(), "wan&#039;t", "outWrite(wan't)");
+            assertEquals(sw.toString(), "wan&apos;t", "outWrite(wan't)");
 
             sw.getBuffer().setLength(0);
             Utils.outWrite(sw, null, "1 & 1", true);

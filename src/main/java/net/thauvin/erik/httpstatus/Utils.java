@@ -76,10 +76,10 @@ public final class Utils {
                     escaped.append("&amp;");
                     break;
                 case '\'':
-                    escaped.append("&#039;");
+                    escaped.append("&apos;");
                     break;
                 case '"':
-                    escaped.append("&#034;");
+                    escaped.append("&quot;");
                     break;
                 default:
                     escaped.append(c);

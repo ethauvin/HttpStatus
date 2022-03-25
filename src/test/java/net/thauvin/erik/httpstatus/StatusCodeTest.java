@@ -50,8 +50,9 @@ public class StatusCodeTest {
     void testStatusCode() {
         final ResourceBundle bundle = ResourceBundle.getBundle(Reasons.BUNDLE_BASENAME);
         StatusCode statusCode = new StatusCode();
+        int code;
         for (final String key : bundle.keySet()) {
-            final int code = Integer.parseInt(key);
+            code = Integer.parseInt(key);
             statusCode.setCode(code);
             assertEquals(statusCode.getCode(), code, "is not " + code);
             assertEquals(statusCode.isInfo(), code >= 100 && code < 200, code + " is info");
@@ -65,7 +66,15 @@ public class StatusCodeTest {
             assertEquals(statusCode.getReason(), Reasons.getReasonPhrase(code), code + "reason phrase is not valid");
         }
 
-        statusCode = new StatusCode(600);
+        code = 600;
+        statusCode = new StatusCode(code);
+        assertEquals(statusCode.getCode(), 600, "is not " + code);
+        assertFalse(statusCode.isInfo(), code + " is info");
+        assertFalse(statusCode.isSuccess(), code + " is ok");
+        assertFalse(statusCode.isRedirect(), code + " is redirect");
+        assertFalse(statusCode.isClientError(), code + " is client error");
+        assertFalse(statusCode.isServerError(), code + " is server error");
+        assertFalse(statusCode.isError(), code + " is error");
         assertFalse(statusCode.isValid(), "600 is invalid");
     }
 }

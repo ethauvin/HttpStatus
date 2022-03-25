@@ -35,9 +35,9 @@ package net.thauvin.erik.httpstatus;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import org.testng.annotations.Test;
 
-import static org.testng.Assert.assertEquals;
-import static org.testng.Assert.assertFalse;
-import static org.testng.Assert.assertTrue;
+import java.util.ResourceBundle;
+
+import static org.testng.Assert.*;
 
 /**
  * StatusCode Tests.
@@ -48,29 +48,24 @@ import static org.testng.Assert.assertTrue;
 public class StatusCodeTest {
     @Test
     void testStatusCode() {
+        final ResourceBundle bundle = ResourceBundle.getBundle(Reasons.BUNDLE_BASENAME);
         StatusCode statusCode = new StatusCode();
-        statusCode.setCode(100);
-        assertEquals(statusCode.getCode(), 100, "100 is 100");
-        assertTrue(statusCode.isInfo(), "100 is informational");
+        for (final String key : bundle.keySet()) {
+            final int code = Integer.parseInt(key);
+            statusCode.setCode(code);
+            assertEquals(statusCode.getCode(), code, "is not " + code);
+            assertEquals(statusCode.isInfo(), code >= 100 && code < 200, code + " is info");
+            assertEquals(statusCode.isSuccess(), code >= 200 && code < 300, code + " is ok");
+            assertEquals(statusCode.isRedirect(), code >= 300 && code < 400, code + " is redirect");
+            assertEquals(statusCode.isClientError(), code >= 400 && code < 500, code + " is client error");
+            assertEquals(statusCode.isServerError(), code >= 500 && code < 600, code + " is server error");
+            assertEquals(statusCode.isError(), code >= 400 && code < 600, code + " is error");
+            assertTrue(statusCode.isValid(), code + "is valid");
 
-        statusCode = new StatusCode(200);
-        assertEquals(statusCode.getCode(), 200, "200 is 200");
-        assertTrue(statusCode.isSuccess(), "200 is OK");
+            assertEquals(statusCode.getReason(), Reasons.getReasonPhrase(code), code + "reason phrase is not valid");
+        }
 
-        statusCode.setCode(300);
-        assertTrue(statusCode.isRedirect(), "300 is redirect");
-
-        statusCode.setCode(400);
-        assertTrue(statusCode.isClientError(), "400 is client error");
-        assertTrue(statusCode.isError(), "400 is error");
-
-        statusCode.setCode(500);
-        assertTrue(statusCode.isServerError(), "500 is server error");
-        assertTrue(statusCode.isError(), "500 is error");
-        assertEquals(statusCode.getReason(), Reasons.getReasonPhrase(500), "500 reason phrase");
-        assertTrue(statusCode.isValid(), "500 is valid");
-
-        statusCode.setCode(600);
-        assertFalse(statusCode.isValid(), "600 is invalid()");
+        statusCode = new StatusCode(600);
+        assertFalse(statusCode.isValid(), "600 is invalid");
     }
 }

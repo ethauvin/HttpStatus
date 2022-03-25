@@ -35,7 +35,7 @@ package net.thauvin.erik.httpstatus;
 import java.io.Serializable;
 
 /**
- * The <code>StatusCode</code> class implements methods to check the class of a HTTP status code.
+ * The <code>StatusCode</code> bean implements methods to check the class of an HTTP status code.
  *
  * @author <a href="mailto:erik@thauvin.net" target="_blank">Erik C. Thauvin</a>
  */
@@ -44,10 +44,10 @@ public class StatusCode implements Serializable {
     private int code;
 
     /**
-     * Creates a new statusCode object.
+     * Creates a new StatusCode object.
      */
     public StatusCode() {
-        // Default construtor.
+        // Default constructor.
     }
     
     /**
@@ -70,13 +70,14 @@ public class StatusCode implements Serializable {
      * Returns the reason for the status code.
      *
      * @return The reason, or <code>null</code>.
+     * @see Reasons#getReasonPhrase(int)
      */
     public String getReason() {
         return Reasons.getReasonPhrase(code);
     }
 
     /**
-     * Checks if the status code is a client error. (eg: <code>Interal Server Error</code>)
+     * Checks if the status code is a client error. (eg: <code>Internal Server Error</code>)
      *
      * @return <code>true</code> if the status code is a client error, <code>false</code> otherwise.
      */

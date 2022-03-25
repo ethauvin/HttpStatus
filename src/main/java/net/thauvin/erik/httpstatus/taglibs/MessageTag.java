@@ -1,7 +1,7 @@
 /*
  * CauseTag.java
  *
- * Copyright (c) 2015-2021, Erik C. Thauvin (erik@thauvin.net)
+ * Copyright (c) 2015-2022, Erik C. Thauvin (erik@thauvin.net)
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -42,7 +42,7 @@ import java.io.IOException;
  * The <code>&lt;hs:message&gt;</code> tag returns the message (if any) for the current error.
  *
  * @author <a href="mailto:erik@thauvin.net" target="_blank">Erik C. Thauvin</a>
- * @created 2021-03-16
+ * @created 2022-03-16
  * @since 1.0.5
  */
 public class MessageTag extends XmlSupport {

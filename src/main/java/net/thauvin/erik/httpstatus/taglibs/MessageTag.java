@@ -41,7 +41,7 @@ import java.io.IOException;
 /**
  * The <code>&lt;hs:message&gt;</code> tag returns the message (if any) for the current error.
  *
- * @author <a href="mailto:erik@thauvin.net" target="_blank">Erik C. Thauvin</a>
+ * @author <a href="mailto:erik@thauvin.net">Erik C. Thauvin</a>
  * @created 2022-03-16
  * @since 1.0.5
  */

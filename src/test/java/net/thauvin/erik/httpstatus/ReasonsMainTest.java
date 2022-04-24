@@ -47,7 +47,7 @@ import static org.testng.Assert.assertTrue;
 /**
  * Main Class Tests.
  *
- * @author <a href="https://erik.thauvin.net/" target="_blank">Erik C. Thauvin</a>
+ * @author <a href="https://erik.thauvin.net/">Erik C. Thauvin</a>
  * @created 2019-05-06
  * @since 1.0
  */

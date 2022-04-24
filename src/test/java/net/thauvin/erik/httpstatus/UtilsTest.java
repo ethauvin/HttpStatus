@@ -43,7 +43,7 @@ import static org.testng.Assert.assertEquals;
 /**
  * Utils Tests.
  *
- * @author <a href="mailto:erik@thauvin.net" target="_blank">Erik C. Thauvin</a>
+ * @author <a href="mailto:erik@thauvin.net">Erik C. Thauvin</a>
  * @created 2015-12-03
  * @since 1.0
  */

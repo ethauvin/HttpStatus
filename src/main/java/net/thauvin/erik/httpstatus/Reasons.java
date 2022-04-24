@@ -42,7 +42,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * Populates the {@link #REASON_PHRASES reason phrases} map from {@link #BUNDLE_BASENAME bundle properties}, and
  * implements accessor methods.
  *
- * @author <a href="mailto:erik@thauvin.net" target="_blank">Erik C. Thauvin</a>
+ * @author <a href="mailto:erik@thauvin.net">Erik C. Thauvin</a>
  * @created 2015-12-02
  * @since 1.0
  */

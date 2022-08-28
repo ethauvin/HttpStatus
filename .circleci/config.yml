@@ -52,4 +52,4 @@ workflows:
   gradle:
     jobs:
       - build_gradle_jdk11
-      - build_gradle_jdk17
+      - build_gradle_jdk18

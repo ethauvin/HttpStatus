@@ -32,9 +32,10 @@
 
 package net.thauvin.erik.httpstatus.taglibs;
 
-import javax.servlet.jsp.JspWriter;
-import javax.servlet.jsp.PageContext;
-import javax.servlet.jsp.tagext.SimpleTagSupport;
+import jakarta.servlet.jsp.JspWriter;
+import jakarta.servlet.jsp.PageContext;
+import jakarta.servlet.jsp.tagext.SimpleTagSupport;
+
 import java.io.IOException;
 
 /**

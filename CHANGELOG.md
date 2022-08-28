@@ -1,6 +1,6 @@
 # Changelog
 
-## [1.0.5](https://github.com/ethauvin/HttpStatus/tree/1.0.5) (2021-03-19)
+## [1.0.5](https://github.com/ethauvin/HttpStatus/tree/1.0.5) (2021-03-20)
 
 [Full Changelog](https://github.com/ethauvin/HttpStatus/compare/1.0.4...1.0.5)
 

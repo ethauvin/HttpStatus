@@ -32,11 +32,11 @@
 
 package net.thauvin.erik.httpstatus.taglibs;
 
+import jakarta.servlet.jsp.JspWriter;
+import jakarta.servlet.jsp.PageContext;
 import net.thauvin.erik.httpstatus.Reasons;
 import net.thauvin.erik.httpstatus.Utils;
 
-import javax.servlet.jsp.JspWriter;
-import javax.servlet.jsp.PageContext;
 import java.io.IOException;
 
 /**

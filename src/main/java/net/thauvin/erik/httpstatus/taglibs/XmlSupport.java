@@ -32,7 +32,7 @@
 
 package net.thauvin.erik.httpstatus.taglibs;
 
-import javax.servlet.jsp.tagext.SimpleTagSupport;
+import jakarta.servlet.jsp.tagext.SimpleTagSupport;
 
 /**
  * Adds support for the <code>default</code> and <code>escapeXml</code> tag attributes.

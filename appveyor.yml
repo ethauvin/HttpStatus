@@ -1,5 +1,5 @@
 image:
-    - Visual Studio 2019
+    - Visual Studio 2022
 
 version: "{branch} {build}"
 skip_tags: true

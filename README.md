@@ -46,7 +46,7 @@ repositories {
 }
 
 dependencies {
-    implementation 'net.thauvin.erik.httpstatus:httpstatus:1.1.0'
+    implementation 'net.thauvin.erik.httpstatus:httpstatus:1.0.5'
 }
 ```
 
@@ -56,7 +56,7 @@ or as a Maven artifact:
 <dependency>
     <groupId>net.thauvin.erik.httpstatus</groupId>
     <artifactId>httpstatus</artifactId>
-    <version>1.1.0</version>
+    <version>1.0.5</version>
 </dependency>
 ```
 

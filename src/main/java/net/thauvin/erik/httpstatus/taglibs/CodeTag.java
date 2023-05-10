@@ -1,7 +1,7 @@
 /*
  * CodeTag.java
  *
- * Copyright (c) 2015-2021, Erik C. Thauvin (erik@thauvin.net)
+ * Copyright 2023 sErik C. Thauvin (erik@thauvin.net)
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -32,15 +32,16 @@
 
 package net.thauvin.erik.httpstatus.taglibs;
 
-import javax.servlet.jsp.JspWriter;
-import javax.servlet.jsp.PageContext;
-import javax.servlet.jsp.tagext.SimpleTagSupport;
+import jakarta.servlet.jsp.JspWriter;
+import jakarta.servlet.jsp.PageContext;
+import jakarta.servlet.jsp.tagext.SimpleTagSupport;
+
 import java.io.IOException;
 
 /**
  * The <code>&lt;hs:code&gt;</code> tag returns the HTTP Status Error Code.
  *
- * @author <a href="mailto:erik@thauvin.net" target="_blank">Erik C. Thauvin</a>
+ * @author <a href="mailto:erik@thauvin.net">Erik C. Thauvin</a>
  * @created 2015-12-03
  * @since 1.0
  */

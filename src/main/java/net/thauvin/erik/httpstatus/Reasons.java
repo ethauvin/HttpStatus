@@ -1,7 +1,7 @@
 /*
  * Reasons.java
  *
- * Copyright (c) 2015-2021, Erik C. Thauvin (erik@thauvin.net)
+ * Copyright 2023 sErik C. Thauvin (erik@thauvin.net)
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -42,7 +42,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * Populates the {@link #REASON_PHRASES reason phrases} map from {@link #BUNDLE_BASENAME bundle properties}, and
  * implements accessor methods.
  *
- * @author <a href="mailto:erik@thauvin.net" target="_blank">Erik C. Thauvin</a>
+ * @author <a href="mailto:erik@thauvin.net">Erik C. Thauvin</a>
  * @created 2015-12-02
  * @since 1.0
  */
@@ -87,7 +87,6 @@ public final class Reasons {
      * @param statusCode The status code.
      * @return The reason phrase, or <code>null</code>.
      */
-    @SuppressWarnings({"WeakerAccess"})
     public static String getReasonPhrase(final String statusCode) {
         return REASON_PHRASES.get(statusCode);
     }

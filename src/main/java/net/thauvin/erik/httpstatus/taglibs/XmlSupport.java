@@ -1,7 +1,7 @@
 /*
  * XmlSupport.java
  *
- * Copyright (c) 2015-2021, Erik C. Thauvin (erik@thauvin.net)
+ * Copyright 2023 sErik C. Thauvin (erik@thauvin.net)
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -32,12 +32,12 @@
 
 package net.thauvin.erik.httpstatus.taglibs;
 
-import javax.servlet.jsp.tagext.SimpleTagSupport;
+import jakarta.servlet.jsp.tagext.SimpleTagSupport;
 
 /**
  * Adds support for the <code>default</code> and <code>escapeXml</code> tag attributes.
  *
- * @author <a href="mailto:erik@thauvin.net" target="_blank">Erik C. Thauvin</a>
+ * @author <a href="mailto:erik@thauvin.net">Erik C. Thauvin</a>
  * @created 2015-12-03
  * @since 1.0
  */

@@ -1,7 +1,7 @@
 /*
- * CauseTag.java
+ * MessageTag.java
  *
- * Copyright (c) 2015-2021, Erik C. Thauvin (erik@thauvin.net)
+ * Copyright 2023 sErik C. Thauvin (erik@thauvin.net)
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -32,17 +32,17 @@
 
 package net.thauvin.erik.httpstatus.taglibs;
 
+import jakarta.servlet.jsp.JspWriter;
+import jakarta.servlet.jsp.PageContext;
 import net.thauvin.erik.httpstatus.Utils;
 
-import javax.servlet.jsp.JspWriter;
-import javax.servlet.jsp.PageContext;
 import java.io.IOException;
 
 /**
  * The <code>&lt;hs:message&gt;</code> tag returns the message (if any) for the current error.
  *
- * @author <a href="mailto:erik@thauvin.net" target="_blank">Erik C. Thauvin</a>
- * @created 2021-03-16
+ * @author <a href="mailto:erik@thauvin.net">Erik C. Thauvin</a>
+ * @created 2022-03-16
  * @since 1.0.5
  */
 public class MessageTag extends XmlSupport {
@@ -55,7 +55,7 @@ public class MessageTag extends XmlSupport {
         @SuppressWarnings("PMD.CloseResource") final JspWriter out = pageContext.getOut();
 
         final String message = (String) pageContext.getRequest().getAttribute(
-                javax.servlet.RequestDispatcher.ERROR_MESSAGE);
+                jakarta.servlet.RequestDispatcher.ERROR_MESSAGE);
 
         Utils.outWrite(out, message, defaultValue, escapeXml);
     }

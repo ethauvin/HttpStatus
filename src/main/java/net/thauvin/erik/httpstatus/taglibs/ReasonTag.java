@@ -1,7 +1,7 @@
 /*
  * ReasonTag.java
  *
- * Copyright (c) 2015-2021, Erik C. Thauvin (erik@thauvin.net)
+ * Copyright 2023 sErik C. Thauvin (erik@thauvin.net)
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -32,18 +32,18 @@
 
 package net.thauvin.erik.httpstatus.taglibs;
 
+import jakarta.servlet.jsp.JspWriter;
+import jakarta.servlet.jsp.PageContext;
 import net.thauvin.erik.httpstatus.Reasons;
 import net.thauvin.erik.httpstatus.Utils;
 
-import javax.servlet.jsp.JspWriter;
-import javax.servlet.jsp.PageContext;
 import java.io.IOException;
 
 /**
  * The <code>&lt;hs:reason&gt;</code> tag returns the Reason Phrase for the current (or specified) HTTP Status Error
  * Code.
  *
- * @author <a href="mailto:erik@thauvin.net" target="_blank">Erik C. Thauvin</a>
+ * @author <a href="mailto:erik@thauvin.net">Erik C. Thauvin</a>
  * @created 2015-12-02
  * @since 1.0
  */
@@ -65,7 +65,7 @@ public class ReasonTag extends XmlSupport {
                 Utils.outWrite(out, Reasons.getReasonPhrase(pageContext.getErrorData().getStatusCode()), defaultValue,
                         escapeXml);
             }
-        } catch (IOException ignore) {
+        } catch (IOException ignored) {
             // Ignore.
         }
     }
@@ -79,6 +79,4 @@ public class ReasonTag extends XmlSupport {
     public void setCode(final int statusCode) {
         this.statusCode = statusCode;
     }
-
-
 }

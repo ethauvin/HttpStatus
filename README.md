@@ -1,8 +1,13 @@
 #  HttpStatus JSP Tag Library
 
-[![Release](https://img.shields.io/github/release/ethauvin/httpstatus.svg)](https://github.com/ethauvin/httpstatus/releases/latest) [![Maven Central](https://img.shields.io/maven-central/v/net.thauvin.erik.httpstatus/httpstatus.svg?label=maven%20central)](https://search.maven.org/search?q=g:%22net.thauvin.erik.httpstatus%22%20AND%20a:%22httpstatus%22)   
-[![License (3-Clause BSD)](https://img.shields.io/badge/license-BSD%203--Clause-blue.svg?style=flat-square)](http://opensource.org/licenses/BSD-3-Clause) [![Known Vulnerabilities](https://snyk.io/test/github/ethauvin/httpstatus/badge.svg?targetFile=build.gradle)](https://snyk.io/test/github/ethauvin/httpstatus?targetFile=build.gradle) [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=ethauvin_HttpStatus&metric=alert_status)](https://sonarcloud.io/dashboard?id=ethauvin_HttpStatus)  
-[![Build Status](https://travis-ci.com/ethauvin/HttpStatus.svg?branch=master)](https://travis-ci.com/ethauvin/HttpStatus) [![Build status](https://ci.appveyor.com/api/projects/status/w5j4kul3w2rkigxb?svg=true)](https://ci.appveyor.com/project/ethauvin/httpstatus) [![CircleCI](https://circleci.com/gh/ethauvin/HttpStatus/tree/master.svg?style=shield)](https://circleci.com/gh/ethauvin/HttpStatus/tree/master)
+[![Java](https://img.shields.io/badge/java-17%2B-blue)](https://www.oracle.com/java/technologies/javase/jdk17-archive-downloads.html)
+[![Release](https://img.shields.io/github/release/ethauvin/httpstatus.svg)](https://github.com/ethauvin/httpstatus/releases/latest)
+[![Maven Central](https://img.shields.io/maven-central/v/net.thauvin.erik.httpstatus/httpstatus.svg?label=maven%20central)](https://search.maven.org/search?q=g:%22net.thauvin.erik.httpstatus%22%20AND%20a:%22httpstatus%22)
+![Sonatype Nexus (Snapshots)](https://img.shields.io/nexus/s/net.thauvin.erik.httpstatus/httpstatus?server=https%3A%2F%2Foss.sonatype.org)  
+[![License (3-Clause BSD)](https://img.shields.io/badge/license-BSD%203--Clause-blue.svg?style=flat-square)](http://opensource.org/licenses/BSD-3-Clause)
+[![Known Vulnerabilities](https://snyk.io/test/github/ethauvin/httpstatus/badge.svg?targetFile=pom.xml)](https://snyk.io/test/github/ethauvin/httpstatus?targetFile=pom.xml)  
+[![GitHub CI](https://github.com/ethauvin/httpstatus/actions/workflows/bld.yml/badge.svg)](https://github.com/ethauvin/httpstatus/actions/workflows/bld.yml)
+[![CircleCI](https://circleci.com/gh/ethauvin/HttpStatus/tree/master.svg?style=shield)](https://circleci.com/gh/ethauvin/HttpStatus/tree/master)
 
 
 A simple [JSP](http://www.oracle.com/technetwork/java/javaee/jsp/index.html) Tag Library to display the [code](#hscode), [reason](#hsreason), [cause](#hscode) and/or [message](#hsmessage) for [HTTP status codes](http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html) in JSP error pages.
@@ -31,6 +36,29 @@ or
 would display on a [501 status code](http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.5.2):
 
     Not Implemented
+
+## Usage with [Gradle](https://gradle.org/) or [Maven](http://maven.apache.org/)
+Include the following in your `build.gradle` file:
+
+```gradle
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'net.thauvin.erik.httpstatus:httpstatus:1.1.0'
+}
+```
+
+or as a Maven artifact:
+
+```xml
+<dependency>
+    <groupId>net.thauvin.erik.httpstatus</groupId>
+    <artifactId>httpstatus</artifactId>
+    <version>1.1.0</version>
+</dependency>
+```
 
 ## hs:cause
 
@@ -79,7 +107,59 @@ Attribute   | Description
 `default`   | The fallback value to output, if no reason is available.
 `escapeXml` | Converts &lt;, &gt;, &amp;, ', " to their corresponding [entity codes](http://dev.w3.org/html5/html-author/charref). Value is `true` by default.
 
-The reasons are defined in a [ResourceBundle](http://docs.oracle.com/javase/8/docs/api/java/util/ResourceBundle.html) properties as follows:
+## StatusCode Bean
+
+The `StatusCode` bean can be used to check the class of the status code error. For example, using the JSTL:
+
+```jsp
+<%@ taglib prefix="hs" uri="http://erik.thauvin.net/taglibs/httpstatus" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
+<jsp:useBean id="statusCode" class="net.thauvin.erik.httpstatus.StatusCode"/>
+<c:set target="${statusCode}" property="code"><hs:code/></c:set>
+<c:choose>
+    <c:when test="${statusCode.isClientError()}">
+        An error occurred on your side. (<hs:reason/>)
+    </c:when>
+    <c:otherwise>
+        An error occurred on our side. (<hs:message/>)
+    </c:otherwise>
+</c:choose>
+```
+
+or in a Servlet:
+
+```java
+import net.thauvin.erik.httpstatus.StatusCode;
+
+// ---
+
+StatusCode statusCode = new StatusCode((Integer) request.getAttribute("javax.servlet.error.status_code"));
+if (statusCode.isError()) {
+    if (statusCode.isServerError()) {
+        String reason = statusCode.getReason();
+    } else {
+        // ...
+    }
+}
+```
+
+The `StatusCode` bean methods are:
+
+Method            | Description
+----------------- | --------------------------------------------------------------------
+`getReason`       | Returns the reason for the status code (eg: `Internal Server Error`)
+`isClientError`   | Checks if the status code is a client error.
+`isError`         | Checks if the status code is a server or client error.
+`isInfo`          | Checks if the status code is informational.
+`isRedirect`      | Checks if the status code is a redirect.
+`isServerError`   | Checks if the status code is a server error.
+`isSuccess`       | Checks if the status code is a success. (`OK`)
+`isValid`         | Checks if the status code is valid.
+
+## Reasons
+
+The reasons are defined in a [ResourceBundle](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/ResourceBundle.html) properties as follows:
 
 Status Code | Reason
 ----------- | -----------------------------------
@@ -175,30 +255,11 @@ Status Code | Reason
 `598`       | Network Read Timeout Error
 `599`       | Network Connect Timeout Error
 
-## Usage with [Gradle](https://gradle.org/) or [Maven](http://maven.apache.org/)
-Include the following in your `build.gradle` file:
-
-```gradle
-dependencies {
-    implementation 'net.thauvin.erik.httpstatus:httpstatus:1.0.5'
-}
-```
-
-or as a Maven artifact:
-
-```xml
-<dependency>
-    <groupId>net.thauvin.erik.httpstatus</groupId>
-    <artifactId>httpstatus</artifactId>
-    <version>1.0.5</version>
-</dependency>
-```
-
 ## Command Line Usage
 You can query the reason phrase for status codes as follows:
 
 ```sh
-$ java -jar httpstatus-1.0.5.jar 404 500
+$ java -jar httpstatus-1.1.0.jar 404 500
 404: Not Found
 500: Internal Server Error
 ```
@@ -206,7 +267,7 @@ $ java -jar httpstatus-1.0.5.jar 404 500
 If no status code is specified, all will be printed:
 
 ```sh
-$ java -jar httpstatus-1.0.5.jar
+$ java -jar httpstatus-1.1.0.jar
 100: Continue
 101: Switching Protocols
 102: Processing

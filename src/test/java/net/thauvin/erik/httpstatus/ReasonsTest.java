@@ -1,7 +1,7 @@
 /*
  * ReasonsTest.java
  *
- * Copyright (c) 2015-2021, Erik C. Thauvin (erik@thauvin.net)
+ * Copyright 2023 sErik C. Thauvin (erik@thauvin.net)
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -32,27 +32,28 @@
 
 package net.thauvin.erik.httpstatus;
 
-import org.testng.annotations.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.ResourceBundle;
 
-import static org.testng.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
+
 
 /**
- * The <code>ReasonsTest</code> class.
+ * Reasons Tests.
  *
- * @author <a href="mailto:erik@thauvin.net" target="_blank">Erik C. Thauvin</a>
+ * @author <a href="mailto:erik@thauvin.net">Erik C. Thauvin</a>
  * @created 2015-12-03
  * @since 1.0
  */
-public class ReasonsTest {
+class ReasonsTest {
     @Test
-    public void testGetReasonPhrase() {
+    void testGetReasonPhrase() {
         final ResourceBundle bundle = ResourceBundle.getBundle(Reasons.BUNDLE_BASENAME);
         for (final String key : bundle.keySet()) {
-            assertEquals(bundle.getString(key), Reasons.getReasonPhrase(key), "getReasonPhrase(" + key + ')');
-            assertEquals(bundle.getString(key), Reasons.getReasonPhrase(Integer.parseInt(key)),
-                    "getReasonPhrase(int: " + key + ')');
+            assertThat(Reasons.getReasonPhrase(key)).as("getReasonPhrase(" + key + ')').isEqualTo(bundle.getString(key));
+            assertThat(Reasons.getReasonPhrase(Integer.parseInt(key)))
+                    .as("getReasonPhrase(int: " + key + ')').isEqualTo(bundle.getString(key));
         }
 
     }

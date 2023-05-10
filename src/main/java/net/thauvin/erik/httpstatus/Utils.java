@@ -1,7 +1,7 @@
 /*
  * Utils.java
  *
- * Copyright (c) 2015-2021, Erik C. Thauvin (erik@thauvin.net)
+ * Copyright 2023 sErik C. Thauvin (erik@thauvin.net)
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -38,7 +38,7 @@ import java.io.Writer;
 /**
  * The <code>Utils</code> class implements a collection of utility methods used throughout this project.
  *
- * @author <a href="mailto:erik@thauvin.net" target="_blank">Erik C. Thauvin</a>
+ * @author <a href="mailto:erik@thauvin.net">Erik C. Thauvin</a>
  * @created 2015-12-03
  * @since 1.0
  */
@@ -66,24 +66,12 @@ public final class Utils {
         for (int i = 0; i < value.length(); i++) {
             final char c = value.charAt(i);
             switch (c) {
-                case '<':
-                    escaped.append("&lt;");
-                    break;
-                case '>':
-                    escaped.append("&gt;");
-                    break;
-                case '&':
-                    escaped.append("&amp;");
-                    break;
-                case '\'':
-                    escaped.append("&#039;");
-                    break;
-                case '"':
-                    escaped.append("&#034;");
-                    break;
-                default:
-                    escaped.append(c);
-                    break;
+                case '<' -> escaped.append("&lt;");
+                case '>' -> escaped.append("&gt;");
+                case '&' -> escaped.append("&amp;");
+                case '\'' -> escaped.append("&apos;");
+                case '"' -> escaped.append("&quot;");
+                default -> escaped.append(c);
             }
         }
 

@@ -10,15 +10,21 @@ defaults_gradle: &defaults_bld
   steps:
     - checkout
     - run:
-        - name: Grant execute permission for bld
-          command: chmod +x bld
+        name: Download the dependencies
+        command: ./bld download
     - run:
-        - name: Download the dependencies
-          command: ./bld download
-    - run:
-        - name: Run tests with bld
-          command: ./bld c
+        name: Run tests with bld
+        command: ./bld compile test
+
 jobs:
+  bld_jdk18:
+    <<: *defaults
+
+    docker:
+      - image: cimg/openjdk:18.0
+
+    <<: *defaults_bld
+
   bld_jdk17:
     <<: *defaults
 
@@ -27,17 +33,9 @@ jobs:
 
     <<: *defaults_bld
 
-  bld_jdk11:
-    <<: *defaults
-
-    docker:
-      - image: cimg/openjdk:11.0
-
-    <<: *defaults_bld
-
 workflows:
   version: 2
-  gradle:
+  bld:
     jobs:
-      - bld_jdk11
-      - bld_gradle_jdk17
+      - bld_jdk17
+      - bld_jdk18

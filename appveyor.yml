@@ -7,11 +7,11 @@ skip_tags: true
 build:
   verbosity: detailed
 
-build_script:
-  - gradlew.bat assemble --info --no-daemon
+download_script:
+  - bld.bat download
 
 test_script:
-  - gradlew.bat check --info --no-daemon
+  - bld.bat compile test
 
 branches:
   only:

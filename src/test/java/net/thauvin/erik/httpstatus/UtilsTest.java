@@ -1,7 +1,7 @@
 /*
  * UtilsTest.java
  *
- * Copyright (c) 2015-2022, Erik C. Thauvin (erik@thauvin.net)
+ * Copyright 2023 sErik C. Thauvin (erik@thauvin.net)
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -32,13 +32,13 @@
 
 package net.thauvin.erik.httpstatus;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
-import org.testng.annotations.Test;
+import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 import java.io.StringWriter;
 
-import static org.testng.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
+
 
 /**
  * Utils Tests.
@@ -47,55 +47,54 @@ import static org.testng.Assert.assertEquals;
  * @created 2015-12-03
  * @since 1.0
  */
-public class UtilsTest {
+class UtilsTest {
     @Test
-    public void testEscapeXml() {
-        assertEquals(Utils.escapeXml(
+    void testEscapeXml() {
+        assertThat(Utils.escapeXml(
                 "This is a test. We wan't to make sure that everything is <encoded> according the \"encoding\" "
-                        + "parameter & value."),
-                "This is a test. We wan&apos;t to make sure that everything is &lt;encoded&gt; according the "
-                        + "&quot;encoding&quot; parameter &amp; value.");
+                        + "parameter & value."))
+                .isEqualTo("This is a test. We wan&apos;t to make sure that everything is &lt;encoded&gt; " +
+                        "according the &quot;encoding&quot; parameter &amp; value.");
     }
 
     @SuppressWarnings("PMD.AvoidDuplicateLiterals")
-    @SuppressFBWarnings("CE_CLASS_ENVY")
     @Test
-    public void testOutWrite() throws IOException {
+    void testOutWrite() throws IOException {
         try (StringWriter sw = new StringWriter()) {
             Utils.outWrite(sw, null, "default", false);
-            assertEquals(sw.toString(), "default", "outWrite(default)");
+            assertThat(sw.toString()).isEqualTo("default").as("outWrite(default)");
 
             sw.getBuffer().setLength(0);
             Utils.outWrite(sw, "", "default", false);
-            assertEquals(sw.toString(), "", "outWrite(value empty)");
+            assertThat(sw.toString()).isEqualTo("").as("outWrite(value empty)");
 
             sw.getBuffer().setLength(0);
             Utils.outWrite(sw, null, null, true);
-            assertEquals(sw.toString(), "", "outWrite(null)");
+            assertThat(sw.toString()).isEqualTo("").as("outWrite(null)");
 
             sw.getBuffer().setLength(0);
             Utils.outWrite(sw, "value", "default", false);
-            assertEquals(sw.toString(), "value", "outWrite(value)");
+            assertThat(sw.toString()).isEqualTo("value").as("outWrite(value)");
 
             sw.getBuffer().setLength(0);
             Utils.outWrite(sw, "wan't", "default", true);
-            assertEquals(sw.toString(), "wan&apos;t", "outWrite(wan't)");
+            assertThat(sw.toString()).isEqualTo("wan&apos;t").as("outWrite(wan't)");
 
             sw.getBuffer().setLength(0);
             Utils.outWrite(sw, null, "1 & 1", true);
-            assertEquals(sw.toString(), "1 &amp; 1", "outWrite(1 & 1)");
+            assertThat(sw.toString()).isEqualTo("1 &amp; 1").as("outWrite(1 & 1)");
 
             sw.getBuffer().setLength(0);
             Utils.outWrite(sw, "", "default", true);
-            assertEquals(sw.toString(), "", "outWrite(value empty, xml)");
+            assertThat(sw.toString()).isEqualTo("").as("outWrite(value empty).as(xml)");
 
             sw.getBuffer().setLength(0);
             Utils.outWrite(sw, null, "", true);
-            assertEquals(sw.toString(), "", "outWrite(default empty)");
+            assertThat(sw.toString()).isEqualTo("").as("outWrite(default empty)");
 
             sw.getBuffer().setLength(0);
             Utils.outWrite(sw, null, null, true);
-            assertEquals(sw.toString(), "", "outWrite(null, xml)");
+            assertThat(sw.toString()).isEqualTo("").as("outWrite(null).as(xml)");
         }
     }
 }

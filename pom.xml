@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>net.thauvin.erik.httpstatus</groupId>
+  <artifactId>httpstatus</artifactId>
+  <version>1.1.0-SNAPSHOT</version>
+  <name>HttpStatus</name>
+  <description>HttpStatus JSP Tag Library</description>
+  <url>https://github.com/ethauvin/HttpStatus</url>
+  <licenses>
+    <license>
+      <name>The BSD 3-Clause License</name>
+      <url>http://opensource.org/licenses/BSD-3-Clause</url>
+    </license>
+  </licenses>
+  <dependencies>
+    <dependency>
+      <groupId>jakarta.servlet</groupId>
+      <artifactId>jakarta.servlet-api</artifactId>
+      <version>6.0.0</version>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>jakarta.servlet.jsp</groupId>
+      <artifactId>jakarta.servlet.jsp-api</artifactId>
+      <version>3.1.1</version>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>jakarta.el</groupId>
+      <artifactId>jakarta.el-api</artifactId>
+      <version>5.0.1</version>
+      <scope>compile</scope>
+    </dependency>
+  </dependencies>
+  <developers>
+    <developer>
+      <id>ethauvin</id>
+      <name>Erik C. Thauvin</name>
+      <email>erik@thauvin.net</email>
+      <url>https://erik.thauvin.net/</url>
+    </developer>
+  </developers>
+  <scm>
+    <connection>scm:git:https://github.com/ethauvin/HttpStatus.git</connection>
+    <developerConnection>scm:git:git@github.com:ethauvin/HttpStatus.git</developerConnection>
+    <url>https://github.com/ethauvin/HttpStatus</url>
+  </scm>
+</project>

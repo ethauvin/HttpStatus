@@ -1,7 +1,7 @@
 /*
  * ReasonsMainTest.java
  *
- * Copyright (c) 2015-2022, Erik C. Thauvin (erik@thauvin.net)
+ * Copyright 2023 sErik C. Thauvin (erik@thauvin.net)
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -32,17 +32,15 @@
 
 package net.thauvin.erik.httpstatus;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
-import org.testng.annotations.AfterTest;
-import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.BeforeTest;
-import org.testng.annotations.Test;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 
-import static org.testng.Assert.assertFalse;
-import static org.testng.Assert.assertTrue;
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * Main Class Tests.
@@ -51,51 +49,50 @@ import static org.testng.Assert.assertTrue;
  * @created 2019-05-06
  * @since 1.0
  */
-@SuppressFBWarnings({"DM_DEFAULT_ENCODING", "ITU_INAPPROPRIATE_TOSTRING_USE"})
-public class ReasonsMainTest {
-    private final PrintStream originalOut = System.out;
-    private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+class ReasonsMainTest {
+    private final static PrintStream originalOut = System.out;
+    private final static ByteArrayOutputStream outContent = new ByteArrayOutputStream();
 
-    @AfterTest
-    public void restoreStreams() {
+    @AfterAll
+    public static void restoreStreams() {
         System.setOut(originalOut);
     }
 
-    @BeforeTest
-    public void setUpStreams() {
+    @BeforeAll
+    public static void setUpStreams() {
         System.setOut(new PrintStream(outContent));
     }
 
-    @BeforeMethod
+    @BeforeEach
     public void resetStreams() {
         outContent.reset();
     }
 
     @Test
-    public void testMain() {
+    void testMain() {
         Reasons.main("401");
-        assertTrue(outContent.toString().contains(Reasons.getReasonPhrase("401")), "401");
-        assertFalse(outContent.toString().contains("500"), "401 no 500");
+        assertThat(outContent.toString().contains(Reasons.getReasonPhrase("401"))).as("401").isTrue();
+        assertThat(outContent.toString().contains("500")).as("401 no 500").isFalse();
     }
 
     @Test
-    public void testMainAll() {
+    void testMainAll() {
         Reasons.main();
-        assertTrue(outContent.toString().contains(Reasons.getReasonPhrase(301)), "301");
-        assertTrue(outContent.toString().contains(Reasons.getReasonPhrase(404)), "404");
+        assertThat(outContent.toString().contains(Reasons.getReasonPhrase(301))).as("301").isTrue();
+        assertThat(outContent.toString().contains(Reasons.getReasonPhrase(404))).as("404").isTrue();
     }
 
     @Test
-    public void testMainArgs() {
+    void testMainArgs() {
         Reasons.main("500", "302");
-        assertTrue(outContent.toString().contains(Reasons.getReasonPhrase("500")), "500 (302)");
-        assertTrue(outContent.toString().contains(Reasons.getReasonPhrase("302")), "(500) 302");
-        assertFalse(outContent.toString().contains("404"), "500/302 not 404");
+        assertThat(outContent.toString().contains(Reasons.getReasonPhrase("500"))).as("500 (302)").isTrue();
+        assertThat(outContent.toString().contains(Reasons.getReasonPhrase("302"))).as("(500) 302").isTrue();
+        assertThat(outContent.toString().contains("404")).as("500/302 not 404").isFalse();
     }
 
     @Test
-    public void testMainInvalid() {
+    void testMainInvalid() {
         Reasons.main("aaa");
-        assertTrue(outContent.toString().isEmpty(), "invalid argument: aaa");
+        assertThat(outContent.toString().isEmpty()).as("invalid argument: aaa").isTrue();
     }
 }

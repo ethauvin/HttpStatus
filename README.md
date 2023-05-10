@@ -7,7 +7,6 @@
 [![License (3-Clause BSD)](https://img.shields.io/badge/license-BSD%203--Clause-blue.svg?style=flat-square)](http://opensource.org/licenses/BSD-3-Clause)
 [![Known Vulnerabilities](https://snyk.io/test/github/ethauvin/httpstatus/badge.svg?targetFile=pom.xml)](https://snyk.io/test/github/ethauvin/httpstatus?targetFile=pom.xml)  
 [![GitHub CI](https://github.com/ethauvin/httpstatus/actions/workflows/bld.yml/badge.svg)](https://github.com/ethauvin/httpstatus/actions/workflows/bld.yml)
-[![Build status](https://ci.appveyor.com/api/projects/status/w5j4kul3w2rkigxb?svg=true)](https://ci.appveyor.com/project/ethauvin/httpstatus)
 [![CircleCI](https://circleci.com/gh/ethauvin/HttpStatus/tree/master.svg?style=shield)](https://circleci.com/gh/ethauvin/HttpStatus/tree/master)
 
 

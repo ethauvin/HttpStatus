@@ -7,7 +7,7 @@
     ],
     "java.configuration.updateBuildConfiguration": "automatic",
     "java.project.referencedLibraries": [
-        "${HOME}/.rife2/dist/rife2-1.6.3.jar",
+        "${HOME}bld-1.7.0.jar",
         "lib/compile/*.jar",
         "lib/runtime/*.jar",
         "lib/test/*.jar"

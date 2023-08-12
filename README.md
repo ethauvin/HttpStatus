@@ -1,11 +1,12 @@
 #  HttpStatus JSP Tag Library
 
+[![License (3-Clause BSD)](https://img.shields.io/badge/license-BSD%203--Clause-blue.svg?style=flat-square)](http://opensource.org/licenses/BSD-3-Clause)
 [![Java](https://img.shields.io/badge/java-17%2B-blue)](https://www.oracle.com/java/technologies/javase/jdk17-archive-downloads.html)
 [![Release](https://img.shields.io/github/release/ethauvin/httpstatus.svg)](https://github.com/ethauvin/httpstatus/releases/latest)
 [![Maven Central](https://img.shields.io/maven-central/v/net.thauvin.erik.httpstatus/httpstatus.svg?label=maven%20central)](https://search.maven.org/search?q=g:%22net.thauvin.erik.httpstatus%22%20AND%20a:%22httpstatus%22)
 ![Sonatype Nexus (Snapshots)](https://img.shields.io/nexus/s/net.thauvin.erik.httpstatus/httpstatus?server=https%3A%2F%2Foss.sonatype.org)  
-[![License (3-Clause BSD)](https://img.shields.io/badge/license-BSD%203--Clause-blue.svg?style=flat-square)](http://opensource.org/licenses/BSD-3-Clause)
-[![Known Vulnerabilities](https://snyk.io/test/github/ethauvin/httpstatus/badge.svg?targetFile=pom.xml)](https://snyk.io/test/github/ethauvin/httpstatus?targetFile=pom.xml)  
+[![Known Vulnerabilities](https://snyk.io/test/github/ethauvin/httpstatus/badge.svg?targetFile=pom.xml)](https://snyk.io/test/github/ethauvin/httpstatus?targetFile=pom.xml)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=ethauvin_HttpStatus&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=ethauvin_HttpStatus)
 [![GitHub CI](https://github.com/ethauvin/httpstatus/actions/workflows/bld.yml/badge.svg)](https://github.com/ethauvin/httpstatus/actions/workflows/bld.yml)
 [![CircleCI](https://circleci.com/gh/ethauvin/HttpStatus/tree/master.svg?style=shield)](https://circleci.com/gh/ethauvin/HttpStatus/tree/master)
 

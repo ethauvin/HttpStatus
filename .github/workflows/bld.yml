@@ -34,9 +34,14 @@ jobs:
       - name: Run tests with bld
         run: ./bld compile jacoco
 
+      - name: Remove pom.xml
+        if: success() && matrix.java-version == env.SONAR_JDK
+        run: rm -rf pom.xml
+
       - name: SonarCloud Scan
         uses: sonarsource/sonarcloud-github-action@master
         if: success() && matrix.java-version == env.SONAR_JDK
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+

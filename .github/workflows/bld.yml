@@ -29,4 +29,19 @@ jobs:
         run: ./bld download
 
       - name: Run tests with bld
-        run: ./bld compile test
+        run: ./bld compile jacoco
+
+      - name: SonarCloud Scan
+        uses: sonarsource/sonarcloud-github-action@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        args: >
+          -Dsonar.organization=ethauvin-github
+          -Dsonar.projectKey=my-ethauvin_HttpStatus
+          -Dsonar.coverage.jacoco.xmlReportPaths=build/reports/jacoco/test/jacocoTestReport.xml
+          -Dsonar.jacoco.reportPath=build/jacoco/jacoco.exec
+          -Dsonar.sources=src/main/java/
+          -Dsonar.tests=src/test/java/
+          -Dsonar.verbose=true
+

@@ -35,12 +35,14 @@ package net.thauvin.erik.httpstatus;
 import rife.bld.BuildCommand;
 import rife.bld.Project;
 import rife.bld.dependencies.Dependency;
+import rife.bld.extension.JacocoReportOperation;
 import rife.bld.extension.PmdOperation;
 import rife.bld.publish.PublishDeveloper;
 import rife.bld.publish.PublishInfo;
 import rife.bld.publish.PublishLicense;
 import rife.bld.publish.PublishScm;
 
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
@@ -117,8 +119,15 @@ public class HttpStatusBuild extends Project {
         Files.copy(pomPath, Path.of(workDirectory.getAbsolutePath(), "pom.xml"), StandardCopyOption.REPLACE_EXISTING);
     }
 
+    @BuildCommand(summary = "Generates Jacoco Reports")
+    public void jacoco() throws IOException {
+        new JacocoReportOperation()
+                .fromProject(this)
+                .execute();
+    }
+
     @BuildCommand(summary = "Runs PMD analysis")
-    public void pmd() throws Exception {
+    public void pmd() {
         new PmdOperation()
                 .fromProject(this)
                 .failOnViolation(true)

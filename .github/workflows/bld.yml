@@ -48,5 +48,4 @@ jobs:
             -Dsonar.jacoco.reportPath=build/jacoco/jacoco.exec
             -Dsonar.sources=src/main/java/
             -Dsonar.tests=src/test/java/
-            -Dsonar.verbose=true
 

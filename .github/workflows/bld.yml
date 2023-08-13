@@ -7,7 +7,7 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
-      COVERAGE: "17"
+      COVERAGE_SDK: "17"
 
     strategy:
       matrix:

@@ -71,10 +71,10 @@ The `<hs:cause/>` tag displays the cause of current HTTP status code, if any. A 
 
 Optional attributes are:
 
-Attribute   | Description
------------ | -------------------------------------------------------------------------------------------
-`default`   | The fallback value to output, if no cause is available.
-`escapeXml` | Converts &lt;, &gt;, &amp;, ', " to their corresponding [entity codes](http://dev.w3.org/html5/html-author/charref). Value is `true` by default.
+| Attribute   | Description                                                                                              |
+|-------------|----------------------------------------------------------------------------------------------------------|
+| `default`   | The fallback value to output, if no cause is                                                             |
+| `escapeXml` | Converts &lt;, &gt;, &amp;, ', " to their corresponding [entity codes](http://dev.w3.org/html5/html-author/charref). Value is `true` by default. |
 
 ## hs:code
 The `<hs:code/>` tag displays the current HTTP status code, if any. A shorthand for:
@@ -93,20 +93,20 @@ The `<hs:message/>` tag displays the current error message, if any. A shorthand 
 
 Optional attributes are:
 
-Attribute   | Description
------------ | -------------------------------------------------------------------------------------------
-`default`   | The fallback value to output, if no error message is available.
-`escapeXml` | Converts &lt;, &gt;, &amp;, ', " to their corresponding [entity codes](http://dev.w3.org/html5/html-author/charref). Value is `true` by default.
+| Attribute   | Description                                                                                              |
+|-------------|----------------------------------------------------------------------------------------------------------|
+| `default`   | The fallback value to output, if no error message is available.                                          |
+| `escapeXml` | Converts &lt;, &gt;, &amp;, ', " to their corresponding [entity codes](http://dev.w3.org/html5/html-author/charref). Value is `true` by default. |
 
 ## hs:reason
 
 The `<hs:reason/>` tag displays the reason for a HTTP status code, if any. Optional attributes are:
 
-Attribute   | Description
------------ | -------------------------------------------------------------------------------------------
-`code`      | The HTTP status error code. If not specified the current status code is used.
-`default`   | The fallback value to output, if no reason is available.
-`escapeXml` | Converts &lt;, &gt;, &amp;, ', " to their corresponding [entity codes](http://dev.w3.org/html5/html-author/charref). Value is `true` by default.
+| Attribute   | Description                                                                                              |
+|-------------|----------------------------------------------------------------------------------------------------------|
+| `default`   | The fallback value to output, if no reason is available.                                                 |
+| `code`      | The HTTP status error code. If not specified the current status code is used.                            |
+| `escapeXml` | Converts &lt;, &gt;, &amp;, ', " to their corresponding [entity codes](http://dev.w3.org/html5/html-author/charref). Value is `true` by default. |
 
 ## StatusCode Bean
 
@@ -147,114 +147,114 @@ if (statusCode.isError()) {
 
 The `StatusCode` bean methods are:
 
-Method            | Description
------------------ | --------------------------------------------------------------------
-`getReason`       | Returns the reason for the status code (eg: `Internal Server Error`)
-`isClientError`   | Checks if the status code is a client error.
-`isError`         | Checks if the status code is a server or client error.
-`isInfo`          | Checks if the status code is informational.
-`isRedirect`      | Checks if the status code is a redirect.
-`isServerError`   | Checks if the status code is a server error.
-`isSuccess`       | Checks if the status code is a success. (`OK`)
-`isValid`         | Checks if the status code is valid.
+| Method          | Description                                                          |
+|-----------------|----------------------------------------------------------------------|
+| `getReason`     | Returns the reason for the status code (eg: `Internal Server Error`) |
+| `isClientError` | Checks if the status code is a client error.                         |
+| `isError`       | Checks if the status code is a server or client error.               |
+| `isInfo`        | Checks if the status code is informational.                          |
+| `isRedirect`    | Checks if the status code is a redirect.                             |
+| `isServerError` | Checks if the status code is a server error.                         |
+| `isSuccess`     | Checks if the status code is a success. (`OK`)                       |
+| `isValid`       | Checks if the status code is valid.                                  |
 
 ## Reasons
 
 The reasons are defined in a [ResourceBundle](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/ResourceBundle.html) properties as follows:
 
-Status Code | Reason
------------ | -----------------------------------
-`100`       | Continue
-`101`       | Switching Protocols
-`102`       | Processing
-`103`       | Early Hints
-`200`       | OK
-`201`       | Created
-`202`       | Accepted
-`203`       | Non-Authoritative Information
-`204`       | No Content
-`205`       | Reset Content
-`206`       | Partial Content
-`207`       | Multi-Status
-`208`       | Already Reported
-`218`       | This is fine
-`226`       | IM Used
-`300`       | Multiple Choices
-`301`       | Moved Permanently
-`302`       | Found/Moved Temporarily
-`303`       | See Other
-`304`       | Not Modified
-`305`       | Use Proxy
-`306`       | Switch Proxy
-`307`       | Temporary Redirect
-`308`       | Permanent Redirect
-`400`       | Bad Request
-`401`       | Unauthorized
-`402`       | Payment Required
-`403`       | Forbidden
-`404`       | Not Found
-`405`       | Method Not Allowed
-`406`       | Not Acceptable
-`407`       | Proxy Authentication Required
-`408`       | Request Timeout
-`409`       | Conflict
-`410`       | Gone
-`411`       | Length Required
-`412`       | Precondition Failed
-`413`       | Request Entity/Payload Too Large
-`414`       | Request-URI Too Long
-`415`       | Unsupported Media Type
-`416`       | Requested Range Not Satisfiable
-`417`       | Expectation Failed
-`418`       | I'm A Teapot
-`419`       | Insufficient Space on Resource
-`420`       | Method Failure
-`421`       | Misdirected Request
-`422`       | Unprocessable Entity
-`423`       | Locked
-`424`       | Failed Dependency
-`426`       | Upgrade Required
-`428`       | Precondition Required
-`429`       | Too Many Requests
-`430`       | Request Header Fields Too Large
-`431`       | Request Header Fields Too Large
-`440`       | Login Timeout
-`444`       | No Response
-`449`       | Retry With
-`450`       | Blocked by Windows Parental Controls
-`451`       | Unavailable For Legal Reasons
-`460`       | Client Closed Connection Before Load Balancer Idle Timeout
-`463`       | X-Forwarded-For Header with More than 30 IP Addresses
-`494`       | Request Header Too Large
-`495`       | SSL Certificate Error
-`496`       | No SSL Certificate
-`497`       | HTTP Request Sent to HTTPS Port
-`498`       | Token Expired/Invalid
-`499`       | Client Closed Request
-`500`       | Internal Server Error
-`501`       | Not Implemented
-`502`       | Bad Gateway
-`503`       | Service Unavailable
-`504`       | Gateway Timeout
-`505`       | HTTP Version Not Supported
-`506`       | Variant Also Negotiates
-`507`       | Insufficient Storage
-`508`       | Loop Detected
-`509`       | Bandwidth Limit Exceeded
-`510`       | Not Extended
-`511`       | Network Authentication Required
-`520`       | Unknown Error
-`521`       | Web Server Is Down
-`522`       | Origin Connection Time-out
-`523`       | Origin Is Unreachable
-`524`       | A Timeout Occurred
-`525`       | SSL Handshake Failed
-`526`       | Invalid SSL Certificate
-`527`       | Railgun Error
-`529`       | Site is overloaded
-`530`       | Site is frozen
-`598`       | Network Read Timeout Error
-`599`       | Network Connect Timeout Error
+| Status Code | Reason                                                     |
+|-------------|------------------------------------------------------------|
+| `100`       | Continue                                                   |
+| `101`       | Switching Protocols                                        |
+| `102`       | Processing                                                 |
+| `103`       | Early Hints                                                |
+| `200`       | OK                                                         |
+| `201`       | Created                                                    |
+| `202`       | Accepted                                                   |
+| `203`       | Non-Authoritative Information                              |
+| `204`       | No Content                                                 |
+| `205`       | Reset Content                                              |
+| `206`       | Partial Content                                            |
+| `207`       | Multi-Status                                               |
+| `208`       | Already Reported                                           |
+| `218`       | This is fine                                               |
+| `226`       | IM Used                                                    |
+| `300`       | Multiple Choices                                           |
+| `301`       | Moved Permanently                                          |
+| `302`       | Found/Moved Temporarily                                    |
+| `303`       | See Other                                                  |
+| `304`       | Not Modified                                               |
+| `305`       | Use Proxy                                                  |
+| `306`       | Switch Proxy                                               |
+| `307`       | Temporary Redirect                                         |
+| `308`       | Permanent Redirect                                         |
+| `400`       | Bad Request                                                |
+| `401`       | Unauthorized                                               |
+| `402`       | Payment Required                                           |
+| `403`       | Forbidden                                                  |
+| `404`       | Not Found                                                  |
+| `405`       | Method Not Allowed                                         |
+| `406`       | Not Acceptable                                             |
+| `407`       | Proxy Authentication Required                              |
+| `408`       | Request Timeout                                            |
+| `409`       | Conflict                                                   |
+| `410`       | Gone                                                       |
+| `411`       | Length Required                                            |
+| `412`       | Precondition Failed                                        |
+| `413`       | Request Entity/Payload Too Large                           |
+| `414`       | Request-URI Too Long                                       |
+| `415`       | Unsupported Media Type                                     |
+| `416`       | Requested Range Not Satisfiable                            |
+| `417`       | Expectation Failed                                         |
+| `418`       | I'm A Teapot                                               |
+| `419`       | Insufficient Space on Resource                             |
+| `420`       | Method Failure                                             |
+| `421`       | Misdirected Request                                        |
+| `422`       | Unprocessable Entity                                       |
+| `423`       | Locked                                                     |
+| `424`       | Failed Dependency                                          |
+| `426`       | Upgrade Required                                           |
+| `428`       | Precondition Required                                      |
+| `429`       | Too Many Requests                                          |
+| `430`       | Request Header Fields Too Large                            |
+| `431`       | Request Header Fields Too Large                            |
+| `440`       | Login Timeout                                              |
+| `444`       | No Response                                                |
+| `449`       | Retry With                                                 |
+| `450`       | Blocked by Windows Parental Controls                       |
+| `451`       | Unavailable For Legal Reasons                              |
+| `460`       | Client Closed Connection Before Load Balancer Idle Timeout |
+| `463`       | X-Forwarded-For Header with More than 30 IP Addresses      |
+| `494`       | Request Header Too Large                                   |
+| `495`       | SSL Certificate Error                                      |
+| `496`       | No SSL Certificate                                         |
+| `497`       | HTTP Request Sent to HTTPS Port                            |
+| `498`       | Token Expired/Invalid                                      |
+| `499`       | Client Closed Request                                      |
+| `500`       | Internal Server Error                                      |
+| `501`       | Not Implemented                                            |
+| `502`       | Bad Gateway                                                |
+| `503`       | Service Unavailable                                        |
+| `504`       | Gateway Timeout                                            |
+| `505`       | HTTP Version Not Supported                                 |
+| `506`       | Variant Also Negotiates                                    |
+| `507`       | Insufficient Storage                                       |
+| `508`       | Loop Detected                                              |
+| `509`       | Bandwidth Limit Exceeded                                   |
+| `510`       | Not Extended                                               |
+| `511`       | Network Authentication Required                            |
+| `520`       | Unknown Error                                              |
+| `521`       | Web Server Is Down                                         |
+| `522`       | Origin Connection Time-out                                 |
+| `523`       | Origin Is Unreachable                                      |
+| `524`       | A Timeout Occurred                                         |
+| `525`       | SSL Handshake Failed                                       |
+| `526`       | Invalid SSL Certificate                                    |
+| `527`       | Railgun Error                                              |
+| `529`       | Site is overloaded                                         |
+| `530`       | Site is frozen                                             |
+| `598`       | Network Read Timeout Error                                 |
+| `599`       | Network Connect Timeout Error                              |
 
 ## Command Line Usage
 You can query the reason phrase for status codes as follows:

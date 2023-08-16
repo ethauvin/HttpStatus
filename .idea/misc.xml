@@ -2,6 +2,10 @@
   <component name="EntryPointsManager">
     <pattern value="net.thauvin.erik.httpstatus.HttpStatusBuild" />
     <pattern value="net.thauvin.erik.httpstatus.HttpStatusBuild" method="pmd" />
+    <pattern value="net.thauvin.erik.httpstatus.HttpStatusBuild" method="jacoco" />
+    <pattern value="net.thauvin.erik.httpstatus.taglibs.XmlSupport" method="setDefault" />
+    <pattern value="net.thauvin.erik.httpstatus.taglibs.XmlSupport" method="setEscapeXml" />
+    <pattern value="net.thauvin.erik.httpstatus.taglibs.ReasonTag" method="setCode" />
   </component>
   <component name="PDMPlugin">
     <option name="customRuleSets">

@@ -34,18 +34,14 @@ package net.thauvin.erik.httpstatus;
 
 import rife.bld.BuildCommand;
 import rife.bld.Project;
-import rife.bld.dependencies.Dependency;
 import rife.bld.extension.JacocoReportOperation;
 import rife.bld.extension.PmdOperation;
-import rife.bld.publish.PublishDeveloper;
-import rife.bld.publish.PublishInfo;
-import rife.bld.publish.PublishLicense;
-import rife.bld.publish.PublishScm;
+import rife.bld.operations.JUnitOperation;
+import rife.bld.publish.*;
+import rife.tools.FileUtils;
 
 import java.io.IOException;
-import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.StandardCopyOption;
 import java.util.List;
 
 import static rife.bld.dependencies.Repository.*;
@@ -75,8 +71,8 @@ public class HttpStatusBuild extends Project {
                 .include(dependency("jakarta.el", "jakarta.el-api", version(5, 0, 1)));
         scope(test)
                 .include(dependency("org.assertj", "assertj-joda-time", version(2, 2, 0)))
-                .include(dependency("org.junit.jupiter", "junit-jupiter", version(5, 9, 3)))
-                .include(dependency("org.junit.platform", "junit-platform-console-standalone", version(1, 9, 3)));
+                .include(dependency("org.junit.jupiter", "junit-jupiter", version(5, 10, 0)))
+                .include(dependency("org.junit.platform", "junit-platform-console-standalone", version(1, 10, 0)));
 
         javadocOperation().javadocOptions()
                 .docTitle(description + ' ' + version.toString())
@@ -93,6 +89,7 @@ public class HttpStatusBuild extends Project {
                         .groupId(pkg)
                         .artifactId(name.toLowerCase())
                         .name(name)
+                        .version(version)
                         .description(description)
                         .url(url)
                         .developer(new PublishDeveloper().id("ethauvin").name("Erik C. Thauvin").email("erik@thauvin.net")
@@ -110,16 +107,7 @@ public class HttpStatusBuild extends Project {
         new HttpStatusBuild().start(args);
     }
 
-    @Override
-    public void publish() throws Exception {
-        super.publish();
-        var pomPath = Path.of(MAVEN_LOCAL.getArtifactLocation(new Dependency(pkg, name.toLowerCase(), version)),
-                version.toString(),
-                name.toLowerCase() + '-' + version + ".pom");
-        Files.copy(pomPath, Path.of(workDirectory.getAbsolutePath(), "pom.xml"), StandardCopyOption.REPLACE_EXISTING);
-    }
-
-    @BuildCommand(summary = "Generates Jacoco Reports")
+    @BuildCommand(summary = "Generates JaCoCo Reports")
     public void jacoco() throws IOException {
         new JacocoReportOperation()
                 .fromProject(this)
@@ -133,5 +121,12 @@ public class HttpStatusBuild extends Project {
                 .failOnViolation(true)
                 .ruleSets("config/pmd.xml")
                 .execute();
+    }
+
+    @Override
+    public void publish() throws Exception {
+        super.publish();
+        var xml = new PomBuilder().info(publishOperation().info()).dependencies(dependencies).build();
+        FileUtils.writeString(xml, Path.of(workDirectory.getPath(), "pom.xml").toFile());
     }
 }

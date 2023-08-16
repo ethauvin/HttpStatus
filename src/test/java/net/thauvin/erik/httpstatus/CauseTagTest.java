@@ -1,5 +1,5 @@
 /*
- * CauseTag.java
+ * CauseTagTest.java
  *
  * Copyright 2023 sErik C. Thauvin (erik@thauvin.net)
  * All rights reserved.
@@ -30,46 +30,28 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package net.thauvin.erik.httpstatus.taglibs;
+package net.thauvin.erik.httpstatus;
 
-import jakarta.servlet.jsp.JspWriter;
-import jakarta.servlet.jsp.PageContext;
-import net.thauvin.erik.httpstatus.Utils;
+import net.thauvin.erik.httpstatus.taglibs.CauseTag;
+import org.junit.jupiter.api.Test;
 
-import java.io.IOException;
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
- * The <code>&lt;hs:cause&gt;</code> tag returns the cause (if any) for the current HTTP Status Error Code.
+ * Implements the CauseTagTest class.
  *
- * @author <a href="mailto:erik@thauvin.net">Erik C. Thauvin</a>
- * @created 2015-12-03
+ * @author <a href="https://erik.thauvin.net/">Erik C. Thauvin</a>
  * @since 1.0
  */
-public class CauseTag extends XmlSupport {
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void doTag() throws IOException {
-        final PageContext pageContext = (PageContext) getJspContext();
-        final JspWriter out = pageContext.getOut();
+class CauseTagTest {
+    @Test
+    void causeTest() {
+        var message = "This is the cause";
+        var tag = new CauseTag();
 
-        final Throwable cause = pageContext.getErrorData().getThrowable().getCause();
-
-        Utils.outWrite(out, getCause(cause), defaultValue, escapeXml);
-    }
-
-    /**
-     * Returns the cause's localized message or default value.
-     *
-     * @param cause The cause.
-     * @return The cause or {@code null}.
-     */
-    public String getCause(Throwable cause) {
-        if (cause != null && cause.getLocalizedMessage() != null) {
-            return cause.getLocalizedMessage();
-        } else {
-            return null;
-        }
+        assertThat(tag.getCause(new Exception(message))).as("has cause").isEqualTo(message);
+        assertThat(tag.getCause(new Exception())).as("no cause").isNull();
+        assertThat(tag.getCause(null)).as("null").isNull();
+        assertThat(tag.getCause(new Exception(""))).as("empty").isEmpty();
     }
 }

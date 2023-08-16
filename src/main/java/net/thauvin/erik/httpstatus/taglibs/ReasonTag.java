@@ -56,7 +56,7 @@ public class ReasonTag extends XmlSupport {
     @Override
     public void doTag() {
         final PageContext pageContext = (PageContext) getJspContext();
-        @SuppressWarnings("PMD.CloseResource") final JspWriter out = pageContext.getOut();
+        final JspWriter out = pageContext.getOut();
 
         try {
             if (statusCode > -1) {
@@ -75,7 +75,6 @@ public class ReasonTag extends XmlSupport {
      *
      * @param statusCode The status code.
      */
-    @SuppressWarnings("unused")
     public void setCode(final int statusCode) {
         this.statusCode = statusCode;
     }

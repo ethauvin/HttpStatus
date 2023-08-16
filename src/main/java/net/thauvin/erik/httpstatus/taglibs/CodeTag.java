@@ -52,7 +52,7 @@ public class CodeTag extends SimpleTagSupport {
     @Override
     public void doTag() throws IOException {
         final PageContext pageContext = (PageContext) getJspContext();
-        @SuppressWarnings("PMD.CloseResource") final JspWriter out = pageContext.getOut();
+        final JspWriter out = pageContext.getOut();
 
         out.write(String.valueOf(pageContext.getErrorData().getStatusCode()));
     }

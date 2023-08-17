@@ -1,4 +1,4 @@
-version: 2
+inversion: 2
 defaults: &defaults
   working_directory: ~/repo
   environment:
@@ -17,11 +17,11 @@ defaults_gradle: &defaults_bld
         command: ./bld compile test
 
 jobs:
-  bld_jdk18:
+  bld_jdk20:
     <<: *defaults
 
     docker:
-      - image: cimg/openjdk:18.0
+      - image: cimg/openjdk:20.0
 
     <<: *defaults_bld
 
@@ -38,4 +38,4 @@ workflows:
   bld:
     jobs:
       - bld_jdk17
-      - bld_jdk18
+      - bld_jdk20

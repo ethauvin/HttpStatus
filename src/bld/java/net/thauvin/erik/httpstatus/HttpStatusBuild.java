@@ -63,7 +63,7 @@ public class HttpStatusBuild extends Project {
         javaRelease = 17;
 
         downloadSources = true;
-        repositories = List.of(MAVEN_LOCAL, MAVEN_CENTRAL, SONATYPE_SNAPSHOTS);
+        repositories = List.of(MAVEN_CENTRAL, SONATYPE_SNAPSHOTS);
 
         scope(compile)
                 .include(dependency("jakarta.servlet", "jakarta.servlet-api", version(6, 0, 0)))

@@ -2,6 +2,7 @@
 
 [![License (3-Clause BSD)](https://img.shields.io/badge/license-BSD%203--Clause-blue.svg?style=flat-square)](http://opensource.org/licenses/BSD-3-Clause)
 [![Java](https://img.shields.io/badge/java-17%2B-blue)](https://www.oracle.com/java/technologies/javase/jdk17-archive-downloads.html)
+[![bld](https://img.shields.io/badge/1.7.0-FA9052?label=bld&labelColor=2392FF)](https://rife2.com/bld)
 [![Release](https://img.shields.io/github/release/ethauvin/httpstatus.svg)](https://github.com/ethauvin/httpstatus/releases/latest)
 [![Maven Central](https://img.shields.io/maven-central/v/net.thauvin.erik.httpstatus/httpstatus.svg?label=maven%20central)](https://search.maven.org/search?q=g:%22net.thauvin.erik.httpstatus%22%20AND%20a:%22httpstatus%22)
 ![Sonatype Nexus (Snapshots)](https://img.shields.io/nexus/s/net.thauvin.erik.httpstatus/httpstatus?server=https%3A%2F%2Foss.sonatype.org)  

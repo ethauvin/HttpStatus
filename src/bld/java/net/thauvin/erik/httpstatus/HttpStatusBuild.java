@@ -36,9 +36,8 @@ import rife.bld.BuildCommand;
 import rife.bld.Project;
 import rife.bld.extension.JacocoReportOperation;
 import rife.bld.extension.PmdOperation;
-import rife.bld.operations.JUnitOperation;
 import rife.bld.publish.*;
-import rife.tools.FileUtils;
+import rife.tools.exceptions.FileUtilsErrorException;
 
 import java.io.IOException;
 import java.nio.file.Path;
@@ -126,7 +125,17 @@ public class HttpStatusBuild extends Project {
     @Override
     public void publish() throws Exception {
         super.publish();
-        var xml = new PomBuilder().info(publishOperation().info()).dependencies(dependencies).build();
-        FileUtils.writeString(xml, Path.of(workDirectory.getPath(), "pom.xml").toFile());
+        rootPom();
+    }
+
+    @Override
+    public void publishLocal() throws Exception {
+        super.publishLocal();
+        rootPom();
+    }
+
+    private void rootPom() throws FileUtilsErrorException {
+        PomBuilder.generateInto(publishOperation().info(), publishOperation().dependencies(),
+                Path.of(workDirectory.getPath(), "pom.xml").toFile());
     }
 }

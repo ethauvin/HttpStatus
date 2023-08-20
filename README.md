@@ -72,9 +72,9 @@ The `<hs:cause/>` tag displays the cause of current HTTP status code, if any. A 
 
 Optional attributes are:
 
-| Attribute   | Description                                                                                              |
-|-------------|----------------------------------------------------------------------------------------------------------|
-| `default`   | The fallback value to output, if no cause is                                                             |
+| Attribute   | Description                                                                                                                                      |
+|-------------|--------------------------------------------------------------------------------------------------------------------------------------------------|
+| `default`   | The fallback value to output, if no cause is                                                                                                     |
 | `escapeXml` | Converts &lt;, &gt;, &amp;, ', " to their corresponding [entity codes](http://dev.w3.org/html5/html-author/charref). Value is `true` by default. |
 
 ## hs:code
@@ -94,19 +94,19 @@ The `<hs:message/>` tag displays the current error message, if any. A shorthand 
 
 Optional attributes are:
 
-| Attribute   | Description                                                                                              |
-|-------------|----------------------------------------------------------------------------------------------------------|
-| `default`   | The fallback value to output, if no error message is available.                                          |
+| Attribute   | Description                                                                                                                                      |
+|-------------|--------------------------------------------------------------------------------------------------------------------------------------------------|
+| `default`   | The fallback value to output, if no error message is available.                                                                                  |
 | `escapeXml` | Converts &lt;, &gt;, &amp;, ', " to their corresponding [entity codes](http://dev.w3.org/html5/html-author/charref). Value is `true` by default. |
 
 ## hs:reason
 
-The `<hs:reason/>` tag displays the reason for a HTTP status code, if any. Optional attributes are:
+The `<hs:reason/>` tag displays the reason for an HTTP status code, if any. Optional attributes are:
 
-| Attribute   | Description                                                                                              |
-|-------------|----------------------------------------------------------------------------------------------------------|
-| `default`   | The fallback value to output, if no reason is available.                                                 |
-| `code`      | The HTTP status error code. If not specified the current status code is used.                            |
+| Attribute   | Description                                                                                                                                      |
+|-------------|--------------------------------------------------------------------------------------------------------------------------------------------------|
+| `default`   | The fallback value to output, if no reason is available.                                                                                         |
+| `code`      | The HTTP status error code. If not specified the current status code is used.                                                                    |
 | `escapeXml` | Converts &lt;, &gt;, &amp;, ', " to their corresponding [entity codes](http://dev.w3.org/html5/html-author/charref). Value is `true` by default. |
 
 ## StatusCode Bean
@@ -134,14 +134,17 @@ or in a Servlet:
 ```java
 import net.thauvin.erik.httpstatus.StatusCode;
 
-// ---
-
-StatusCode statusCode = new StatusCode((Integer) request.getAttribute("javax.servlet.error.status_code"));
-if (statusCode.isError()) {
-    if (statusCode.isServerError()) {
-        String reason = statusCode.getReason();
-    } else {
-        // ...
+public class ExampleServlet extends HttpServlet {
+    public void doGet(HttpServletRequest request, HttpServletResponse response)  {
+        var statusCode = new StatusCode(
+                (Integer) request.getAttribute("javax.servlet.error.status_code"));
+        if (statusCode.isError()) {
+            if (statusCode.isServerError()) {
+                var reason = statusCode.getReason();
+            } else {
+                // ...
+            }
+        }
     }
 }
 ```

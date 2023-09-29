@@ -39,6 +39,7 @@ import java.io.Serializable;
  * The <code>StatusCode</code> bean implements methods to check the class of an HTTP status code.
  *
  * @author <a href="mailto:erik@thauvin.net">Erik C. Thauvin</a>
+ * @since 1.1.0
  */
 public class StatusCode implements Serializable {
     @Serial

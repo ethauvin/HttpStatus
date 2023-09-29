@@ -37,7 +37,7 @@
 
     <description>HttpStatus JSP Tag Library</description>
     <display-name>HttpStatus JSP Tags</display-name>
-    <tlib-version>1.0.5</tlib-version>
+    <tlib-version>1.1.0</tlib-version>
     <short-name>hs</short-name>
     <uri>http://erik.thauvin.net/taglibs/httpstatus</uri>
 

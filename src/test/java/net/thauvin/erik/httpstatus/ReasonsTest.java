@@ -38,7 +38,6 @@ import java.util.ResourceBundle;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-
 /**
  * Reasons Tests.
  *

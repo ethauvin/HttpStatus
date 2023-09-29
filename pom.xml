@@ -6,7 +6,7 @@
   <artifactId>httpstatus</artifactId>
   <version>1.1.0-SNAPSHOT</version>
   <name>HttpStatus</name>
-  <description>HttpStatus JSP Tag Library</description>
+  <description>Tag library to display the code, reason, cause and/or message for HTTP status codes in JSP error pages</description>
   <url>https://github.com/ethauvin/HttpStatus</url>
   <licenses>
     <license>

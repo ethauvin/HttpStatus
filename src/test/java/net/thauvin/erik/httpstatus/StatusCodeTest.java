@@ -42,6 +42,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  * StatusCode Tests.
  *
  * @author <a href="mailto:erik@thauvin.net">Erik C. Thauvin</a>
+ * @since 1.1.0
  */
 class StatusCodeTest {
     @Test

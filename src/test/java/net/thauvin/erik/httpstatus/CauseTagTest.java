@@ -41,7 +41,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  * Implements the CauseTagTest class.
  *
  * @author <a href="https://erik.thauvin.net/">Erik C. Thauvin</a>
- * @since 1.0
+ * @since 1.1.0
  */
 class CauseTagTest {
     @Test

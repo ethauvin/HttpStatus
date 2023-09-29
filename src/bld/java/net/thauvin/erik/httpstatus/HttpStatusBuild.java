@@ -42,6 +42,7 @@ import rife.tools.exceptions.FileUtilsErrorException;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.util.List;
+import java.util.jar.Attributes;
 
 import static rife.bld.dependencies.Repository.*;
 import static rife.bld.dependencies.Scope.compile;
@@ -54,7 +55,7 @@ public class HttpStatusBuild extends Project {
         name = "HttpStatus";
         version = version(1, 1, 0, "SNAPSHOT");
 
-        var description = "HttpStatus JSP Tag Library";
+        var description = "Tag library to display the code, reason, cause and/or message for HTTP status codes in JSP error pages";
         var url = "https://github.com/ethauvin/HttpStatus";
 
         mainClass = "net.thauvin.erik.httpstatus.Reasons";
@@ -69,9 +70,11 @@ public class HttpStatusBuild extends Project {
                 .include(dependency("jakarta.servlet.jsp", "jakarta.servlet.jsp-api", version(3, 1, 1)))
                 .include(dependency("jakarta.el", "jakarta.el-api", version(5, 0, 1)));
         scope(test)
-                .include(dependency("org.assertj", "assertj-joda-time", version(2, 2, 0)))
+                .include(dependency("org.assertj", "assertj-core", version(3, 24, 2)))
                 .include(dependency("org.junit.jupiter", "junit-jupiter", version(5, 10, 0)))
                 .include(dependency("org.junit.platform", "junit-platform-console-standalone", version(1, 10, 0)));
+
+        jarOperation().manifestAttribute(Attributes.Name.MAIN_CLASS, pkg + '.' + "Reasons");
 
         javadocOperation().javadocOptions()
                 .docTitle(description + ' ' + version.toString())
@@ -83,7 +86,6 @@ public class HttpStatusBuild extends Project {
                         .withCredentials(property("sonatype.user"), property("sonatype.password"))
                         : repository(SONATYPE_RELEASES.location())
                         .withCredentials(property("sonatype.user"), property("sonatype.password")))
-                .repository(MAVEN_LOCAL)
                 .info(new PublishInfo()
                         .groupId(pkg)
                         .artifactId(name.toLowerCase())

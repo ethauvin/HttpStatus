@@ -1,17 +1,27 @@
 # Changelog
 
-## [1.0.5](https://github.com/ethauvin/HttpStatus/tree/1.0.5) (2021-03-20)
+## [1.1.0](https://github.com/ethauvin/httpstatus/tree/1.1.0) (2023-09-29)
 
-[Full Changelog](https://github.com/ethauvin/HttpStatus/compare/1.0.4...1.0.5)
+[Full Changelog](https://github.com/ethauvin/httpstatus/compare/1.0.5...1.1.0)
+
+**Implemented enhancements:**
+
+- Move to Jakarta EE [\#7](https://github.com/ethauvin/HttpStatus/issues/7)
+- Only use XML character entities in Utils.escapeXml\(\) [\#6](https://github.com/ethauvin/HttpStatus/issues/6)
+- Implement a StatusCode bean to check the status code. [\#5](https://github.com/ethauvin/HttpStatus/issues/5)
+
+## [1.0.5](https://github.com/ethauvin/httpstatus/tree/1.0.5) (2021-03-20)
+
+[Full Changelog](https://github.com/ethauvin/httpstatus/compare/1.0.4...1.0.5)
 
 **Implemented enhancements:**
 
 - Retrieve the error message from the request, if available. [\#4](https://github.com/ethauvin/HttpStatus/issues/4)
 - Add Unofficial Codes [\#3](https://github.com/ethauvin/HttpStatus/issues/3)
 
-## [1.0.4](https://github.com/ethauvin/HttpStatus/tree/1.0.4) (2019-05-08)
+## [1.0.4](https://github.com/ethauvin/httpstatus/tree/1.0.4) (2019-05-08)
 
-[Full Changelog](https://github.com/ethauvin/HttpStatus/compare/1.0.3...1.0.4)
+[Full Changelog](https://github.com/ethauvin/httpstatus/compare/1.0.3...1.0.4)
 
 **Implemented enhancements:**
 
@@ -21,21 +31,21 @@
 
 - hs:reason always outputs the default value. [\#2](https://github.com/ethauvin/HttpStatus/issues/2)
 
-## [1.0.3](https://github.com/ethauvin/HttpStatus/tree/1.0.3) (2016-01-22)
+## [1.0.3](https://github.com/ethauvin/httpstatus/tree/1.0.3) (2016-01-22)
 
-[Full Changelog](https://github.com/ethauvin/HttpStatus/compare/1.0.2...1.0.3)
+[Full Changelog](https://github.com/ethauvin/httpstatus/compare/1.0.2...1.0.3)
 
-## [1.0.2](https://github.com/ethauvin/HttpStatus/tree/1.0.2) (2016-01-21)
+## [1.0.2](https://github.com/ethauvin/httpstatus/tree/1.0.2) (2016-01-21)
 
-[Full Changelog](https://github.com/ethauvin/HttpStatus/compare/1.0.1...1.0.2)
+[Full Changelog](https://github.com/ethauvin/httpstatus/compare/1.0.1...1.0.2)
 
-## [1.0.1](https://github.com/ethauvin/HttpStatus/tree/1.0.1) (2015-12-16)
+## [1.0.1](https://github.com/ethauvin/httpstatus/tree/1.0.1) (2015-12-16)
 
-[Full Changelog](https://github.com/ethauvin/HttpStatus/compare/1.0...1.0.1)
+[Full Changelog](https://github.com/ethauvin/httpstatus/compare/1.0...1.0.1)
 
-## [1.0](https://github.com/ethauvin/HttpStatus/tree/1.0) (2015-12-04)
+## [1.0](https://github.com/ethauvin/httpstatus/tree/1.0) (2015-12-04)
 
-[Full Changelog](https://github.com/ethauvin/HttpStatus/compare/ad982eff1b27c31b54df4abae00ac2d4065543d6...1.0)
+[Full Changelog](https://github.com/ethauvin/httpstatus/compare/ad982eff1b27c31b54df4abae00ac2d4065543d6...1.0)
 
 
 

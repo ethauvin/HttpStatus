@@ -43,7 +43,6 @@ import java.io.Writer;
  * @since 1.0
  */
 public final class Utils {
-
     /**
      * Disables the default constructor.
      *

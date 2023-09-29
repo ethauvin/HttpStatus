@@ -39,7 +39,6 @@ import java.io.StringWriter;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-
 /**
  * Utils Tests.
  *

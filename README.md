@@ -14,6 +14,24 @@
 
 A simple [JSP](http://www.oracle.com/technetwork/java/javaee/jsp/index.html) Tag Library to display the [code](#hscode), [reason](#hsreason), [cause](#hscode) and/or [message](#hsmessage) for [HTTP status codes](http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html) in JSP error pages.
 
+## Table of Contents
+
+- [Examples](#examples)
+- Usage
+  - [Gradle](#gradle)
+  - [bld](#bld)
+  - [Maven](#maven)
+- JSP Tags
+  - [hs:cause](#hscause)
+  - [hs:code](#hscode)
+  - [hs:message](#hsmessage)
+  - [hs:reason](#hsreason)
+- [StatusCode Bean](#statuscode-bean)
+- [Reasons](#reasons)
+- [Command Line Usage](#command-line-usage)
+
+## Examples
+
 For example:
 
 ```jsp
@@ -41,7 +59,9 @@ would display on a [501 status code](https://www.rfc-editor.org/rfc/rfc9110.html
 Not Implemented
 ```
 
-## Usage with [Gradle](https://gradle.org/), [Maven](http://maven.apache.org/) or [bld](https://rife2.com/bld)
+## Usage
+
+### [Gradle](https://gradle.org/)
 
 Include the following in your `build.gradle` file:
 
@@ -55,7 +75,19 @@ dependencies {
 }
 ```
 
-or as a `Maven` artifact:
+### [bld](https://rife2.com/bld)
+
+Include the following in your `bld` build file:
+
+```java
+scope(compile).include(
+        dependency("net.thauvin.erik.httpstatus","httpstatus", version(1, 1, 0))
+);
+```
+
+### [Maven](http://maven.apache.org/)
+
+As a `Maven` artifact:
 
 ```xml
 <dependency>
@@ -65,15 +97,9 @@ or as a `Maven` artifact:
 </dependency>
 ```
 
-or in a `bld` build file:
+## JSP Tags
 
-```java
-scope(compile).include(
-        dependency("net.thauvin.erik.httpstatus","httpstatus", version(1, 1, 0))
-);
-```
-
-## hs:cause
+### hs:cause
 
 The `<hs:cause/>` tag displays the cause of current HTTP status code, if any. A shorthand for:
 
@@ -88,7 +114,7 @@ Optional attributes are:
 | `default`   | The fallback value to output, if no cause is                                                                                                     |
 | `escapeXml` | Converts &lt;, &gt;, &amp;, ', " to their corresponding [entity codes](http://dev.w3.org/html5/html-author/charref). Value is `true` by default. |
 
-## hs:code
+### hs:code
 
 The `<hs:code/>` tag displays the current HTTP status code, if any. A shorthand for:
 
@@ -96,7 +122,7 @@ The `<hs:code/>` tag displays the current HTTP status code, if any. A shorthand 
 <%= pageContext.getErrorData().getStatusCode() %>
 ```
 
-## hs:message
+### hs:message
 
 The `<hs:message/>` tag displays the current error message, if any. A shorthand for:
 
@@ -111,7 +137,7 @@ Optional attributes are:
 | `default`   | The fallback value to output, if no error message is available.                                                                                  |
 | `escapeXml` | Converts &lt;, &gt;, &amp;, ', " to their corresponding [entity codes](http://dev.w3.org/html5/html-author/charref). Value is `true` by default. |
 
-## hs:reason
+### hs:reason
 
 The `<hs:reason/>` tag displays the reason for an HTTP status code, if any. Optional attributes are:
 
@@ -294,14 +320,9 @@ $ java -jar httpstatus-1.1.0.jar
 201: Created
 202: Accepted
 203: Non-Authoritative Information
-204: No Content
-205: Reset Content
-206: Partial Content
-207: Multi-Status
-208: Already Reported
-226: IM Used
 ...
 ```
+
 You can also print status codes by [response classes](https://www.rfc-editor.org/rfc/rfc9110.html#name-status-codes):
 
 ```sh
@@ -310,6 +331,5 @@ $ java -jar httpstatus-1.1.0.jar 2xx
 201: Created
 202: Accepted
 203: Non-Authoritative Information
-204: No Content
-...
+
 ```

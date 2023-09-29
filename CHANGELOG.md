@@ -6,6 +6,7 @@
 
 **Implemented enhancements:**
 
+- Print status code by response classes [\#8](https://github.com/ethauvin/HttpStatus/issues/8)
 - Move to Jakarta EE [\#7](https://github.com/ethauvin/HttpStatus/issues/7)
 - Only use XML character entities in Utils.escapeXml\(\) [\#6](https://github.com/ethauvin/HttpStatus/issues/6)
 - Implement a StatusCode bean to check the status code. [\#5](https://github.com/ethauvin/HttpStatus/issues/5)

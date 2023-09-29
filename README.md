@@ -302,3 +302,14 @@ $ java -jar httpstatus-1.1.0.jar
 226: IM Used
 ...
 ```
+You can also print status codes by [response classes](https://www.rfc-editor.org/rfc/rfc9110.html#name-status-codes):
+
+```sh
+$ java -jar httpstatus-1.1.0.jar 2xx
+200: OK
+201: Created
+202: Accepted
+203: Non-Authoritative Information
+204: No Content
+...
+```

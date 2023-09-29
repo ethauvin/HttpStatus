@@ -71,28 +71,34 @@ class ReasonsMainTest {
     @Test
     void testMain() {
         Reasons.main("401");
-        assertThat(outContent.toString().contains(Reasons.getReasonPhrase("401"))).as("401").isTrue();
-        assertThat(outContent.toString().contains("500")).as("401 no 500").isFalse();
+        assertThat(outContent.toString()).contains(Reasons.getReasonPhrase("401")).as("401");
+        assertThat(outContent.toString()).doesNotContain("500").as("401 no 500");
     }
 
     @Test
     void testMainAll() {
         Reasons.main();
-        assertThat(outContent.toString().contains(Reasons.getReasonPhrase(301))).as("301").isTrue();
-        assertThat(outContent.toString().contains(Reasons.getReasonPhrase(404))).as("404").isTrue();
+        assertThat(outContent.toString()).contains(Reasons.getReasonPhrase(301)).as("301");
+        assertThat(outContent.toString()).contains(Reasons.getReasonPhrase(404)).as("404");
     }
 
     @Test
     void testMainArgs() {
         Reasons.main("500", "302");
-        assertThat(outContent.toString().contains(Reasons.getReasonPhrase("500"))).as("500 (302)").isTrue();
-        assertThat(outContent.toString().contains(Reasons.getReasonPhrase("302"))).as("(500) 302").isTrue();
-        assertThat(outContent.toString().contains("404")).as("500/302 not 404").isFalse();
+        assertThat(outContent.toString()).contains(Reasons.getReasonPhrase("500")).as("500 (302)");
+        assertThat(outContent.toString()).contains(Reasons.getReasonPhrase("302")).as("(500) 302");
+        assertThat(outContent.toString()).doesNotContain("404").as("500/302 not 404");
+    }
+
+    @Test
+    void testMainArgsClass() {
+        Reasons.main("2xx");
+        assertThat(outContent.toString()).contains(Reasons.getReasonPhrase("200")).as("2xx");
     }
 
     @Test
     void testMainInvalid() {
         Reasons.main("aaa");
-        assertThat(outContent.toString().isEmpty()).as("invalid argument: aaa").isTrue();
+        assertThat(outContent.toString()).as("invalid argument: aaa").isEmpty();
     }
 }

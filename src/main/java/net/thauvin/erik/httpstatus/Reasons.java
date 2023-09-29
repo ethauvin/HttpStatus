@@ -100,9 +100,18 @@ public final class Reasons {
     public static void main(final String... args) {
         if (args.length >= 1) {
             for (final String key : args) {
-                final String value = REASON_PHRASES.get(key);
-                if (value != null) {
-                    System.out.println(key + ": " + value);
+                if (key.endsWith("xx")) {
+                    var cat = key.charAt(0);
+                    REASON_PHRASES.forEach((k, v) -> {
+                        if (k.charAt(0) == cat) {
+                            System.out.println(k + ": " + v);
+                        }
+                    });
+                } else {
+                    final String value = REASON_PHRASES.get(key);
+                    if (value != null) {
+                        System.out.println(key + ": " + value);
+                    }
                 }
             }
         } else {

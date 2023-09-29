@@ -34,8 +34,6 @@ package net.thauvin.erik.httpstatus;
 
 import java.util.Map;
 import java.util.ResourceBundle;
-import java.util.SortedSet;
-import java.util.TreeSet;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
@@ -94,16 +92,16 @@ public final class Reasons {
     /**
      * Prints the reason phrase for the given status code(s).
      *
-     * @param args The status code(s), prints all if none.
+     * @param args The status code(s) or response class(es), prints all if none.
      */
     @SuppressWarnings("PMD.SystemPrintln")
     public static void main(final String... args) {
         if (args.length >= 1) {
             for (final String key : args) {
                 if (key.endsWith("xx")) {
-                    var cat = key.charAt(0);
+                    var responseClass = key.charAt(0);
                     REASON_PHRASES.forEach((k, v) -> {
-                        if (k.charAt(0) == cat) {
+                        if (k.charAt(0) == responseClass) {
                             System.out.println(k + ": " + v);
                         }
                     });
@@ -115,14 +113,11 @@ public final class Reasons {
                 }
             }
         } else {
-            final SortedSet<String> keys = new TreeSet<>(REASON_PHRASES.keySet());
-            for (final String key : keys) {
-                final String value = REASON_PHRASES.get(key);
-                if (value != null) {
-                    System.out.println(key + ": " + value);
+            REASON_PHRASES.forEach((k, v) -> {
+                if (v != null) {
+                    System.out.println(k + ": " + v);
                 }
-            }
-
+            });
             System.out.println("Total: " + REASON_PHRASES.size());
         }
     }

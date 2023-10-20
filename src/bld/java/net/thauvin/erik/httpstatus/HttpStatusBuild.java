@@ -53,7 +53,7 @@ public class HttpStatusBuild extends Project {
     public HttpStatusBuild() {
         pkg = "net.thauvin.erik.httpstatus";
         name = "HttpStatus";
-        version = version(1, 1, 0);
+        version = version(1, 1, 1, "SNAPSHOT");
 
         var description = "Tag library to display the code, reason, cause and/or message for HTTP status codes in JSP error pages";
         var url = "https://github.com/ethauvin/HttpStatus";
@@ -84,7 +84,7 @@ public class HttpStatusBuild extends Project {
         publishOperation()
                 .repository(version.isSnapshot() ? repository(SONATYPE_SNAPSHOTS_LEGACY.location())
                         .withCredentials(property("sonatype.user"), property("sonatype.password"))
-                        : repository("https://oss.sonatype.org/service/local/staging/deploy/maven2/")
+                        : repository(SONATYPE_RELEASES_LEGACY.location())
                         .withCredentials(property("sonatype.user"), property("sonatype.password")))
                 .info(new PublishInfo()
                         .groupId(pkg)

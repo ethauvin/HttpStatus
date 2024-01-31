@@ -32,11 +32,11 @@
 
 package net.thauvin.erik.httpstatus.taglibs;
 
-import jakarta.servlet.jsp.JspWriter;
 import jakarta.servlet.jsp.PageContext;
-import net.thauvin.erik.httpstatus.Utils;
-
 import java.io.IOException;
+import net.thauvin.erik.httpstatus.Utils;
+import jakarta.servlet.jsp.JspWriter;
+
 
 /**
  * The <code>&lt;hs:cause&gt;</code> tag returns the cause (if any) for the current HTTP Status Error Code.
@@ -53,6 +53,8 @@ public class CauseTag extends XmlSupport {
     public void doTag() throws IOException {
         final PageContext pageContext = (PageContext) getJspContext();
         final JspWriter out = pageContext.getOut();
+
+    
 
         final Throwable cause = pageContext.getErrorData().getThrowable().getCause();
 

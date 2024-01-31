@@ -63,6 +63,7 @@ public class HttpStatusBuild extends Project {
         javaRelease = 17;
 
         downloadSources = true;
+        autoDownloadPurge = true;
         repositories = List.of(MAVEN_CENTRAL, SONATYPE_SNAPSHOTS);
 
         scope(compile)
@@ -70,9 +71,9 @@ public class HttpStatusBuild extends Project {
                 .include(dependency("jakarta.servlet.jsp", "jakarta.servlet.jsp-api", version(3, 1, 1)))
                 .include(dependency("jakarta.el", "jakarta.el-api", version(5, 0, 1)));
         scope(test)
-                .include(dependency("org.assertj", "assertj-core", version(3, 24, 2)))
-                .include(dependency("org.junit.jupiter", "junit-jupiter", version(5, 10, 0)))
-                .include(dependency("org.junit.platform", "junit-platform-console-standalone", version(1, 10, 0)));
+                .include(dependency("org.assertj", "assertj-core", version(3, 25, 2)))
+                .include(dependency("org.junit.jupiter", "junit-jupiter", version(5, 10, 1)))
+                .include(dependency("org.junit.platform", "junit-platform-console-standalone", version(1, 10, 1)));
 
         jarOperation().manifestAttribute(Attributes.Name.MAIN_CLASS, pkg + '.' + "Reasons");
 
@@ -93,11 +94,20 @@ public class HttpStatusBuild extends Project {
                         .version(version)
                         .description(description)
                         .url(url)
-                        .developer(new PublishDeveloper().id("ethauvin").name("Erik C. Thauvin").email("erik@thauvin.net")
-                                .url("https://erik.thauvin.net/"))
-                        .license(new PublishLicense().name("The BSD 3-Clause License")
-                                .url("http://opensource.org/licenses/BSD-3-Clause"))
-                        .scm(new PublishScm().connection("scm:git:" + url + ".git")
+                        .developer(
+                                new PublishDeveloper()
+                                        .id("ethauvin")
+                                        .name("Erik C. Thauvin")
+                                        .email("erik@thauvin.net")
+                                        .url("https://erik.thauvin.net/")
+                        )
+                        .license(
+                                new PublishLicense()
+                                        .name("The BSD 3-Clause License")
+                                        .url("http://opensource.org/licenses/BSD-3-Clause")
+                        )
+                        .scm(new PublishScm()
+                                .connection("scm:git:" + url + ".git")
                                 .developerConnection("scm:git:git@github.com:ethauvin/" + name + ".git")
                                 .url(url))
                         .signKey(property("sign.key"))

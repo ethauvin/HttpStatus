@@ -29,6 +29,7 @@ A simple [JSP](http://www.oracle.com/technetwork/java/javaee/jsp/index.html) Tag
 - [StatusCode Bean](#statuscode-bean)
 - [Reasons](#reasons)
 - [Command Line Usage](#command-line-usage)
+- [Contributing](#contributing)
 
 ## Examples
 
@@ -333,3 +334,22 @@ $ java -jar httpstatus-1.1.0.jar 2xx
 203: Non-Authoritative Information
 
 ```
+
+## Contributing
+
+If you want to contribute to this project, all you have to do is clone the GitHub
+repository:
+
+```console
+git clone git@github.com:ethauvin/HttpStatus.git
+```
+
+Then use [bld](https://rife2.com/bld) to build:
+
+```console
+cd HttpStatus
+./bld compile
+```
+
+The project has an [IntelliJ IDEA](https://www.jetbrains.com/idea/) project structure. You can just open it after all
+the dependencies were downloaded and peruse the code.

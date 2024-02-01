@@ -303,7 +303,7 @@ The reasons are defined in a [ResourceBundle](https://docs.oracle.com/en/java/ja
 
 You can query the reason phrase for status codes as follows:
 
-```sh
+```console
 $ java -jar httpstatus-1.1.0.jar 404 500
 404: Not Found
 500: Internal Server Error
@@ -311,7 +311,7 @@ $ java -jar httpstatus-1.1.0.jar 404 500
 
 If no status code is specified, all will be printed:
 
-```sh
+```console
 $ java -jar httpstatus-1.1.0.jar
 100: Continue
 101: Switching Protocols
@@ -326,7 +326,7 @@ $ java -jar httpstatus-1.1.0.jar
 
 You can also print status codes by [response classes](https://www.rfc-editor.org/rfc/rfc9110.html#name-status-codes):
 
-```sh
+```console
 $ java -jar httpstatus-1.1.0.jar 2xx
 200: OK
 201: Created

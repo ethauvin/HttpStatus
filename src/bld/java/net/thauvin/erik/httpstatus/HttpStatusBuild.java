@@ -50,6 +50,11 @@ import static rife.bld.dependencies.Scope.test;
 import static rife.bld.operations.JavadocOptions.DocLinkOption.NO_MISSING;
 
 public class HttpStatusBuild extends Project {
+    final PmdOperation pmdOp = new PmdOperation()
+            .fromProject(this)
+            .failOnViolation(true)
+            .ruleSets("config/pmd.xml");
+
     public HttpStatusBuild() {
         pkg = "net.thauvin.erik.httpstatus";
         name = "HttpStatus";
@@ -69,11 +74,11 @@ public class HttpStatusBuild extends Project {
         scope(compile)
                 .include(dependency("jakarta.servlet", "jakarta.servlet-api", version(6, 0, 0)))
                 .include(dependency("jakarta.servlet.jsp", "jakarta.servlet.jsp-api", version(3, 1, 1)))
-                .include(dependency("jakarta.el", "jakarta.el-api", version(5, 0, 1)));
+                .include(dependency("jakarta.el", "jakarta.el-api", version(6, 0, 0)));
         scope(test)
-                .include(dependency("org.assertj", "assertj-core", version(3, 25, 2)))
-                .include(dependency("org.junit.jupiter", "junit-jupiter", version(5, 10, 1)))
-                .include(dependency("org.junit.platform", "junit-platform-console-standalone", version(1, 10, 1)));
+                .include(dependency("org.assertj", "assertj-core", version(3, 25, 3)))
+                .include(dependency("org.junit.jupiter", "junit-jupiter", version(5, 10, 2)))
+                .include(dependency("org.junit.platform", "junit-platform-console-standalone", version(1, 10, 2)));
 
         jarOperation().manifestAttribute(Attributes.Name.MAIN_CLASS, pkg + '.' + "Reasons");
 
@@ -104,7 +109,7 @@ public class HttpStatusBuild extends Project {
                         .license(
                                 new PublishLicense()
                                         .name("The BSD 3-Clause License")
-                                        .url("http://opensource.org/licenses/BSD-3-Clause")
+                                        .url("https://opensource.org/licenses/BSD-3-Clause")
                         )
                         .scm(new PublishScm()
                                 .connection("scm:git:" + url + ".git")
@@ -127,11 +132,12 @@ public class HttpStatusBuild extends Project {
 
     @BuildCommand(summary = "Runs PMD analysis")
     public void pmd() {
-        new PmdOperation()
-                .fromProject(this)
-                .failOnViolation(true)
-                .ruleSets("config/pmd.xml")
-                .execute();
+        pmdOp.execute();
+    }
+
+    @BuildCommand(value = "pmd-cli", summary = "Runs PMD analysis (CLI)")
+    public void pmdCli() {
+        pmdOp.includeLineNumber(false).execute();
     }
 
     @Override
@@ -147,7 +153,7 @@ public class HttpStatusBuild extends Project {
     }
 
     private void rootPom() throws FileUtilsErrorException {
-        PomBuilder.generateInto(publishOperation().info(), publishOperation().dependencies(),
+        PomBuilder.generateInto(publishOperation().info(), dependencies(),
                 Path.of(workDirectory.getPath(), "pom.xml").toFile());
     }
 }

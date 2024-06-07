@@ -76,7 +76,7 @@ public class HttpStatusBuild extends Project {
                 .include(dependency("jakarta.servlet.jsp", "jakarta.servlet.jsp-api", version(3, 1, 1)))
                 .include(dependency("jakarta.el", "jakarta.el-api", version(6, 0, 0)));
         scope(test)
-                .include(dependency("org.assertj", "assertj-core", version(3, 25, 3)))
+                .include(dependency("org.assertj", "assertj-core", version(3, 26, 0)))
                 .include(dependency("org.junit.jupiter", "junit-jupiter", version(5, 10, 2)))
                 .include(dependency("org.junit.platform", "junit-platform-console-standalone", version(1, 10, 2)));
 

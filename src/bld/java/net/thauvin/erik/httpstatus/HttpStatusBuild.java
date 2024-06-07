@@ -143,16 +143,16 @@ public class HttpStatusBuild extends Project {
     @Override
     public void publish() throws Exception {
         super.publish();
-        rootPom();
+        pomRoot();
     }
 
     @Override
     public void publishLocal() throws Exception {
         super.publishLocal();
-        rootPom();
+        pomRoot();
     }
 
-    private void rootPom() throws FileUtilsErrorException {
+    private void pomRoot() throws FileUtilsErrorException {
         PomBuilder.generateInto(publishOperation().info(), dependencies(),
                 Path.of(workDirectory.getPath(), "pom.xml").toFile());
     }

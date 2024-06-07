@@ -1,7 +1,7 @@
 /*
  * MessageTag.java
  *
- * Copyright 2015-2023 Erik C. Thauvin (erik@thauvin.net)
+ * Copyright 2015-2024 Erik C. Thauvin (erik@thauvin.net)
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -51,10 +51,10 @@ public class MessageTag extends XmlSupport {
      */
     @Override
     public void doTag() throws IOException {
-        final PageContext pageContext = (PageContext) getJspContext();
-        final JspWriter out = pageContext.getOut();
+        PageContext pageContext = (PageContext) getJspContext();
+        JspWriter out = pageContext.getOut();
 
-        final String message = (String) pageContext.getRequest().getAttribute(
+        String message = (String) pageContext.getRequest().getAttribute(
                 jakarta.servlet.RequestDispatcher.ERROR_MESSAGE);
 
         Utils.outWrite(out, message, defaultValue, escapeXml);

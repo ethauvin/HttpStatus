@@ -1,7 +1,7 @@
 /*
  * CodeTag.java
  *
- * Copyright 2015-2023 Erik C. Thauvin (erik@thauvin.net)
+ * Copyright 2015-2024 Erik C. Thauvin (erik@thauvin.net)
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -51,8 +51,8 @@ public class CodeTag extends SimpleTagSupport {
      */
     @Override
     public void doTag() throws IOException {
-        final PageContext pageContext = (PageContext) getJspContext();
-        final JspWriter out = pageContext.getOut();
+        PageContext pageContext = (PageContext) getJspContext();
+        JspWriter out = pageContext.getOut();
 
         out.write(String.valueOf(pageContext.getErrorData().getStatusCode()));
     }

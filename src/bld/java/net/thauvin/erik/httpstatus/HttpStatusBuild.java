@@ -1,7 +1,7 @@
 /*
  * HttpStatusBuild.java
  *
- * Copyright 2015-2023 Erik C. Thauvin (erik@thauvin.net)
+ * Copyright 2015-2024 Erik C. Thauvin (erik@thauvin.net)
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -140,6 +140,11 @@ public class HttpStatusBuild extends Project {
         pmdOp.includeLineNumber(false).execute();
     }
 
+    private void pomRoot() throws FileUtilsErrorException {
+        PomBuilder.generateInto(publishOperation().info(), dependencies(),
+                Path.of(workDirectory.getPath(), "pom.xml").toFile());
+    }
+
     @Override
     public void publish() throws Exception {
         super.publish();
@@ -150,10 +155,5 @@ public class HttpStatusBuild extends Project {
     public void publishLocal() throws Exception {
         super.publishLocal();
         pomRoot();
-    }
-
-    private void pomRoot() throws FileUtilsErrorException {
-        PomBuilder.generateInto(publishOperation().info(), dependencies(),
-                Path.of(workDirectory.getPath(), "pom.xml").toFile());
     }
 }

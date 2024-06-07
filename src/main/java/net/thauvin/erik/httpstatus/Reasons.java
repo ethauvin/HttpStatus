@@ -1,7 +1,7 @@
 /*
  * Reasons.java
  *
- * Copyright 2015-2023 Erik C. Thauvin (erik@thauvin.net)
+ * Copyright 2015-2024 Erik C. Thauvin (erik@thauvin.net)
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -34,6 +34,7 @@ package net.thauvin.erik.httpstatus;
 
 import java.util.Map;
 import java.util.ResourceBundle;
+import java.util.TreeSet;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
@@ -56,8 +57,8 @@ public final class Reasons {
 
     // Initializes the reason phrases map.
     static {
-        final ResourceBundle bundle = ResourceBundle.getBundle(BUNDLE_BASENAME);
-        for (final String key : bundle.keySet()) {
+        var bundle = ResourceBundle.getBundle(BUNDLE_BASENAME);
+        for (var key : bundle.keySet()) {
             REASON_PHRASES.put(key, bundle.getString(key));
         }
     }
@@ -75,7 +76,7 @@ public final class Reasons {
      * @param statusCode The status code.
      * @return The reason phrase, or <code>null</code>.
      */
-    public static String getReasonPhrase(final int statusCode) {
+    public static String getReasonPhrase(int statusCode) {
         return getReasonPhrase(Integer.toString(statusCode));
     }
 
@@ -85,7 +86,7 @@ public final class Reasons {
      * @param statusCode The status code.
      * @return The reason phrase, or <code>null</code>.
      */
-    public static String getReasonPhrase(final String statusCode) {
+    public static String getReasonPhrase(String statusCode) {
         return REASON_PHRASES.get(statusCode);
     }
 
@@ -95,29 +96,26 @@ public final class Reasons {
      * @param args The status code(s) or response class(es), prints all if none.
      */
     @SuppressWarnings("PMD.SystemPrintln")
-    public static void main(final String... args) {
+    public static void main(String... args) {
+        var keys = new TreeSet<>(REASON_PHRASES.keySet());
         if (args.length >= 1) {
-            for (final String key : args) {
+            for (var key : args) {
                 if (key.endsWith("xx")) {
                     var responseClass = key.charAt(0);
-                    REASON_PHRASES.forEach((k, v) -> {
+                    keys.forEach((k)  -> {
                         if (k.charAt(0) == responseClass) {
-                            System.out.println(k + ": " + v);
+                            System.out.println(k + ": " + REASON_PHRASES.get(k));
                         }
                     });
                 } else {
-                    final String value = REASON_PHRASES.get(key);
+                    var value = REASON_PHRASES.get(key);
                     if (value != null) {
                         System.out.println(key + ": " + value);
                     }
                 }
             }
         } else {
-            REASON_PHRASES.forEach((k, v) -> {
-                if (v != null) {
-                    System.out.println(k + ": " + v);
-                }
-            });
+            keys.forEach((k) -> System.out.println(k + ": " + REASON_PHRASES.get(k)));
             System.out.println("Total: " + REASON_PHRASES.size());
         }
     }

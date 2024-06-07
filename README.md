@@ -2,7 +2,7 @@
 
 [![License (3-Clause BSD)](https://img.shields.io/badge/license-BSD%203--Clause-blue.svg?style=flat-square)](http://opensource.org/licenses/BSD-3-Clause)
 [![Java](https://img.shields.io/badge/java-17%2B-blue)](https://www.oracle.com/java/technologies/javase/jdk17-archive-downloads.html)
-[![bld](https://img.shields.io/badge/1.8.0-FA9052?label=bld&labelColor=2392FF)](https://rife2.com/bld)
+[![bld](https://img.shields.io/badge/1.9.1-FA9052?label=bld&labelColor=2392FF)](https://rife2.com/bld)
 [![Release](https://img.shields.io/github/release/ethauvin/httpstatus.svg)](https://github.com/ethauvin/httpstatus/releases/latest)
 [![Sonatype Nexus (Snapshots)](https://img.shields.io/nexus/s/net.thauvin.erik.httpstatus/httpstatus?label=sanpshot&server=https%3A%2F%2Foss.sonatype.org)](https://oss.sonatype.org/content/repositories/snapshots/net/thauvin/erik/httpstatus/httpstatus/)
 [![Maven Central](https://img.shields.io/maven-central/v/net.thauvin.erik.httpstatus/httpstatus.svg?color=blue)](https://central.sonatype.com/artifact/net.thauvin.erik.httpstatus/httpstatus)
@@ -17,11 +17,11 @@ A simple [JSP](http://www.oracle.com/technetwork/java/javaee/jsp/index.html) Tag
 ## Table of Contents
 
 - [Examples](#examples)
-- Usage
+- [Usage](#usage)
   - [Gradle](#gradle)
   - [bld](#bld)
   - [Maven](#maven)
-- JSP Tags
+- [JSP Tags](#jsp-tags)
   - [hs:cause](#hscause)
   - [hs:code](#hscode)
   - [hs:message](#hsmessage)
@@ -111,7 +111,7 @@ The `<hs:cause/>` tag displays the cause of current HTTP status code, if any. A 
 Optional attributes are:
 
 | Attribute   | Description                                                                                                                                      |
-|-------------|--------------------------------------------------------------------------------------------------------------------------------------------------|
+| ----------- | ------------------------------------------------------------------------------------------------------------------------------------------------ |
 | `default`   | The fallback value to output, if no cause is                                                                                                     |
 | `escapeXml` | Converts &lt;, &gt;, &amp;, ', " to their corresponding [entity codes](http://dev.w3.org/html5/html-author/charref). Value is `true` by default. |
 
@@ -134,7 +134,7 @@ The `<hs:message/>` tag displays the current error message, if any. A shorthand 
 Optional attributes are:
 
 | Attribute   | Description                                                                                                                                      |
-|-------------|--------------------------------------------------------------------------------------------------------------------------------------------------|
+| ----------- | ------------------------------------------------------------------------------------------------------------------------------------------------ |
 | `default`   | The fallback value to output, if no error message is available.                                                                                  |
 | `escapeXml` | Converts &lt;, &gt;, &amp;, ', " to their corresponding [entity codes](http://dev.w3.org/html5/html-author/charref). Value is `true` by default. |
 
@@ -143,7 +143,7 @@ Optional attributes are:
 The `<hs:reason/>` tag displays the reason for an HTTP status code, if any. Optional attributes are:
 
 | Attribute   | Description                                                                                                                                      |
-|-------------|--------------------------------------------------------------------------------------------------------------------------------------------------|
+| ----------- | ------------------------------------------------------------------------------------------------------------------------------------------------ |
 | `default`   | The fallback value to output, if no reason is available.                                                                                         |
 | `code`      | The HTTP status error code. If not specified the current status code is used.                                                                    |
 | `escapeXml` | Converts &lt;, &gt;, &amp;, ', " to their corresponding [entity codes](http://dev.w3.org/html5/html-author/charref). Value is `true` by default. |
@@ -191,7 +191,7 @@ public class ExampleServlet extends HttpServlet {
 The `StatusCode` bean methods are:
 
 | Method          | Description                                                          |
-|-----------------|----------------------------------------------------------------------|
+| --------------- | -------------------------------------------------------------------- |
 | `getReason`     | Returns the reason for the status code (eg: `Internal Server Error`) |
 | `isClientError` | Checks if the status code is a client error.                         |
 | `isError`       | Checks if the status code is a server or client error.               |
@@ -206,11 +206,16 @@ The `StatusCode` bean methods are:
 The reasons are defined in a [ResourceBundle](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/ResourceBundle.html) properties as follows:
 
 | Status Code | Reason                                                     |
-|-------------|------------------------------------------------------------|
+| ----------- | ---------------------------------------------------------- |
 | `100`       | Continue                                                   |
 | `101`       | Switching Protocols                                        |
 | `102`       | Processing                                                 |
 | `103`       | Early Hints                                                |
+| `110`       | Response is Stale                                          |
+| `111`       | Revalidation Failed                                        |
+| `112`       | Disconnected Operation                                     |
+| `113`       | Heuristic Expiration                                       |
+| `199`       | Miscellaneous Warning                                      |
 | `200`       | OK                                                         |
 | `201`       | Created                                                    |
 | `202`       | Accepted                                                   |
@@ -220,15 +225,17 @@ The reasons are defined in a [ResourceBundle](https://docs.oracle.com/en/java/ja
 | `206`       | Partial Content                                            |
 | `207`       | Multi-Status                                               |
 | `208`       | Already Reported                                           |
+| `214`       | Transformation Applied                                     |
 | `218`       | This is fine                                               |
 | `226`       | IM Used                                                    |
+| `299`       | Miscellaneous Persistent Warning                           |
 | `300`       | Multiple Choices                                           |
 | `301`       | Moved Permanently                                          |
 | `302`       | Found/Moved Temporarily                                    |
 | `303`       | See Other                                                  |
 | `304`       | Not Modified                                               |
 | `305`       | Use Proxy                                                  |
-| `306`       | Switch Proxy                                               |
+| `306`       | Unused                                                     |
 | `307`       | Temporary Redirect                                         |
 | `308`       | Permanent Redirect                                         |
 | `400`       | Bad Request                                                |
@@ -244,18 +251,19 @@ The reasons are defined in a [ResourceBundle](https://docs.oracle.com/en/java/ja
 | `410`       | Gone                                                       |
 | `411`       | Length Required                                            |
 | `412`       | Precondition Failed                                        |
-| `413`       | Request Entity/Payload Too Large                           |
-| `414`       | Request-URI Too Long                                       |
+| `413`       | Payload Too Large                                          |
+| `414`       | URI Too Long                                               |
 | `415`       | Unsupported Media Type                                     |
-| `416`       | Requested Range Not Satisfiable                            |
+| `416`       | Range Not Satisfiable                                      |
 | `417`       | Expectation Failed                                         |
 | `418`       | I'm A Teapot                                               |
 | `419`       | Insufficient Space on Resource                             |
 | `420`       | Method Failure                                             |
 | `421`       | Misdirected Request                                        |
-| `422`       | Unprocessable Entity                                       |
+| `422`       | Unprocessable Content                                      |
 | `423`       | Locked                                                     |
 | `424`       | Failed Dependency                                          |
+| `425`       | Too Early                                                  |
 | `426`       | Upgrade Required                                           |
 | `428`       | Precondition Required                                      |
 | `429`       | Too Many Requests                                          |
@@ -270,7 +278,7 @@ The reasons are defined in a [ResourceBundle](https://docs.oracle.com/en/java/ja
 | `463`       | X-Forwarded-For Header with More than 30 IP Addresses      |
 | `494`       | Request Header Too Large                                   |
 | `495`       | SSL Certificate Error                                      |
-| `496`       | No SSL Certificate                                         |
+| `496`       | SSL Certificate Required                                   |
 | `497`       | HTTP Request Sent to HTTPS Port                            |
 | `498`       | Token Expired/Invalid                                      |
 | `499`       | Client Closed Request                                      |
@@ -288,7 +296,7 @@ The reasons are defined in a [ResourceBundle](https://docs.oracle.com/en/java/ja
 | `511`       | Network Authentication Required                            |
 | `520`       | Unknown Error                                              |
 | `521`       | Web Server Is Down                                         |
-| `522`       | Origin Connection Time-out                                 |
+| `522`       | Connection Timed Out                                       |
 | `523`       | Origin Is Unreachable                                      |
 | `524`       | A Timeout Occurred                                         |
 | `525`       | SSL Handshake Failed                                       |
@@ -296,8 +304,11 @@ The reasons are defined in a [ResourceBundle](https://docs.oracle.com/en/java/ja
 | `527`       | Railgun Error                                              |
 | `529`       | Site is overloaded                                         |
 | `530`       | Site is frozen                                             |
+| `540`       | Temporarily Disabled                                       |
+| `561`       | Unauthorized                                               |
 | `598`       | Network Read Timeout Error                                 |
 | `599`       | Network Connect Timeout Error                              |
+| `783`       | Unexpected Token                                           |
 
 ## Command Line Usage
 
@@ -317,6 +328,11 @@ $ java -jar httpstatus-1.1.0.jar
 101: Switching Protocols
 102: Processing
 103: Early Hints
+110: Response is Stale
+111: Revalidation Failed
+112: Disconnected Operation
+113: Heuristic Expiration
+199: Miscellaneous Warning
 200: OK
 201: Created
 202: Accepted
@@ -332,7 +348,7 @@ $ java -jar httpstatus-1.1.0.jar 2xx
 201: Created
 202: Accepted
 203: Non-Authoritative Information
-
+...
 ```
 
 ## Contributing

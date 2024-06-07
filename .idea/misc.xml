@@ -1,9 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="EntryPointsManager">
     <pattern value="net.thauvin.erik.httpstatus.HttpStatusBuild" />
     <pattern value="net.thauvin.erik.httpstatus.HttpStatusBuild" method="pmd" />
     <pattern value="net.thauvin.erik.httpstatus.HttpStatusBuild" method="jacoco" />
     <pattern value="net.thauvin.erik.httpstatus.taglibs.ReasonTag" method="setCode" />
+    <pattern value="net.thauvin.erik.httpstatus.HttpStatusBuild" method="pmdCli" />
   </component>
   <component name="PDMPlugin">
     <option name="customRuleSets">

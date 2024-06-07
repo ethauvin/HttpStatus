@@ -1,7 +1,7 @@
 /*
  * XmlSupport.java
  *
- * Copyright 2015-2023 Erik C. Thauvin (erik@thauvin.net)
+ * Copyright 2015-2024 Erik C. Thauvin (erik@thauvin.net)
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -58,7 +58,7 @@ public abstract class XmlSupport extends SimpleTagSupport {
      * @param defaultValue The default value.
      */
     @SuppressWarnings("unused")
-    public void setDefault(final String defaultValue) {
+    public void setDefault(String defaultValue) {
         this.defaultValue = defaultValue;
     }
 
@@ -68,7 +68,7 @@ public abstract class XmlSupport extends SimpleTagSupport {
      * @param escapeXml <code>true</code> or <code>false</code>
      */
     @SuppressWarnings("unused")
-    public void setEscapeXml(final boolean escapeXml) {
+    public void setEscapeXml(boolean escapeXml) {
         this.escapeXml = escapeXml;
     }
 }

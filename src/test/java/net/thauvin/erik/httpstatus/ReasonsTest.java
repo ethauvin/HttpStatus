@@ -1,7 +1,7 @@
 /*
  * ReasonsTest.java
  *
- * Copyright 2015-2023 Erik C. Thauvin (erik@thauvin.net)
+ * Copyright 2015-2024 Erik C. Thauvin (erik@thauvin.net)
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -48,8 +48,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 class ReasonsTest {
     @Test
     void testGetReasonPhrase() {
-        final ResourceBundle bundle = ResourceBundle.getBundle(Reasons.BUNDLE_BASENAME);
-        for (final String key : bundle.keySet()) {
+        var bundle = ResourceBundle.getBundle(Reasons.BUNDLE_BASENAME);
+        for (var key : bundle.keySet()) {
             assertThat(Reasons.getReasonPhrase(key)).as("getReasonPhrase(" + key + ')').isEqualTo(bundle.getString(key));
             assertThat(Reasons.getReasonPhrase(Integer.parseInt(key)))
                     .as("getReasonPhrase(int: " + key + ')').isEqualTo(bundle.getString(key));

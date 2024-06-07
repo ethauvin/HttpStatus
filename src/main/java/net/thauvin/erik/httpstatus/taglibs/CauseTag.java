@@ -1,7 +1,7 @@
 /*
  * CauseTag.java
  *
- * Copyright 2015-2023 Erik C. Thauvin (erik@thauvin.net)
+ * Copyright 2015-2024 Erik C. Thauvin (erik@thauvin.net)
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -32,10 +32,11 @@
 
 package net.thauvin.erik.httpstatus.taglibs;
 
-import jakarta.servlet.jsp.PageContext;
-import java.io.IOException;
-import net.thauvin.erik.httpstatus.Utils;
 import jakarta.servlet.jsp.JspWriter;
+import jakarta.servlet.jsp.PageContext;
+import net.thauvin.erik.httpstatus.Utils;
+
+import java.io.IOException;
 
 
 /**
@@ -51,12 +52,10 @@ public class CauseTag extends XmlSupport {
      */
     @Override
     public void doTag() throws IOException {
-        final PageContext pageContext = (PageContext) getJspContext();
-        final JspWriter out = pageContext.getOut();
+        PageContext pageContext = (PageContext) getJspContext();
+        JspWriter out = pageContext.getOut();
 
-    
-
-        final Throwable cause = pageContext.getErrorData().getThrowable().getCause();
+        Throwable cause = pageContext.getErrorData().getThrowable().getCause();
 
         Utils.outWrite(out, getCause(cause), defaultValue, escapeXml);
     }

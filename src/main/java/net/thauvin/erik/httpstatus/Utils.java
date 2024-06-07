@@ -1,7 +1,7 @@
 /*
  * Utils.java
  *
- * Copyright 2015-2023 Erik C. Thauvin (erik@thauvin.net)
+ * Copyright 2015-2024 Erik C. Thauvin (erik@thauvin.net)
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -59,11 +59,11 @@ public final class Utils {
      * @param value The string value to convert.
      * @return The converted string value.
      */
-    public static String escapeXml(final String value) {
-        final StringBuilder escaped = new StringBuilder();
+    public static String escapeXml(String value) {
+        var escaped = new StringBuilder();
 
-        for (int i = 0; i < value.length(); i++) {
-            final char c = value.charAt(i);
+        for (var i = 0; i < value.length(); i++) {
+            var c = value.charAt(i);
             switch (c) {
                 case '<' -> escaped.append("&lt;");
                 case '>' -> escaped.append("&gt;");
@@ -86,7 +86,7 @@ public final class Utils {
      * @param xml          The {@link #escapeXml(String) xml} flag.
      * @throws IOException If an I/O error occurs.
      */
-    public static void outWrite(final Writer out, final String value, final String defaultValue, final boolean xml)
+    public static void outWrite(Writer out, String value, String defaultValue, boolean xml)
             throws IOException {
         if (value != null) {
             out.write(xml ? escapeXml(value) : value);

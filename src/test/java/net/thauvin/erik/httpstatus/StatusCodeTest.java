@@ -1,7 +1,7 @@
 /*
  * StatusCodeTest.java
  *
- * Copyright 2015-2023 Erik C. Thauvin (erik@thauvin.net)
+ * Copyright 2015-2024 Erik C. Thauvin (erik@thauvin.net)
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -47,10 +47,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 class StatusCodeTest {
     @Test
     void testStatusCode() {
-        final ResourceBundle bundle = ResourceBundle.getBundle(Reasons.BUNDLE_BASENAME);
-        StatusCode statusCode = new StatusCode();
-        for (final String key : bundle.keySet()) {
-            final int code = Integer.parseInt(key);
+        var bundle = ResourceBundle.getBundle(Reasons.BUNDLE_BASENAME);
+        var statusCode = new StatusCode();
+        for (var key : bundle.keySet()) {
+            int code = Integer.parseInt(key);
             statusCode.setCode(code);
             assertThat(statusCode.getCode()).as("is not " + code).isEqualTo(code);
             assertThat(statusCode.isInfo()).as(code + " is info").isEqualTo(code >= 100 && code < 200);
@@ -65,8 +65,8 @@ class StatusCodeTest {
                     .isEqualTo(Reasons.getReasonPhrase(code));
         }
 
-        final int[] unknowns = {0, 99, 600};
-        for (final int code : unknowns) {
+        int[] unknowns = {0, 99, 600};
+        for (var code : unknowns) {
             statusCode.setCode(code);
             assertThat(statusCode.getCode()).as("is not " + code).isEqualTo(code);
             assertThat(statusCode.isInfo()).as(code + " is info").isFalse();

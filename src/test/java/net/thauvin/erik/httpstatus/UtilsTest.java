@@ -1,7 +1,7 @@
 /*
  * UtilsTest.java
  *
- * Copyright 2015-2023 Erik C. Thauvin (erik@thauvin.net)
+ * Copyright 2015-2024 Erik C. Thauvin (erik@thauvin.net)
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -59,7 +59,7 @@ class UtilsTest {
     @SuppressWarnings("PMD.AvoidDuplicateLiterals")
     @Test
     void testOutWrite() throws IOException {
-        try (StringWriter sw = new StringWriter()) {
+        try (var sw = new StringWriter()) {
             Utils.outWrite(sw, null, "default", false);
             assertThat(sw.toString()).isEqualTo("default").as("outWrite(default)");
 

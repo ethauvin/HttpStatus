@@ -1,7 +1,7 @@
 /*
  * StatusCode.java
  *
- * Copyright 2015-2023 Erik C. Thauvin (erik@thauvin.net)
+ * Copyright 2015-2024 Erik C. Thauvin (erik@thauvin.net)
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -58,7 +58,7 @@ public class StatusCode implements Serializable {
      *
      * @param code The status code.
      */
-    public StatusCode(final int code) {
+    public StatusCode(int code) {
         this.code = code;
     }
 
@@ -147,7 +147,7 @@ public class StatusCode implements Serializable {
      *
      * @param code The HTTP status code.
      */
-    public void setCode(final int code) {
+    public void setCode(int code) {
         this.code = code;
     }
 }

@@ -1,7 +1,7 @@
 /*
  * ReasonTag.java
  *
- * Copyright 2015-2023 Erik C. Thauvin (erik@thauvin.net)
+ * Copyright 2015-2024 Erik C. Thauvin (erik@thauvin.net)
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -55,8 +55,8 @@ public class ReasonTag extends XmlSupport {
      */
     @Override
     public void doTag() {
-        final PageContext pageContext = (PageContext) getJspContext();
-        final JspWriter out = pageContext.getOut();
+        PageContext pageContext = (PageContext) getJspContext();
+        JspWriter out = pageContext.getOut();
 
         try {
             if (statusCode > -1) {
@@ -75,7 +75,7 @@ public class ReasonTag extends XmlSupport {
      *
      * @param statusCode The status code.
      */
-    public void setCode(final int statusCode) {
+    public void setCode(int statusCode) {
         this.statusCode = statusCode;
     }
 }

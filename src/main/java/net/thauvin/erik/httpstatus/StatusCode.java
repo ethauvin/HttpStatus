@@ -139,7 +139,7 @@ public class StatusCode implements Serializable {
      * @return <code>true</code> if the status code is valid, <code>false</code> otherwise.
      */
     public boolean isValid() {
-        return code >= 100 && code < 600;
+        return code == 783 || (code >= 100 && code < 600);
     }
 
     /**

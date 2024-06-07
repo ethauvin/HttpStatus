@@ -59,9 +59,9 @@ class StatusCodeTest {
             assertThat(statusCode.isClientError()).as(code + " is client error").isEqualTo(code >= 400 && code < 500);
             assertThat(statusCode.isServerError()).as(code + " is server error").isEqualTo(code >= 500 && code < 600);
             assertThat(statusCode.isError()).as(code + " is error").isEqualTo(code >= 400 && code < 600);
-            assertThat(statusCode.isValid()).as(code + "is valid").isTrue();
+            assertThat(statusCode.isValid()).as(code + " is valid").isTrue();
 
-            assertThat(statusCode.getReason()).as(code + "reason phrase is not valid")
+            assertThat(statusCode.getReason()).as(code + " reason phrase is not valid")
                     .isEqualTo(Reasons.getReasonPhrase(code));
         }
 
@@ -75,8 +75,8 @@ class StatusCodeTest {
             assertThat(statusCode.isClientError()).as(code + " is client error").isFalse();
             assertThat(statusCode.isServerError()).as(code + " is server error").isFalse();
             assertThat(statusCode.isError()).as(code + " is error").isFalse();
-            assertThat(statusCode.isValid()).as("600 is invalid").isFalse();
-            assertThat(statusCode.getReason()).as(code + "reason phrase is not null.").isNull();
+            assertThat(statusCode.isValid()).as(code + " is invalid").isFalse();
+            assertThat(statusCode.getReason()).as(code + " reason phrase is not null.").isNull();
         }
 
         statusCode = new StatusCode(900);

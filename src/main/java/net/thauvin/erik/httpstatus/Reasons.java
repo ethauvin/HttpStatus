@@ -99,23 +99,23 @@ public final class Reasons {
     public static void main(String... args) {
         var keys = new TreeSet<>(REASON_PHRASES.keySet());
         if (args.length >= 1) {
-            for (var key : args) {
-                if (key.endsWith("xx")) {
-                    var responseClass = key.charAt(0);
-                    keys.forEach((k)  -> {
+            for (var arg : args) {
+                if (arg.endsWith("xx")) { // e.g.: 2xx
+                    var responseClass = arg.charAt(0);
+                    keys.forEach(k -> {
                         if (k.charAt(0) == responseClass) {
                             System.out.println(k + ": " + REASON_PHRASES.get(k));
                         }
                     });
-                } else {
-                    var value = REASON_PHRASES.get(key);
+                } else { // e.g.: 404
+                    var value = REASON_PHRASES.get(arg);
                     if (value != null) {
-                        System.out.println(key + ": " + value);
+                        System.out.println(arg + ": " + value);
                     }
                 }
             }
-        } else {
-            keys.forEach((k) -> System.out.println(k + ": " + REASON_PHRASES.get(k)));
+        } else { // Print all
+            keys.forEach(k -> System.out.println(k + ": " + REASON_PHRASES.get(k)));
             System.out.println("Total: " + REASON_PHRASES.size());
         }
     }

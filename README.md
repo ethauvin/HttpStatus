@@ -72,7 +72,7 @@ repositories {
 }
 
 dependencies {
-    implementation 'net.thauvin.erik.httpstatus:httpstatus:1.1.0'
+    implementation 'net.thauvin.erik.httpstatus:httpstatus:1.1.1'
 }
 ```
 
@@ -94,7 +94,7 @@ As a `Maven` artifact:
 <dependency>
     <groupId>net.thauvin.erik.httpstatus</groupId>
     <artifactId>httpstatus</artifactId>
-    <version>1.1.0</version>
+    <version>1.1.1</version>
 </dependency>
 ```
 
@@ -315,7 +315,7 @@ The reasons are defined in a [ResourceBundle](https://docs.oracle.com/en/java/ja
 You can query the reason phrase for status codes as follows:
 
 ```console
-$ java -jar httpstatus-1.1.0.jar 404 500
+$ java -jar httpstatus-1.1.1.jar 404 500
 404: Not Found
 500: Internal Server Error
 ```
@@ -323,7 +323,7 @@ $ java -jar httpstatus-1.1.0.jar 404 500
 If no status code is specified, all will be printed:
 
 ```console
-$ java -jar httpstatus-1.1.0.jar
+$ java -jar httpstatus-1.1.1.jar
 100: Continue
 101: Switching Protocols
 102: Processing
@@ -343,7 +343,7 @@ $ java -jar httpstatus-1.1.0.jar
 You can also print status codes by [response classes](https://www.rfc-editor.org/rfc/rfc9110.html#name-status-codes):
 
 ```console
-$ java -jar httpstatus-1.1.0.jar 2xx
+$ java -jar httpstatus-1.1.1.jar 2xx
 200: OK
 201: Created
 202: Accepted

@@ -1,5 +1,14 @@
 # Changelog
 
+## [1.1.1](https://github.com/ethauvin/httpstatus/tree/1.1.1) (2024-06-07)
+
+[Full Changelog](https://github.com/ethauvin/httpstatus/compare/1.1.0...1.1.1)
+
+**Implemented enhancements:**
+
+- Sort command line output [\#10](https://github.com/ethauvin/HttpStatus/issues/10)
+- Update reasons properties status codes [\#9](https://github.com/ethauvin/HttpStatus/issues/9)
+
 ## [1.1.0](https://github.com/ethauvin/httpstatus/tree/1.1.0) (2023-09-29)
 
 [Full Changelog](https://github.com/ethauvin/httpstatus/compare/1.0.5...1.1.0)

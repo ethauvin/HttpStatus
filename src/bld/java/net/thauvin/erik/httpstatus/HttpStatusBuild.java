@@ -58,7 +58,7 @@ public class HttpStatusBuild extends Project {
     public HttpStatusBuild() {
         pkg = "net.thauvin.erik.httpstatus";
         name = "HttpStatus";
-        version = version(1, 1, 1, "SNAPSHOT");
+        version = version(1, 1, 1);
 
         var description = "Tag library to display the code, reason, cause and/or message for HTTP status codes in JSP error pages";
         var url = "https://github.com/ethauvin/HttpStatus";

@@ -39,8 +39,7 @@ import rife.bld.extension.PmdOperation;
 import rife.bld.publish.*;
 import rife.tools.exceptions.FileUtilsErrorException;
 
-import java.io.IOException;
-import java.nio.file.Path;
+import java.io.File;
 import java.util.List;
 import java.util.jar.Attributes;
 
@@ -58,7 +57,7 @@ public class HttpStatusBuild extends Project {
     public HttpStatusBuild() {
         pkg = "net.thauvin.erik.httpstatus";
         name = "HttpStatus";
-        version = version(1, 1, 1);
+        version = version(1, 1, 2, "SNAPSHOT");
 
         var description = "Tag library to display the code, reason, cause and/or message for HTTP status codes in JSP error pages";
         var url = "https://github.com/ethauvin/HttpStatus";
@@ -72,13 +71,13 @@ public class HttpStatusBuild extends Project {
         repositories = List.of(MAVEN_CENTRAL, SONATYPE_SNAPSHOTS);
 
         scope(compile)
-                .include(dependency("jakarta.servlet", "jakarta.servlet-api", version(6, 0, 0)))
-                .include(dependency("jakarta.servlet.jsp", "jakarta.servlet.jsp-api", version(3, 1, 1)))
-                .include(dependency("jakarta.el", "jakarta.el-api", version(6, 0, 0)));
+                .include(dependency("jakarta.servlet", "jakarta.servlet-api", version(6, 1, 0)))
+                .include(dependency("jakarta.servlet.jsp", "jakarta.servlet.jsp-api", version(4, 0, 0)))
+                .include(dependency("jakarta.el", "jakarta.el-api", version(6, 0, 1)));
         scope(test)
-                .include(dependency("org.assertj", "assertj-core", version(3, 26, 0)))
-                .include(dependency("org.junit.jupiter", "junit-jupiter", version(5, 10, 2)))
-                .include(dependency("org.junit.platform", "junit-platform-console-standalone", version(1, 10, 2)));
+                .include(dependency("org.assertj", "assertj-core", version(3, 26, 3)))
+                .include(dependency("org.junit.jupiter", "junit-jupiter", version(5, 11, 0)))
+                .include(dependency("org.junit.platform", "junit-platform-console-standalone", version(1, 11, 0)));
 
         jarOperation().manifestAttribute(Attributes.Name.MAIN_CLASS, pkg + '.' + "Reasons");
 
@@ -92,6 +91,7 @@ public class HttpStatusBuild extends Project {
                         .withCredentials(property("sonatype.user"), property("sonatype.password"))
                         : repository(SONATYPE_RELEASES_LEGACY.location())
                         .withCredentials(property("sonatype.user"), property("sonatype.password")))
+                .repository(repository("github"))
                 .info(new PublishInfo()
                         .groupId(pkg)
                         .artifactId(name.toLowerCase())
@@ -99,17 +99,15 @@ public class HttpStatusBuild extends Project {
                         .version(version)
                         .description(description)
                         .url(url)
-                        .developer(
-                                new PublishDeveloper()
-                                        .id("ethauvin")
-                                        .name("Erik C. Thauvin")
-                                        .email("erik@thauvin.net")
-                                        .url("https://erik.thauvin.net/")
+                        .developer(new PublishDeveloper()
+                                .id("ethauvin")
+                                .name("Erik C. Thauvin")
+                                .email("erik@thauvin.net")
+                                .url("https://erik.thauvin.net/")
                         )
-                        .license(
-                                new PublishLicense()
-                                        .name("The BSD 3-Clause License")
-                                        .url("https://opensource.org/licenses/BSD-3-Clause")
+                        .license(new PublishLicense()
+                                .name("The BSD 3-Clause License")
+                                .url("https://opensource.org/licenses/BSD-3-Clause")
                         )
                         .scm(new PublishScm()
                                 .connection("scm:git:" + url + ".git")
@@ -124,25 +122,25 @@ public class HttpStatusBuild extends Project {
     }
 
     @BuildCommand(summary = "Generates JaCoCo Reports")
-    public void jacoco() throws IOException {
+    public void jacoco() throws Exception {
         new JacocoReportOperation()
                 .fromProject(this)
                 .execute();
     }
 
     @BuildCommand(summary = "Runs PMD analysis")
-    public void pmd() {
+    public void pmd() throws Exception {
         pmdOp.execute();
     }
 
     @BuildCommand(value = "pmd-cli", summary = "Runs PMD analysis (CLI)")
-    public void pmdCli() {
+    public void pmdCli() throws Exception {
         pmdOp.includeLineNumber(false).execute();
     }
 
     private void pomRoot() throws FileUtilsErrorException {
-        PomBuilder.generateInto(publishOperation().info(), dependencies(),
-                Path.of(workDirectory.getPath(), "pom.xml").toFile());
+        PomBuilder.generateInto(publishOperation().fromProject(this).info(), dependencies(),
+                new File(workDirectory, "pom.xml"));
     }
 
     @Override

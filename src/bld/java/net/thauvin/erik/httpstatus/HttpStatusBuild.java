@@ -76,8 +76,8 @@ public class HttpStatusBuild extends Project {
                 .include(dependency("jakarta.el", "jakarta.el-api", version(6, 0, 1)));
         scope(test)
                 .include(dependency("org.assertj", "assertj-core", version(3, 26, 3)))
-                .include(dependency("org.junit.jupiter", "junit-jupiter", version(5, 11, 0)))
-                .include(dependency("org.junit.platform", "junit-platform-console-standalone", version(1, 11, 0)));
+                .include(dependency("org.junit.jupiter", "junit-jupiter", version(5, 11, 3)))
+                .include(dependency("org.junit.platform", "junit-platform-console-standalone", version(1, 11, 3)));
 
         jarOperation().manifestAttribute(Attributes.Name.MAIN_CLASS, pkg + '.' + "Reasons");
 

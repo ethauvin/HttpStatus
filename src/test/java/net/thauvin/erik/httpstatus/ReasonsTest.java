@@ -50,9 +50,9 @@ class ReasonsTest {
     void testGetReasonPhrase() {
         var bundle = ResourceBundle.getBundle(Reasons.BUNDLE_BASENAME);
         for (var key : bundle.keySet()) {
-            assertThat(Reasons.getReasonPhrase(key)).as("getReasonPhrase(" + key + ')').isEqualTo(bundle.getString(key));
-            assertThat(Reasons.getReasonPhrase(Integer.parseInt(key)))
-                    .as("getReasonPhrase(int: " + key + ')').isEqualTo(bundle.getString(key));
+            assertThat(Reasons.getReasonPhrase(key)).as("getReasonPhrase(%s)", key).isEqualTo(bundle.getString(key));
+            assertThat(Reasons.getReasonPhrase(Integer.parseInt(key))).as("getReasonPhrase(%s)", key)
+                    .isEqualTo(bundle.getString(key));
         }
 
     }

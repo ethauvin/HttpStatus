@@ -33,9 +33,8 @@
 package net.thauvin.erik.httpstatus;
 
 import net.thauvin.erik.httpstatus.taglibs.CauseTag;
+import org.assertj.core.api.AutoCloseableSoftAssertions;
 import org.junit.jupiter.api.Test;
-
-import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * Implements the CauseTagTest class.
@@ -49,9 +48,11 @@ class CauseTagTest {
         var message = "This is the cause";
         var tag = new CauseTag();
 
-        assertThat(tag.getCause(new Exception(message))).as("has cause").isEqualTo(message);
-        assertThat(tag.getCause(new Exception())).as("no cause").isNull();
-        assertThat(tag.getCause(null)).as("null").isNull();
-        assertThat(tag.getCause(new Exception(""))).as("empty").isEmpty();
+        try (var softly = new AutoCloseableSoftAssertions()) {
+            softly.assertThat(tag.getCause(new Exception(message))).as("has cause").isEqualTo(message);
+            softly.assertThat(tag.getCause(new Exception())).as("no cause").isNull();
+            softly.assertThat(tag.getCause(null)).as("null").isNull();
+            softly.assertThat(tag.getCause(new Exception(""))).as("empty").isEmpty();
+        }
     }
 }

@@ -50,55 +50,55 @@ import static org.assertj.core.api.Assertions.assertThat;
  * @since 1.0
  */
 class ReasonsMainTest {
-    private final static PrintStream originalOut = System.out;
-    private final static ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+    private final static ByteArrayOutputStream OUTPUT_STREAM = new ByteArrayOutputStream();
+    private final static PrintStream SYSTEM_OUT = System.out;
 
     @AfterAll
     public static void restoreStreams() {
-        System.setOut(originalOut);
+        System.setOut(SYSTEM_OUT);
     }
 
     @BeforeAll
     public static void setUpStreams() {
-        System.setOut(new PrintStream(outContent));
+        System.setOut(new PrintStream(OUTPUT_STREAM));
     }
 
     @BeforeEach
     public void resetStreams() {
-        outContent.reset();
+        OUTPUT_STREAM.reset();
     }
 
     @Test
     void testMain() {
         Reasons.main("401");
-        assertThat(outContent.toString()).contains(Reasons.getReasonPhrase("401")).as("401");
-        assertThat(outContent.toString()).doesNotContain("500").as("401 no 500");
+        assertThat(OUTPUT_STREAM.toString()).contains(Reasons.getReasonPhrase("401")).as("401");
+        assertThat(OUTPUT_STREAM.toString()).doesNotContain("500").as("401 no 500");
     }
 
     @Test
     void testMainAll() {
         Reasons.main();
-        assertThat(outContent.toString()).contains(Reasons.getReasonPhrase(301)).as("301");
-        assertThat(outContent.toString()).contains(Reasons.getReasonPhrase(404)).as("404");
+        assertThat(OUTPUT_STREAM.toString()).contains(Reasons.getReasonPhrase(301)).as("301");
+        assertThat(OUTPUT_STREAM.toString()).contains(Reasons.getReasonPhrase(404)).as("404");
     }
 
     @Test
     void testMainArgs() {
         Reasons.main("500", "302");
-        assertThat(outContent.toString()).contains(Reasons.getReasonPhrase("500")).as("500 (302)");
-        assertThat(outContent.toString()).contains(Reasons.getReasonPhrase("302")).as("(500) 302");
-        assertThat(outContent.toString()).doesNotContain("404").as("500/302 not 404");
+        assertThat(OUTPUT_STREAM.toString()).contains(Reasons.getReasonPhrase("500")).as("500 (302)");
+        assertThat(OUTPUT_STREAM.toString()).contains(Reasons.getReasonPhrase("302")).as("(500) 302");
+        assertThat(OUTPUT_STREAM.toString()).doesNotContain("404").as("500/302 not 404");
     }
 
     @Test
     void testMainArgsClass() {
         Reasons.main("2xx");
-        assertThat(outContent.toString()).contains(Reasons.getReasonPhrase("200")).as("2xx");
+        assertThat(OUTPUT_STREAM.toString()).contains(Reasons.getReasonPhrase("200")).as("2xx");
     }
 
     @Test
     void testMainInvalid() {
         Reasons.main("aaa");
-        assertThat(outContent.toString()).as("invalid argument: aaa").isEmpty();
+        assertThat(OUTPUT_STREAM.toString()).as("invalid argument: aaa").isEmpty();
     }
 }

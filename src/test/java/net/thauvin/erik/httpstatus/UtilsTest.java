@@ -32,6 +32,7 @@
 
 package net.thauvin.erik.httpstatus;
 
+import org.assertj.core.api.AutoCloseableSoftAssertions;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
@@ -56,44 +57,44 @@ class UtilsTest {
                         "according the &quot;encoding&quot; parameter &amp; value.");
     }
 
-    @SuppressWarnings("PMD.AvoidDuplicateLiterals")
     @Test
     void testOutWrite() throws IOException {
-        try (var sw = new StringWriter()) {
-            Utils.outWrite(sw, null, "default", false);
-            assertThat(sw.toString()).isEqualTo("default").as("outWrite(default)");
+        try (var sw = new StringWriter(); var softly = new AutoCloseableSoftAssertions()) {
+            var defaultValue = "default";
+            Utils.outWrite(sw, null, defaultValue, false);
+            softly.assertThat(sw.toString()).as("outWrite(default)").isEqualTo(defaultValue);
 
             sw.getBuffer().setLength(0);
-            Utils.outWrite(sw, "", "default", false);
-            assertThat(sw.toString()).isEqualTo("").as("outWrite(value empty)");
+            Utils.outWrite(sw, "", defaultValue, false);
+            softly.assertThat(sw.toString()).as("outWrite(value empty)").isEmpty();
 
             sw.getBuffer().setLength(0);
             Utils.outWrite(sw, null, null, true);
-            assertThat(sw.toString()).isEqualTo("").as("outWrite(null)");
+            softly.assertThat(sw.toString()).as("outWrite(null)").isEmpty();
 
             sw.getBuffer().setLength(0);
-            Utils.outWrite(sw, "value", "default", false);
-            assertThat(sw.toString()).isEqualTo("value").as("outWrite(value)");
+            Utils.outWrite(sw, "value", defaultValue, false);
+            softly.assertThat(sw.toString()).as("outWrite(value)").isEqualTo("value");
 
             sw.getBuffer().setLength(0);
-            Utils.outWrite(sw, "wan't", "default", true);
-            assertThat(sw.toString()).isEqualTo("wan&apos;t").as("outWrite(wan't)");
+            Utils.outWrite(sw, "wan't", defaultValue, true);
+            softly.assertThat(sw.toString()).as("outWrite(wan't)").isEqualTo("wan&apos;t");
 
             sw.getBuffer().setLength(0);
             Utils.outWrite(sw, null, "1 & 1", true);
-            assertThat(sw.toString()).isEqualTo("1 &amp; 1").as("outWrite(1 & 1)");
+            softly.assertThat(sw.toString()).as("outWrite(1 & 1)").isEqualTo("1 &amp; 1");
 
             sw.getBuffer().setLength(0);
-            Utils.outWrite(sw, "", "default", true);
-            assertThat(sw.toString()).isEqualTo("").as("outWrite(value empty).as(xml)");
+            Utils.outWrite(sw, "", defaultValue, true);
+            softly.assertThat(sw.toString()).as("outWrite(value empty).as(xml)").isEmpty();
 
             sw.getBuffer().setLength(0);
             Utils.outWrite(sw, null, "", true);
-            assertThat(sw.toString()).isEqualTo("").as("outWrite(default empty)");
+            softly.assertThat(sw.toString()).as("outWrite(default empty)").isEmpty();
 
             sw.getBuffer().setLength(0);
             Utils.outWrite(sw, null, null, true);
-            assertThat(sw.toString()).isEqualTo("").as("outWrite(null).as(xml)");
+            softly.assertThat(sw.toString()).as("outWrite(null).as(xml)").isEmpty();
         }
     }
 }

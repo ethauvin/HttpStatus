@@ -48,7 +48,9 @@ import java.io.IOException;
  */
 public class CauseTag extends XmlSupport {
     /**
-     * {@inheritDoc}
+     * Prints the cause (if any) for the current HTTP Status Error Code.
+     *
+     * @throws IOException If an error occurs while writing the output.
      */
     @Override
     public void doTag() throws IOException {

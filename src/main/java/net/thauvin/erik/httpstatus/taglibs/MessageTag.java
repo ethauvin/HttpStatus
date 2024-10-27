@@ -47,7 +47,9 @@ import java.io.IOException;
  */
 public class MessageTag extends XmlSupport {
     /**
-     * {@inheritDoc}
+     * Writes the error message associated with the current HTTP Status Error Code.
+     *
+     * @throws IOException If an I/O error occurs.
      */
     @Override
     public void doTag() throws IOException {

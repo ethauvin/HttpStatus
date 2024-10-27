@@ -51,7 +51,7 @@ public class ReasonTag extends XmlSupport {
     private int statusCode = -1;
 
     /**
-     * {@inheritDoc}
+     * Writes the Reason Phrase for the current (or specified) HTTP Status Error Code.
      */
     @Override
     public void doTag() {

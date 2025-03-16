@@ -1,7 +1,7 @@
 /*
  * ReasonsMainTest.java
  *
- * Copyright 2015-2024 Erik C. Thauvin (erik@thauvin.net)
+ * Copyright 2015-2025 Erik C. Thauvin (erik@thauvin.net)
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -50,8 +50,8 @@ import static org.assertj.core.api.Assertions.assertThat;
  * @since 1.0
  */
 class ReasonsMainTest {
-    private final static ByteArrayOutputStream OUTPUT_STREAM = new ByteArrayOutputStream();
-    private final static PrintStream SYSTEM_OUT = System.out;
+    private static final ByteArrayOutputStream OUTPUT_STREAM = new ByteArrayOutputStream();
+    private static final PrintStream SYSTEM_OUT = System.out;
 
     @AfterAll
     public static void restoreStreams() {

@@ -1,17 +1,18 @@
 name: bld-ci
 
-on: [push, pull_request, workflow_dispatch]
+on: [ push, pull_request, workflow_dispatch ]
 
 jobs:
   build-bld-project:
-    runs-on: ubuntu-latest
-
     env:
       COVERAGE_JDK: "17"
 
     strategy:
       matrix:
-        java-version: [17, 21, 24]
+        java-version: [ 17, 21, 24 ]
+        os: [ ubuntu-latest, windows-latest, macos-latest ]
+
+    runs-on: ${{ matrix.os }}
 
     steps:
       - name: Checkout source repository
@@ -35,18 +36,18 @@ jobs:
         run: ./bld jacoco
 
       - name: Remove pom.xml
-        if: success() && matrix.java-version == env.COVERAGE_JDK
+        if: success() && matrix.java-version == env.COVERAGE_JDK && matrix.os == 'ubuntu-latest'
         run: rm -rf pom.xml
 
       - name: SonarCloud Scan
         uses: sonarsource/sonarcloud-github-action@master
-        if: success() && matrix.java-version == env.COVERAGE_JDK
+        if: success() && matrix.java-version == env.COVERAGE_JDK && matrix.os == 'ubuntu-latest'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
       - name: Upload coverage reports to Codecov
         uses: codecov/codecov-action@v3
-        if: success() && matrix.java-version == env.COVERAGE_JDK
+        if: success() && matrix.java-version == env.COVERAGE_JDK && matrix.os == 'ubuntu-latest'
         env:
           CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}

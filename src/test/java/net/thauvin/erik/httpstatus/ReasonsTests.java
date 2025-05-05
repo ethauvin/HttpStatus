@@ -1,5 +1,5 @@
 /*
- * CauseTagTest.java
+ * ReasonsTests.java
  *
  * Copyright 2015-2025 Erik C. Thauvin (erik@thauvin.net)
  * All rights reserved.
@@ -32,27 +32,56 @@
 
 package net.thauvin.erik.httpstatus;
 
-import net.thauvin.erik.httpstatus.taglibs.CauseTag;
 import org.assertj.core.api.AutoCloseableSoftAssertions;
 import org.junit.jupiter.api.Test;
 
-/**
- * Implements the CauseTagTest class.
- *
- * @author <a href="https://erik.thauvin.net/">Erik C. Thauvin</a>
- * @since 1.1.0
- */
-class CauseTagTest {
-    @Test
-    void causeTest() {
-        var message = "This is the cause";
-        var tag = new CauseTag();
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Modifier;
+import java.util.ResourceBundle;
 
+import static org.junit.jupiter.api.Assertions.assertInstanceOf;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+/**
+ * Reasons Tests.
+ *
+ * @author <a href="mailto:erik@thauvin.net">Erik C. Thauvin</a>
+ * @created 2015-12-03
+ * @since 1.0
+ */
+class ReasonsTests {
+    private static final ResourceBundle BUNDLE = ResourceBundle.getBundle(Reasons.BUNDLE_BASENAME);
+
+    @Test
+    @SuppressWarnings("PMD.AvoidAccessibilityAlteration")
+    void privateConstructor() throws Exception {
+        var constructor = Reasons.class.getDeclaredConstructor();
+        assertTrue(Modifier.isPrivate(constructor.getModifiers()), "Constructor is not private");
+        constructor.setAccessible(true);
+        try {
+            constructor.newInstance();
+        } catch (InvocationTargetException e) {
+            assertInstanceOf(UnsupportedOperationException.class, e.getCause(), e.getMessage());
+        }
+    }
+
+    @Test
+    void reasonPhrase() {
         try (var softly = new AutoCloseableSoftAssertions()) {
-            softly.assertThat(tag.getCause(new Exception(message))).as("has cause").isEqualTo(message);
-            softly.assertThat(tag.getCause(new Exception())).as("no cause").isNull();
-            softly.assertThat(tag.getCause(null)).as("null").isNull();
-            softly.assertThat(tag.getCause(new Exception(""))).as("empty").isEmpty();
+            for (var key : BUNDLE.keySet()) {
+                softly.assertThat(Reasons.getReasonPhrase(key)).as("getReasonPhrase(%s)", key)
+                        .isEqualTo(BUNDLE.getString(key));
+            }
+        }
+    }
+
+    @Test
+    void reasonPhraseWithInts() {
+        try (var softly = new AutoCloseableSoftAssertions()) {
+            for (var key : BUNDLE.keySet()) {
+                softly.assertThat(Reasons.getReasonPhrase(Integer.parseInt(key))).as("getReasonPhrase(%s)", key)
+                        .isEqualTo(BUNDLE.getString(key));
+            }
         }
     }
 }

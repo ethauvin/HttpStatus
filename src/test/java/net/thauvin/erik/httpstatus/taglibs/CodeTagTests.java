@@ -1,5 +1,5 @@
 /*
- * ReasonsTest.java
+ * CodeTagTests.java
  *
  * Copyright 2015-2025 Erik C. Thauvin (erik@thauvin.net)
  * All rights reserved.
@@ -30,30 +30,34 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package net.thauvin.erik.httpstatus;
+package net.thauvin.erik.httpstatus.taglibs;
 
+import jakarta.servlet.jsp.ErrorData;
+import jakarta.servlet.jsp.PageContext;
 import org.junit.jupiter.api.Test;
 
-import java.util.ResourceBundle;
+import java.io.IOException;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
-/**
- * Reasons Tests.
- *
- * @author <a href="mailto:erik@thauvin.net">Erik C. Thauvin</a>
- * @created 2015-12-03
- * @since 1.0
- */
-class ReasonsTest {
+class CodeTagTests {
     @Test
-    void testGetReasonPhrase() {
-        var bundle = ResourceBundle.getBundle(Reasons.BUNDLE_BASENAME);
-        for (var key : bundle.keySet()) {
-            assertThat(Reasons.getReasonPhrase(key)).as("getReasonPhrase(%s)", key).isEqualTo(bundle.getString(key));
-            assertThat(Reasons.getReasonPhrase(Integer.parseInt(key))).as("getReasonPhrase(%s)", key)
-                    .isEqualTo(bundle.getString(key));
-        }
+    void testDoTagWithStatusCode() throws IOException {
+        var mockPageContext = mock(PageContext.class);
+        var mockWriter = new MockJspWriter();
+        var mockErrorData = mock(ErrorData.class);
 
+        when(mockErrorData.getStatusCode()).thenReturn(404);
+        when(mockPageContext.getOut()).thenReturn(mockWriter);
+        when(mockPageContext.getErrorData()).thenReturn(mockErrorData);
+
+        CodeTag codeTag = new CodeTag();
+        codeTag.setJspContext(mockPageContext);
+
+        codeTag.doTag();
+
+        assertEquals("404", mockWriter.getContent());
     }
 }

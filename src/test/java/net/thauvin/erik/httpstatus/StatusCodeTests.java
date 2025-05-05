@@ -1,5 +1,5 @@
 /*
- * StatusCodeTest.java
+ * StatusCodeTests.java
  *
  * Copyright 2015-2025 Erik C. Thauvin (erik@thauvin.net)
  * All rights reserved.
@@ -34,10 +34,10 @@ package net.thauvin.erik.httpstatus;
 
 import org.assertj.core.api.AutoCloseableSoftAssertions;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import java.util.ResourceBundle;
-
-import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * StatusCode Tests.
@@ -45,9 +45,9 @@ import static org.assertj.core.api.Assertions.assertThat;
  * @author <a href="mailto:erik@thauvin.net">Erik C. Thauvin</a>
  * @since 1.1.0
  */
-class StatusCodeTest {
+class StatusCodeTests {
     @Test
-    void testStatusCode() {
+    void statusCode() {
         var bundle = ResourceBundle.getBundle(Reasons.BUNDLE_BASENAME);
         var statusCode = new StatusCode();
 
@@ -57,40 +57,40 @@ class StatusCodeTest {
 
                 statusCode.setCode(code);
                 softly.assertThat(statusCode.getCode()).as("is not %s", code).isEqualTo(code);
-                softly.assertThat(statusCode.isInfo()).as("%s is info", code).isEqualTo(code >= 100 && code < 200);
-                softly.assertThat(statusCode.isSuccess()).as("%s is ok", code).isEqualTo(code >= 200 && code < 300);
+                softly.assertThat(statusCode.isInfo()).as("%s is info", code)
+                        .isEqualTo(code >= 100 && code < 200);
+                softly.assertThat(statusCode.isSuccess()).as("%s is ok", code)
+                        .isEqualTo(code >= 200 && code < 300);
                 softly.assertThat(statusCode.isRedirect()).as("%s is redirect", code)
                         .isEqualTo(code >= 300 && code < 400);
                 softly.assertThat(statusCode.isClientError()).as("%s is client error", code)
                         .isEqualTo(code >= 400 && code < 500);
                 softly.assertThat(statusCode.isServerError()).as("%s is server error", code)
                         .isEqualTo(code >= 500 && code < 600);
-                softly.assertThat(statusCode.isError()).as("%s is error", code).isEqualTo(code >= 400 && code < 600);
+                softly.assertThat(statusCode.isError()).as("%s is error", code)
+                        .isEqualTo(code >= 400 && code < 600);
                 softly.assertThat(statusCode.isValid()).as("%s is valid", code).isTrue();
 
                 softly.assertThat(statusCode.getReason()).as("%s reason phrase is not valid", code)
                         .isEqualTo(Reasons.getReasonPhrase(code));
             }
         }
+    }
 
+    @ParameterizedTest
+    @ValueSource(ints = {0, 99, 600, 900})
+    void statusCodeWithUnknowns(int code) {
+        var statusCode = new StatusCode(code);
         try (var softly = new AutoCloseableSoftAssertions()) {
-            int[] unknowns = {0, 99, 600};
-
-            for (var code : unknowns) {
-                statusCode.setCode(code);
-                softly.assertThat(statusCode.getCode()).as("is not %s", code).isEqualTo(code);
-                softly.assertThat(statusCode.isInfo()).as("%s is info", code).isFalse();
-                softly.assertThat(statusCode.isSuccess()).as("%s is ok", code).isFalse();
-                softly.assertThat(statusCode.isRedirect()).as("%s is redirect", code).isFalse();
-                softly.assertThat(statusCode.isClientError()).as("%s is client error", code).isFalse();
-                softly.assertThat(statusCode.isServerError()).as("%s is server error", code).isFalse();
-                softly.assertThat(statusCode.isError()).as("%s is error", code).isFalse();
-                softly.assertThat(statusCode.isValid()).as("%s is invalid", code).isFalse();
-                softly.assertThat(statusCode.getReason()).as("%s reason phrase is not null.", code).isNull();
-            }
+            softly.assertThat(statusCode.getCode()).as("is not %s", code).isEqualTo(code);
+            softly.assertThat(statusCode.isInfo()).as("%s is info", code).isFalse();
+            softly.assertThat(statusCode.isSuccess()).as("%s is ok", code).isFalse();
+            softly.assertThat(statusCode.isRedirect()).as("%s is redirect", code).isFalse();
+            softly.assertThat(statusCode.isClientError()).as("%s is client error", code).isFalse();
+            softly.assertThat(statusCode.isServerError()).as("%s is server error", code).isFalse();
+            softly.assertThat(statusCode.isError()).as("%s is error", code).isFalse();
+            softly.assertThat(statusCode.isValid()).as("%s is invalid", code).isFalse();
+            softly.assertThat(statusCode.getReason()).as("%s reason phrase is not null.", code).isNull();
         }
-
-        statusCode = new StatusCode(900);
-        assertThat(statusCode.getCode()).as("is not %s", statusCode.getCode()).isEqualTo(900);
     }
 }

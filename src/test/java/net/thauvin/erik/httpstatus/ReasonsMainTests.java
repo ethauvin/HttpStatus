@@ -1,5 +1,5 @@
 /*
- * ReasonsMainTest.java
+ * ReasonsMainTests.java
  *
  * Copyright 2015-2025 Erik C. Thauvin (erik@thauvin.net)
  * All rights reserved.
@@ -32,6 +32,7 @@
 
 package net.thauvin.erik.httpstatus;
 
+import org.assertj.core.api.AutoCloseableSoftAssertions;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -49,7 +50,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  * @created 2019-05-06
  * @since 1.0
  */
-class ReasonsMainTest {
+class ReasonsMainTests {
     private static final ByteArrayOutputStream OUTPUT_STREAM = new ByteArrayOutputStream();
     private static final PrintStream SYSTEM_OUT = System.out;
 
@@ -63,27 +64,26 @@ class ReasonsMainTest {
         System.setOut(new PrintStream(OUTPUT_STREAM));
     }
 
-    @BeforeEach
-    public void resetStreams() {
-        OUTPUT_STREAM.reset();
+    @Test
+    void mainWithArgsClass() {
+        Reasons.main("2xx");
+        var lines = OUTPUT_STREAM.toString().split("\n");
+        assertThat(lines).as("should be 13 reasons for 2xx").hasSize(13);
+        try (var softly = new AutoCloseableSoftAssertions()) {
+            for (var line : lines) {
+                softly.assertThat(line).startsWith("2").as("%s starts with 2", line);
+            }
+        }
     }
 
     @Test
-    void testMain() {
-        Reasons.main("401");
-        assertThat(OUTPUT_STREAM.toString()).contains(Reasons.getReasonPhrase("401")).as("401");
-        assertThat(OUTPUT_STREAM.toString()).doesNotContain("500").as("401 no 500");
+    void mainWithInvalidArg() {
+        Reasons.main("aaa");
+        assertThat(OUTPUT_STREAM.toString()).as("invalid argument: aaa").isEmpty();
     }
 
     @Test
-    void testMainAll() {
-        Reasons.main();
-        assertThat(OUTPUT_STREAM.toString()).contains(Reasons.getReasonPhrase(301)).as("301");
-        assertThat(OUTPUT_STREAM.toString()).contains(Reasons.getReasonPhrase(404)).as("404");
-    }
-
-    @Test
-    void testMainArgs() {
+    void mainWithMultipleArgs() {
         Reasons.main("500", "302");
         assertThat(OUTPUT_STREAM.toString()).contains(Reasons.getReasonPhrase("500")).as("500 (302)");
         assertThat(OUTPUT_STREAM.toString()).contains(Reasons.getReasonPhrase("302")).as("(500) 302");
@@ -91,14 +91,21 @@ class ReasonsMainTest {
     }
 
     @Test
-    void testMainArgsClass() {
-        Reasons.main("2xx");
-        assertThat(OUTPUT_STREAM.toString()).contains(Reasons.getReasonPhrase("200")).as("2xx");
+    void mainWithSingleArg() {
+        Reasons.main("401");
+        assertThat(OUTPUT_STREAM.toString()).contains(Reasons.getReasonPhrase("401")).as("401");
+        assertThat(OUTPUT_STREAM.toString()).doesNotContain("500").as("401 no 500");
     }
 
     @Test
-    void testMainInvalid() {
-        Reasons.main("aaa");
-        assertThat(OUTPUT_STREAM.toString()).as("invalid argument: aaa").isEmpty();
+    void mainWithoutArgs() {
+        Reasons.main();
+        assertThat(OUTPUT_STREAM.toString()).contains(Reasons.getReasonPhrase(301)).as("301");
+        assertThat(OUTPUT_STREAM.toString()).contains(Reasons.getReasonPhrase(404)).as("404");
+    }
+
+    @BeforeEach
+    public void resetStreams() {
+        OUTPUT_STREAM.reset();
     }
 }

@@ -32,13 +32,18 @@
 
 package net.thauvin.erik.httpstatus;
 
-import org.assertj.core.api.AutoCloseableSoftAssertions;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 import java.io.StringWriter;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Modifier;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertInstanceOf;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * Utils Tests.
@@ -49,52 +54,141 @@ import static org.assertj.core.api.Assertions.assertThat;
  */
 class UtilsTest {
     @Test
-    void testEscapeXml() {
-        assertThat(Utils.escapeXml(
-                "This is a test. We wan't to make sure that everything is <encoded> according the \"encoding\" "
-                        + "parameter & value."))
-                .isEqualTo("This is a test. We wan&apos;t to make sure that everything is &lt;encoded&gt; " +
-                        "according the &quot;encoding&quot; parameter &amp; value.");
+    @SuppressWarnings("PMD.AvoidAccessibilityAlteration")
+    void privateConstructor() throws Exception {
+        var constructor = Utils.class.getDeclaredConstructor();
+        assertTrue(Modifier.isPrivate(constructor.getModifiers()), "Constructor is not private");
+        constructor.setAccessible(true);
+        try {
+            constructor.newInstance();
+        } catch (InvocationTargetException e) {
+            assertInstanceOf(UnsupportedOperationException.class, e.getCause(), e.getMessage());
+        }
     }
 
-    @Test
-    void testOutWrite() throws IOException {
-        try (var sw = new StringWriter(); var softly = new AutoCloseableSoftAssertions()) {
-            var defaultValue = "default";
-            Utils.outWrite(sw, null, defaultValue, false);
-            softly.assertThat(sw.toString()).as("outWrite(default)").isEqualTo(defaultValue);
+    @Nested
+    @DisplayName("EscapeXml Tests")
+    class EscapeXmlTests {
+        @Test
+        void escapeXml() {
+            var xmlInput = "<xml>&data>'text'\"more data\"&more</xml>";
+            var expectedOutput = "&lt;xml&gt;&amp;data&gt;&apos;text&apos;&quot;more data&quot;&amp;more&lt;/xml&gt;";
+            assertThat(Utils.escapeXml(xmlInput)).isEqualTo(expectedOutput);
+        }
 
-            sw.getBuffer().setLength(0);
-            Utils.outWrite(sw, "", defaultValue, false);
-            softly.assertThat(sw.toString()).as("outWrite(value empty)").isEmpty();
+        @Test
+        void escapeXmlWithContinuousSpecialCharacters() {
+            var input = "<<<>>>&&&'''\"\"\"";
+            var expected = "&lt;&lt;&lt;&gt;&gt;&gt;&amp;&amp;&amp;&apos;&apos;&apos;&quot;&quot;&quot;";
+            assertThat(Utils.escapeXml(input)).isEqualTo(expected);
+        }
 
-            sw.getBuffer().setLength(0);
-            Utils.outWrite(sw, null, null, true);
-            softly.assertThat(sw.toString()).as("outWrite(null)").isEmpty();
+        @Test
+        void escapeXmlWithEmptyString() {
+            assertThat(Utils.escapeXml("")).isEqualTo("");
+        }
 
-            sw.getBuffer().setLength(0);
-            Utils.outWrite(sw, "value", defaultValue, false);
-            softly.assertThat(sw.toString()).as("outWrite(value)").isEqualTo("value");
+        @Test
+        void escapeXmlWithMixedContent() {
+            var input = "Mix123<&>'\"Text";
+            var expected = "Mix123&lt;&amp;&gt;&apos;&quot;Text";
+            assertThat(Utils.escapeXml(input)).isEqualTo(expected);
+        }
 
-            sw.getBuffer().setLength(0);
-            Utils.outWrite(sw, "wan't", defaultValue, true);
-            softly.assertThat(sw.toString()).as("outWrite(wan't)").isEqualTo("wan&apos;t");
+        @Test
+        void escapeXmlWithNumericCharacters() {
+            var input = "1234567890";
+            var expected = "1234567890";
+            assertThat(Utils.escapeXml(input)).isEqualTo(expected);
+        }
 
-            sw.getBuffer().setLength(0);
-            Utils.outWrite(sw, null, "1 & 1", true);
-            softly.assertThat(sw.toString()).as("outWrite(1 & 1)").isEqualTo("1 &amp; 1");
+        @Test
+        void escapeXmlWithSpecialCharacters() {
+            assertThat(Utils.escapeXml("<>&'\"")).isEqualTo("&lt;&gt;&amp;&apos;&quot;");
+        }
 
-            sw.getBuffer().setLength(0);
-            Utils.outWrite(sw, "", defaultValue, true);
-            softly.assertThat(sw.toString()).as("outWrite(value empty).as(xml)").isEmpty();
+        @Test
+        void escapeXmlWithTextWithNoSpecialCharacters() {
+            assertThat(Utils.escapeXml("No special characters here"))
+                    .isEqualTo("No special characters here");
+        }
+    }
 
-            sw.getBuffer().setLength(0);
-            Utils.outWrite(sw, null, "", true);
-            softly.assertThat(sw.toString()).as("outWrite(default empty)").isEmpty();
+    @Nested
+    @DisplayName("OutWrite Tests")
+    class OutWriteTests {
+        private static final String DEFAULT_VALUE = "default";
 
-            sw.getBuffer().setLength(0);
-            Utils.outWrite(sw, null, null, true);
-            softly.assertThat(sw.toString()).as("outWrite(null).as(xml)").isEmpty();
+        @Test
+        void outWrite() throws IOException {
+            try (var sw = new StringWriter()) {
+                Utils.outWrite(sw, "value", DEFAULT_VALUE, false);
+                assertThat(sw.toString()).as("outWrite(value)").isEqualTo("value");
+            }
+        }
+
+        @Test
+        void outWriteWithAmpersand() throws IOException {
+            try (var sw = new StringWriter()) {
+                Utils.outWrite(sw, null, "1 & 1", true);
+                assertThat(sw.toString()).as("outWrite(1 & 1)").isEqualTo("1 &amp; 1");
+            }
+        }
+
+        @Test
+        void outWriteWithApostrophe() throws IOException {
+            try (var sw = new StringWriter()) {
+                Utils.outWrite(sw, "wan't", DEFAULT_VALUE, true);
+                assertThat(sw.toString()).as("outWrite(wan't)").isEqualTo("wan&apos;t");
+            }
+        }
+
+        @Test
+        void outWriteWithDefaultValue() throws IOException {
+            try (var sw = new StringWriter()) {
+                Utils.outWrite(sw, null, DEFAULT_VALUE, false);
+                assertThat(sw.toString()).as("outWrite(default)").isEqualTo(DEFAULT_VALUE);
+            }
+        }
+
+        @Test
+        void outWriteWithEmptyValue() throws IOException {
+            try (var sw = new StringWriter()) {
+                Utils.outWrite(sw, "", DEFAULT_VALUE, false);
+                assertThat(sw.toString()).as("outWrite(value empty)").isEmpty();
+            }
+        }
+
+        @Test
+        void outWriteWithEmptyValueAsXml() throws IOException {
+            try (var sw = new StringWriter()) {
+                Utils.outWrite(sw, "", DEFAULT_VALUE, true);
+                assertThat(sw.toString()).as("outWrite(value empty).as(xml)").isEmpty();
+            }
+        }
+
+        @Test
+        void outWriteWithNullValue() throws IOException {
+            try (var sw = new StringWriter()) {
+                Utils.outWrite(sw, null, null, true);
+                assertThat(sw.toString()).as("outWrite(null)").isEmpty();
+            }
+        }
+
+        @Test
+        void outWriteWithNullValueAndEmptyDefaultValue() throws IOException {
+            try (var sw = new StringWriter()) {
+                Utils.outWrite(sw, null, "", true);
+                assertThat(sw.toString()).as("outWrite(default empty)").isEmpty();
+            }
+        }
+
+        @Test
+        void outWriteWithNullValueAndNullDefaultValue() throws IOException {
+            try (var sw = new StringWriter()) {
+                Utils.outWrite(sw, null, null, true);
+                assertThat(sw.toString()).as("outWrite(null).as(xml)").isEmpty();
+            }
         }
     }
 }

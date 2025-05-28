@@ -32,7 +32,6 @@
 
 package net.thauvin.erik.httpstatus.taglibs;
 
-import jakarta.servlet.jsp.JspWriter;
 import jakarta.servlet.jsp.PageContext;
 import net.thauvin.erik.httpstatus.Reasons;
 import net.thauvin.erik.httpstatus.Utils;
@@ -54,26 +53,23 @@ public class ReasonTag extends XmlSupport {
      * Writes the Reason Phrase for the current (or specified) HTTP Status Error Code.
      */
     @Override
-    public void doTag() {
-        PageContext pageContext = (PageContext) getJspContext();
-        JspWriter out = pageContext.getOut();
+    public void doTag() throws IOException {
+        var pageContext = (PageContext) getJspContext();
+        var out = pageContext.getOut();
 
-        try {
-            if (statusCode > -1) {
-                Utils.outWrite(out, Reasons.getReasonPhrase(statusCode), defaultValue, escapeXml);
-            } else {
-                Utils.outWrite(out, Reasons.getReasonPhrase(pageContext.getErrorData().getStatusCode()), defaultValue,
-                        escapeXml);
-            }
-        } catch (IOException ignored) {
-            // Ignore.
+        if (statusCode > -1) {
+            Utils.outWrite(out, Reasons.getReasonPhrase(statusCode), defaultValue, escapeXml);
+        } else {
+            Utils.outWrite(out, Reasons.getReasonPhrase(pageContext.getErrorData().getStatusCode()), defaultValue,
+                    escapeXml);
         }
+
     }
 
     /**
      * Sets the status code.
      *
-     * @param statusCode The status code.
+     * @param statusCode The status code
      */
     public void setCode(int statusCode) {
         this.statusCode = statusCode;

@@ -46,7 +46,7 @@ public final class Utils {
     /**
      * Disables the default constructor.
      *
-     * @throws UnsupportedOperationException If the constructor is called.
+     * @throws UnsupportedOperationException If the constructor is called
      */
     private Utils() {
         throw new UnsupportedOperationException("Illegal constructor call.");
@@ -56,8 +56,8 @@ public final class Utils {
      * Converts <code>&lt;</code>, <code>&gt;</code>, <code>&amp;</code>, <code>'</code>, <code>"</code>
      * to their corresponding entity codes.
      *
-     * @param value The string value to convert.
-     * @return The converted string value.
+     * @param value The string value to convert
+     * @return The converted string value
      */
     public static String escapeXml(String value) {
         var escaped = new StringBuilder();
@@ -80,11 +80,11 @@ public final class Utils {
     /**
      * Writes a string value to the specified writer. The default value is used when the actual value is null.
      *
-     * @param out          The writer to output the value to.
-     * @param value        The string value.
-     * @param defaultValue The default value.
-     * @param xml          The {@link #escapeXml(String) xml} flag.
-     * @throws IOException If an I/O error occurs.
+     * @param out          The writer to output the value to
+     * @param value        The string value
+     * @param defaultValue The default value
+     * @param xml          The {@link #escapeXml(String) xml} flag
+     * @throws IOException If an I/O error occurs
      */
     public static void outWrite(Writer out, String value, String defaultValue, boolean xml)
             throws IOException {

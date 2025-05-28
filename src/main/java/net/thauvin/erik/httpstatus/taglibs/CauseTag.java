@@ -32,7 +32,6 @@
 
 package net.thauvin.erik.httpstatus.taglibs;
 
-import jakarta.servlet.jsp.JspWriter;
 import jakarta.servlet.jsp.PageContext;
 import net.thauvin.erik.httpstatus.Utils;
 
@@ -50,23 +49,23 @@ public class CauseTag extends XmlSupport {
     /**
      * Prints the cause (if any) for the current HTTP Status Error Code.
      *
-     * @throws IOException If an error occurs while writing the output.
+     * @throws IOException If an error occurs while writing the output
      */
     @Override
     public void doTag() throws IOException {
-        PageContext pageContext = (PageContext) getJspContext();
-        JspWriter out = pageContext.getOut();
+        var pageContext = (PageContext) getJspContext();
+        var out = pageContext.getOut();
 
-        Throwable cause = pageContext.getErrorData().getThrowable().getCause();
+        var cause = pageContext.getErrorData().getThrowable().getCause();
 
         Utils.outWrite(out, getCause(cause), defaultValue, escapeXml);
     }
 
     /**
-     * Returns the cause's localized message or default value.
+     * Returns the cause's localized message.
      *
-     * @param cause The cause.
-     * @return The cause or {@code null}.
+     * @param cause The cause
+     * @return The cause or {@code null} if none
      */
     public String getCause(Throwable cause) {
         if (cause != null && cause.getLocalizedMessage() != null) {

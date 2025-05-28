@@ -56,7 +56,7 @@ public class StatusCode implements Serializable {
     /**
      * Creates a new StatusCode object.
      *
-     * @param code The status code.
+     * @param code The status code
      */
     public StatusCode(int code) {
         this.code = code;
@@ -72,7 +72,7 @@ public class StatusCode implements Serializable {
     /**
      * Returns the reason for the status code.
      *
-     * @return The reason, or <code>null</code>.
+     * @return The reason, or <code>null</code>
      * @see Reasons#getReasonPhrase(int)
      */
     public String getReason() {
@@ -82,7 +82,7 @@ public class StatusCode implements Serializable {
     /**
      * Checks if the status code is a client error. (eg: <code>Internal Server Error</code>)
      *
-     * @return <code>true</code> if the status code is a client error, <code>false</code> otherwise.
+     * @return <code>true</code> if the status code is a client error, <code>false</code> otherwise
      */
     public boolean isClientError() {
         return code >= 400 && code < 500;
@@ -91,7 +91,7 @@ public class StatusCode implements Serializable {
     /**
      * Checks if the status code is a client or server error.
      *
-     * @return <code>true</code> if the status code is an error, <code>false</code> otherwise.
+     * @return <code>true</code> if the status code is an error, <code>false</code> otherwise
      */
     public boolean isError() {
         return code >= 400 && code < 600;
@@ -100,7 +100,7 @@ public class StatusCode implements Serializable {
     /**
      * Checks if the status code is informational.
      *
-     * @return <code>true</code> if the status code is informational, <code>false</code> otherwise.
+     * @return <code>true</code> if the status code is informational, <code>false</code> otherwise
      */
     public boolean isInfo() {
         return code >= 100 && code < 200;
@@ -109,7 +109,7 @@ public class StatusCode implements Serializable {
     /**
      * Checks if the status code is a redirect.
      *
-     * @return <code>true</code> if the status code is a redirect, <code>false</code> otherwise.
+     * @return <code>true</code> if the status code is a redirect, <code>false</code> otherwise
      */
     public boolean isRedirect() {
         return code >= 300 && code < 400;
@@ -118,7 +118,7 @@ public class StatusCode implements Serializable {
     /**
      * Checks if the status code is a server error.
      *
-     * @return <code>true</code> if the status code is a server error, <code>false</code> otherwise.
+     * @return <code>true</code> if the status code is a server error, <code>false</code> otherwise
      */
     public boolean isServerError() {
         return code >= 500 && code < 600;
@@ -127,7 +127,7 @@ public class StatusCode implements Serializable {
     /**
      * Checks if the status code is a (<code>OK</code>) success.
      *
-     * @return <code>true</code> if the status code is a success, <code>false</code> otherwise.
+     * @return <code>true</code> if the status code is a success, <code>false</code> otherwise
      */
     public boolean isSuccess() {
         return code >= 200 && code < 300;
@@ -136,7 +136,7 @@ public class StatusCode implements Serializable {
     /**
      * Checks if the status code is valid.
      *
-     * @return <code>true</code> if the status code is valid, <code>false</code> otherwise.
+     * @return <code>true</code> if the status code is valid, <code>false</code> otherwise
      */
     public boolean isValid() {
         return code == 783 || (code >= 100 && code < 600);
@@ -145,7 +145,7 @@ public class StatusCode implements Serializable {
     /**
      * Sets the status code.
      *
-     * @param code The HTTP status code.
+     * @param code The HTTP status code
      */
     public void setCode(int code) {
         this.code = code;

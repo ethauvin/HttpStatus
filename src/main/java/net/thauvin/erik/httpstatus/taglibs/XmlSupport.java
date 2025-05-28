@@ -55,9 +55,8 @@ public abstract class XmlSupport extends SimpleTagSupport {
     /**
      * Sets the default value.
      *
-     * @param defaultValue The default value.
+     * @param defaultValue The default value
      */
-    @SuppressWarnings("unused")
     public void setDefault(String defaultValue) {
         this.defaultValue = defaultValue;
     }
@@ -67,7 +66,6 @@ public abstract class XmlSupport extends SimpleTagSupport {
      *
      * @param escapeXml <code>true</code> or <code>false</code>
      */
-    @SuppressWarnings("unused")
     public void setEscapeXml(boolean escapeXml) {
         this.escapeXml = escapeXml;
     }

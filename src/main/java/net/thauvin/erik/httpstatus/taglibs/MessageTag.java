@@ -32,7 +32,6 @@
 
 package net.thauvin.erik.httpstatus.taglibs;
 
-import jakarta.servlet.jsp.JspWriter;
 import jakarta.servlet.jsp.PageContext;
 import net.thauvin.erik.httpstatus.Utils;
 
@@ -49,14 +48,14 @@ public class MessageTag extends XmlSupport {
     /**
      * Writes the error message associated with the current HTTP Status Error Code.
      *
-     * @throws IOException If an I/O error occurs.
+     * @throws IOException If an I/O error occurs
      */
     @Override
     public void doTag() throws IOException {
-        PageContext pageContext = (PageContext) getJspContext();
-        JspWriter out = pageContext.getOut();
+        var pageContext = (PageContext) getJspContext();
+        var out = pageContext.getOut();
 
-        String message = (String) pageContext.getRequest().getAttribute(
+        var message = (String) pageContext.getRequest().getAttribute(
                 jakarta.servlet.RequestDispatcher.ERROR_MESSAGE);
 
         Utils.outWrite(out, message, defaultValue, escapeXml);

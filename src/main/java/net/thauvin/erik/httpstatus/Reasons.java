@@ -34,8 +34,7 @@ package net.thauvin.erik.httpstatus;
 
 import java.util.Map;
 import java.util.ResourceBundle;
-import java.util.TreeSet;
-import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentSkipListMap;
 
 /**
  * Populates the {@link #REASON_PHRASES reason phrases} map from {@link #BUNDLE_BASENAME bundle properties}, and
@@ -53,7 +52,8 @@ public final class Reasons {
     /**
      * The reason phrases map.
      */
-    private static final Map<String, String> REASON_PHRASES = new ConcurrentHashMap<>();
+    @SuppressWarnings("PMD.UseConcurrentHashMap")
+    private static final Map<String, String> REASON_PHRASES = new ConcurrentSkipListMap<>();
 
     // Initializes the reason phrases map.
     static {
@@ -73,8 +73,8 @@ public final class Reasons {
     /**
      * Returns the reason phrase for the specified status code.
      *
-     * @param statusCode The status code.
-     * @return The reason phrase, or <code>null</code>.
+     * @param statusCode The status code
+     * @return The reason phrase, or <code>null</code>
      */
     public static String getReasonPhrase(int statusCode) {
         return getReasonPhrase(Integer.toString(statusCode));
@@ -83,8 +83,8 @@ public final class Reasons {
     /**
      * Returns the reason phrase for the specified status code.
      *
-     * @param statusCode The status code.
-     * @return The reason phrase, or <code>null</code>.
+     * @param statusCode The status code
+     * @return The reason phrase, or <code>null</code>
      */
     public static String getReasonPhrase(String statusCode) {
         return REASON_PHRASES.get(statusCode);
@@ -93,16 +93,15 @@ public final class Reasons {
     /**
      * Prints the reason phrase for the given status code(s).
      *
-     * @param args The status code(s) or response class(es), prints all if none.
+     * @param args The status code(s) or response class(es), prints all if none
      */
     @SuppressWarnings("PMD.SystemPrintln")
     public static void main(String... args) {
-        var keys = new TreeSet<>(REASON_PHRASES.keySet());
         if (args.length >= 1) {
             for (var arg : args) {
-                if (arg.endsWith("xx")) { // e.g.: 2xx
+                if (arg.matches("\\dxx")) { // e.g.: 2xx
                     var responseClass = arg.charAt(0);
-                    keys.forEach(k -> {
+                    REASON_PHRASES.keySet().forEach(k -> {
                         if (k.charAt(0) == responseClass) {
                             System.out.println(k + ": " + REASON_PHRASES.get(k));
                         }
@@ -115,7 +114,7 @@ public final class Reasons {
                 }
             }
         } else { // Print all
-            keys.forEach(k -> System.out.println(k + ": " + REASON_PHRASES.get(k)));
+            REASON_PHRASES.keySet().forEach(k -> System.out.println(k + ": " + REASON_PHRASES.get(k)));
             System.out.println("Total: " + REASON_PHRASES.size());
         }
     }

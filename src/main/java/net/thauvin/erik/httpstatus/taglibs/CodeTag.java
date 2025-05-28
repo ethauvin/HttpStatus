@@ -32,7 +32,6 @@
 
 package net.thauvin.erik.httpstatus.taglibs;
 
-import jakarta.servlet.jsp.JspWriter;
 import jakarta.servlet.jsp.PageContext;
 import jakarta.servlet.jsp.tagext.SimpleTagSupport;
 
@@ -49,12 +48,12 @@ public class CodeTag extends SimpleTagSupport {
     /**
      * Writes the HTTP Status Error Code to the current JspWriter.
      *
-     * @throws IOException If an I/O error occurs.
+     * @throws IOException If an I/O error occurs
      */
     @Override
     public void doTag() throws IOException {
-        PageContext pageContext = (PageContext) getJspContext();
-        JspWriter out = pageContext.getOut();
+        var pageContext = (PageContext) getJspContext();
+        var out = pageContext.getOut();
 
         out.write(String.valueOf(pageContext.getErrorData().getStatusCode()));
     }

@@ -34,12 +34,15 @@ package net.thauvin.erik.httpstatus;
 
 import rife.bld.BuildCommand;
 import rife.bld.Project;
+import rife.bld.extension.ExecOperation;
 import rife.bld.extension.JacocoReportOperation;
 import rife.bld.extension.PmdOperation;
 import rife.bld.publish.*;
 import rife.tools.exceptions.FileUtilsErrorException;
 
 import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.List;
 import java.util.jar.Attributes;
 
@@ -49,6 +52,7 @@ import static rife.bld.dependencies.Scope.test;
 import static rife.bld.operations.JavadocOptions.DocLinkOption.NO_MISSING;
 
 public class HttpStatusBuild extends Project {
+    static final String TEST_RESULTS_DIR = "build/test-results/test/";
     final PmdOperation pmdOp = new PmdOperation()
             .fromProject(this)
             .failOnViolation(true)
@@ -75,7 +79,7 @@ public class HttpStatusBuild extends Project {
                 .include(dependency("jakarta.servlet.jsp", "jakarta.servlet.jsp-api", version(4, 0, 0)))
                 .include(dependency("jakarta.el", "jakarta.el-api", version(6, 0, 1)));
         scope(test)
-                .include(dependency("org.jetbrains", "annotations", version(24, 0, 0)))
+                .include(dependency("org.jetbrains", "annotations", version(26, 0, 2)))
                 .include(dependency("org.mockito", "mockito-core", version(5, 18, 0)))
                 .include(dependency("org.assertj", "assertj-core", version(3, 27, 3)))
                 .include(dependency("org.junit.jupiter", "junit-jupiter", version(5, 12, 2)))
@@ -125,9 +129,21 @@ public class HttpStatusBuild extends Project {
 
     @BuildCommand(summary = "Generates JaCoCo Reports")
     public void jacoco() throws Exception {
-        new JacocoReportOperation()
-                .fromProject(this)
-                .execute();
+        var op = new JacocoReportOperation().fromProject(this);
+        //op.testToolOptions("--reports-dir=" + TEST_RESULTS_DIR);
+
+        Exception ex = null;
+        try {
+            op.execute();
+        } catch (Exception e) {
+            ex = e;
+        }
+
+        renderWithXunitViewer();
+
+        if (ex != null) {
+            throw ex;
+        }
     }
 
     @BuildCommand(summary = "Runs PMD analysis")
@@ -143,6 +159,39 @@ public class HttpStatusBuild extends Project {
     private void pomRoot() throws FileUtilsErrorException {
         PomBuilder.generateInto(publishOperation().fromProject(this).info(), dependencies(),
                 new File(workDirectory, "pom.xml"));
+    }
+
+    private void renderWithXunitViewer() throws Exception {
+        var xunitViewer = new File("/usr/bin/xunit-viewer");
+        if (xunitViewer.exists() && xunitViewer.canExecute()) {
+            var reportsDir = "build/reports/tests/test/";
+
+            Files.createDirectories(Path.of(reportsDir));
+
+            new ExecOperation()
+                    .fromProject(this)
+                    .command(xunitViewer.getPath(), "-r", TEST_RESULTS_DIR, "-o", reportsDir + "index.html")
+                    .execute();
+        }
+    }
+
+    @Override
+    public void test() throws Exception {
+        var op = testOperation().fromProject(this);
+        op.testToolOptions().reportsDir(new File(TEST_RESULTS_DIR));
+
+        Exception ex = null;
+        try {
+            op.execute();
+        } catch (Exception e) {
+            ex = e;
+        }
+
+        renderWithXunitViewer();
+
+        if (ex != null) {
+            throw ex;
+        }
     }
 
     @Override

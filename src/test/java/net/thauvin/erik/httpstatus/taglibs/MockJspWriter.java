@@ -44,11 +44,13 @@ public class MockJspWriter extends JspWriter {
         this.buffer = new StringBuilder();
     }
 
+    @SuppressWarnings("unused")
     public MockJspWriter(StringBuilder buffer) {
         super(0, false);
         this.buffer = buffer != null ? buffer : new StringBuilder();
     }
 
+    @SuppressWarnings("unused")
     public StringBuilder getBuffer() {
         return buffer;
     }

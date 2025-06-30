@@ -82,8 +82,8 @@ public class HttpStatusBuild extends Project {
                 .include(dependency("org.jetbrains", "annotations", version(26, 0, 2)))
                 .include(dependency("org.mockito", "mockito-core", version(5, 18, 0)))
                 .include(dependency("org.assertj", "assertj-core", version(3, 27, 3)))
-                .include(dependency("org.junit.jupiter", "junit-jupiter", version(5, 12, 2)))
-                .include(dependency("org.junit.platform", "junit-platform-console-standalone", version(1, 12, 2)));
+                .include(dependency("org.junit.jupiter", "junit-jupiter", version(5, 13, 2)))
+                .include(dependency("org.junit.platform", "junit-platform-console-standalone", version(1, 13, 2)));
 
         jarOperation().manifestAttribute(Attributes.Name.MAIN_CLASS, pkg + '.' + "Reasons");
 

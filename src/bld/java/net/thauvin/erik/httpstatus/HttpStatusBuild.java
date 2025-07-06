@@ -93,10 +93,10 @@ public class HttpStatusBuild extends Project {
                 .link("https://jakarta.ee/specifications/platform/9/apidocs/");
 
         publishOperation()
-                .repository(version.isSnapshot() ? repository(SONATYPE_SNAPSHOTS_LEGACY.location())
-                        .withCredentials(property("sonatype.user"), property("sonatype.password"))
-                        : repository(SONATYPE_RELEASES_LEGACY.location())
-                        .withCredentials(property("sonatype.user"), property("sonatype.password")))
+                .repository(version.isSnapshot() ? repository(CENTRAL_SNAPSHOTS.location())
+                        .withCredentials(property("central.user"), property("central.password"))
+                        : repository(CENTRAL_RELEASES.location())
+                        .withCredentials(property("central.user"), property("central.password")))
                 .repository(repository("github"))
                 .info(new PublishInfo()
                         .groupId(pkg)

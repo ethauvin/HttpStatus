@@ -32,9 +32,7 @@
 
 package net.thauvin.erik.httpstatus;
 
-import java.util.Map;
-import java.util.Objects;
-import java.util.ResourceBundle;
+import java.util.*;
 import java.util.concurrent.ConcurrentSkipListMap;
 
 /**
@@ -139,31 +137,55 @@ public final class Reasons {
         return getReasonPhrase(Integer.toString(statusCode));
     }
 
+    private static boolean isStatusCodeClass(String code) {
+        return code.matches("[1-5]xx");
+    }
+
     /**
      * Prints the reason phrase for the given status code(s).
      *
      * @param args The status code(s) or response class(es), prints all if none
      */
-    @SuppressWarnings("PMD.SystemPrintln")
     public static void main(String... args) {
-        if (args.length >= 1) {
-            for (var arg : args) {
-                if (arg.matches("[1-5]xx")) { // e.g.: 2xx
-                    var reasonClass = StatusCodeClass.fromFirstDigit(arg.substring(0, 1));
-                    if (reasonClass.isPresent()) {
-                        var reasons = getReasonClass(reasonClass.get());
-                        reasons.forEach((k, v) -> System.out.println(k + ": " + v));
-                    }
-                } else { // e.g.: 404
-                    var value = REASON_PHRASES.get(arg);
-                    if (value != null) {
-                        System.out.println(arg + ": " + value);
-                    }
-                }
-            }
-        } else { // Print all
-            REASON_PHRASES.keySet().forEach(k -> System.out.println(k + ": " + REASON_PHRASES.get(k)));
-            System.out.println("Total: " + REASON_PHRASES.size());
+        if (args.length == 0) {
+            printAllReasonPhrases();
+            return;
         }
+
+        Arrays.stream(args).forEach(Reasons::processStatusCode);
+    }
+
+    @SuppressWarnings("PMD.SystemPrintln")
+    private static void printAllReasonPhrases() {
+        REASON_PHRASES.forEach(Reasons::printReasonPhrase);
+        System.out.println("Total: " + REASON_PHRASES.size());
+    }
+
+    private static void printReasonClassPhrases(Map<String, String> reasons) {
+        reasons.forEach(Reasons::printReasonPhrase);
+    }
+
+    @SuppressWarnings("PMD.SystemPrintln")
+    private static void printReasonPhrase(String code, String phrase) {
+        System.out.println(code + ": " + phrase);
+    }
+
+    private static void printSingleStatusCode(String code) {
+        Optional.ofNullable(REASON_PHRASES.get(code))
+                .ifPresent(phrase -> printReasonPhrase(code, phrase));
+    }
+
+    private static void processStatusCode(String code) {
+        if (isStatusCodeClass(code)) {
+            processStatusCodeClass(code);
+        } else {
+            printSingleStatusCode(code);
+        }
+    }
+
+    private static void processStatusCodeClass(String code) {
+        var firstDigit = code.substring(0, 1);
+        StatusCodeClass.fromFirstDigit(firstDigit)
+                .ifPresent(reasonClass -> printReasonClassPhrases(getReasonClass(reasonClass)));
     }
 }

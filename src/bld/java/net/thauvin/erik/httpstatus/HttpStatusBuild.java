@@ -61,9 +61,9 @@ public class HttpStatusBuild extends Project {
     public HttpStatusBuild() {
         pkg = "net.thauvin.erik.httpstatus";
         name = "HttpStatus";
-        version = version(1, 1, 2, "SNAPSHOT");
+        version = version(2, 0, 0, "SNAPSHOT");
 
-        var description = "Tag library to display the code, reason, cause and/or message for HTTP status codes in JSP error pages";
+        var description = "HTTP Status Codes & JSP Tag Library";
         var url = "https://github.com/ethauvin/HttpStatus";
 
         mainClass = "net.thauvin.erik.httpstatus.Reasons";
@@ -82,8 +82,8 @@ public class HttpStatusBuild extends Project {
                 .include(dependency("org.jetbrains", "annotations", version(26, 0, 2)))
                 .include(dependency("org.mockito", "mockito-core", version(5, 18, 0)))
                 .include(dependency("org.assertj", "assertj-core", version(3, 27, 3)))
-                .include(dependency("org.junit.jupiter", "junit-jupiter", version(5, 13, 3)))
-                .include(dependency("org.junit.platform", "junit-platform-console-standalone", version(1, 13, 3)));
+                .include(dependency("org.junit.jupiter", "junit-jupiter", version(5, 13, 4)))
+                .include(dependency("org.junit.platform", "junit-platform-console-standalone", version(1, 13, 4)));
 
         jarOperation().manifestAttribute(Attributes.Name.MAIN_CLASS, pkg + '.' + "Reasons");
 

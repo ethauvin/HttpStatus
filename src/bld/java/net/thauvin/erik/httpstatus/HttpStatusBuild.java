@@ -47,8 +47,7 @@ import java.util.List;
 import java.util.jar.Attributes;
 
 import static rife.bld.dependencies.Repository.*;
-import static rife.bld.dependencies.Scope.compile;
-import static rife.bld.dependencies.Scope.test;
+import static rife.bld.dependencies.Scope.*;
 import static rife.bld.operations.JavadocOptions.DocLinkOption.NO_MISSING;
 
 public class HttpStatusBuild extends Project {
@@ -74,7 +73,7 @@ public class HttpStatusBuild extends Project {
         autoDownloadPurge = true;
         repositories = List.of(MAVEN_CENTRAL, SONATYPE_SNAPSHOTS);
 
-        scope(compile)
+        scope(provided)
                 .include(dependency("jakarta.servlet", "jakarta.servlet-api", version(6, 1, 0)))
                 .include(dependency("jakarta.servlet.jsp", "jakarta.servlet.jsp-api", version(4, 0, 0)))
                 .include(dependency("jakarta.el", "jakarta.el-api", version(6, 0, 1)));

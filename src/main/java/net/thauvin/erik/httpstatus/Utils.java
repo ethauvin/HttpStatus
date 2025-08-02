@@ -34,6 +34,8 @@ package net.thauvin.erik.httpstatus;
 
 import java.io.IOException;
 import java.io.Writer;
+import java.util.Map;
+import java.util.Objects;
 
 /**
  * The <code>Utils</code> class implements a collection of utility methods used throughout this project.
@@ -43,6 +45,14 @@ import java.io.Writer;
  * @since 1.0
  */
 public final class Utils {
+    private static final Map<Character, String> XML_ENTITIES = Map.of(
+            '<', "&lt;",
+            '>', "&gt;",
+            '&', "&amp;",
+            '\'', "&apos;",
+            '"', "&quot;"
+    );
+
     /**
      * Disables the default constructor.
      *
@@ -60,38 +70,40 @@ public final class Utils {
      * @return The converted string value
      */
     public static String escapeXml(String value) {
-        var escaped = new StringBuilder();
-
-        for (var i = 0; i < value.length(); i++) {
-            var c = value.charAt(i);
-            switch (c) {
-                case '<' -> escaped.append("&lt;");
-                case '>' -> escaped.append("&gt;");
-                case '&' -> escaped.append("&amp;");
-                case '\'' -> escaped.append("&apos;");
-                case '"' -> escaped.append("&quot;");
-                default -> escaped.append(c);
-            }
+        if (value == null || value.isEmpty()) {
+            return value;
         }
 
+        var escaped = new StringBuilder(value.length() * 2);
+        for (char c : value.toCharArray()) {
+            escaped.append(XML_ENTITIES.getOrDefault(c, String.valueOf(c)));
+        }
         return escaped.toString();
     }
 
     /**
-     * Writes a string value to the specified writer. The default value is used when the actual value is null.
+     * Writes a string value to the specified writer, with optional XML escaping.
+     * The default value is used when the actual value is null.
      *
      * @param out          The writer to output the value to
      * @param value        The string value
      * @param defaultValue The default value
      * @param xml          The {@link #escapeXml(String) xml} flag
-     * @throws IOException If an I/O error occurs
+     * @throws IOException          If an I/O error occurs
+     * @throws NullPointerException If the writer is null
      */
     public static void outWrite(Writer out, String value, String defaultValue, boolean xml)
             throws IOException {
-        if (value != null) {
-            out.write(xml ? escapeXml(value) : value);
-        } else if (defaultValue != null) {
-            out.write(xml ? escapeXml(defaultValue) : defaultValue);
+        Objects.requireNonNull(out, "Writer cannot be null");
+
+        var textToWrite = value != null ? value : defaultValue;
+        if (textToWrite != null) {
+            writeEscapedText(out, textToWrite, xml);
         }
+    }
+
+    private static void writeEscapedText(Writer out, String text, boolean shouldEscape)
+            throws IOException {
+        out.write(shouldEscape ? escapeXml(text) : text);
     }
 }

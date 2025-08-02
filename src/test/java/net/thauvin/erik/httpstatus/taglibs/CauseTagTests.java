@@ -34,10 +34,11 @@ package net.thauvin.erik.httpstatus.taglibs;
 
 import jakarta.servlet.jsp.ErrorData;
 import jakarta.servlet.jsp.PageContext;
-import org.assertj.core.api.AutoCloseableSoftAssertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.mockito.Mockito.mock;
@@ -91,16 +92,21 @@ class CauseTagTests {
     @Nested
     @DisplayName("GetCause Tests")
     class GetCauseTests {
+        final static String message = "This is the cause";
+
         @Test
         void cause() {
-            var message = "This is the cause";
+            assertThat(tag.getCause(new Exception(message))).as("has cause").isEqualTo(message);
+        }
 
-            try (var softly = new AutoCloseableSoftAssertions()) {
-                softly.assertThat(tag.getCause(new Exception(message))).as("has cause").isEqualTo(message);
-                softly.assertThat(tag.getCause(new Exception())).as("no cause").isNull();
-                softly.assertThat(tag.getCause(null)).as("null").isNull();
-                softly.assertThat(tag.getCause(new Exception(""))).as("empty").isEmpty();
-            }
+        @Test
+        void causeWithEmptyMessage() {
+            assertThat(tag.getCause(new Exception(""))).as("empty").isEmpty();
+        }
+
+        @Test
+        void causeWithNoMessage() {
+            assertThat(tag.getCause(new Exception())).as("no cause").isNull();
         }
 
         @Test
@@ -116,16 +122,20 @@ class CauseTagTests {
         }
 
         @Test
+        void causeWithNullMessage() {
+            assertThat(tag.getCause(null)).as("null").isNull();
+        }
+
+        @Test
         void causeWithSpecialCharacters() {
             var message = "!@#$%^&*()_+<>?";
 
             assertThat(tag.getCause(new Exception(message))).as("special characters").isEqualTo(message);
         }
 
-        @Test
-        void causeWithWhitespace() {
-            var message = "  ";
-
+        @ParameterizedTest
+        @ValueSource(strings = {" ", "  ", "\t", "\n", "\r"})
+        void causeWithWhitespace(String message) {
             assertThat(tag.getCause(new Exception(message))).as("whitespace").isEqualTo(message);
         }
     }

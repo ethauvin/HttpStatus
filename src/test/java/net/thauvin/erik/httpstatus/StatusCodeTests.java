@@ -45,35 +45,36 @@ import java.util.ResourceBundle;
  * @author <a href="mailto:erik@thauvin.net">Erik C. Thauvin</a>
  * @since 1.1.0
  */
+@SuppressWarnings("PMD.AvoidDuplicateLiterals")
 class StatusCodeTests {
     @Test
     void statusCode() {
         var bundle = ResourceBundle.getBundle(Reasons.BUNDLE_BASENAME);
         var statusCode = new StatusCode();
+        statusCode.setCode(code);
 
         try (var softly = new AutoCloseableSoftAssertions()) {
-            for (var key : bundle.keySet()) {
-                int code = Integer.parseInt(key);
+            softly.assertThat(statusCode.getCode()).as("is not %s", code).isEqualTo(code);
+            softly.assertThat(statusCode.isInfo()).as("%s is info", code)
+                    .isEqualTo(code >= 100 && code < 200);
+            softly.assertThat(statusCode.isInformational()).as("%s is info", code)
+                    .isEqualTo(code >= 100 && code < 200);
+            softly.assertThat(statusCode.isSuccess()).as("%s is ok", code)
+                    .isEqualTo(code >= 200 && code < 300);
+            softly.assertThat(statusCode.isSuccessful()).as("%s is ok", code)
+                    .isEqualTo(code >= 200 && code < 300);
+            softly.assertThat(statusCode.isRedirect()).as("%s is redirect", code)
+                    .isEqualTo(code >= 300 && code < 400);
+            softly.assertThat(statusCode.isClientError()).as("%s is client error", code)
+                    .isEqualTo(code >= 400 && code < 500);
+            softly.assertThat(statusCode.isServerError()).as("%s is server error", code)
+                    .isEqualTo(code >= 500 && code < 600);
+            softly.assertThat(statusCode.isError()).as("%s is error", code)
+                    .isEqualTo(code >= 400 && code < 600);
+            softly.assertThat(statusCode.isValid()).as("%s is valid", code).isTrue();
 
-                statusCode.setCode(code);
-                softly.assertThat(statusCode.getCode()).as("is not %s", code).isEqualTo(code);
-                softly.assertThat(statusCode.isInfo()).as("%s is info", code)
-                        .isEqualTo(code >= 100 && code < 200);
-                softly.assertThat(statusCode.isSuccess()).as("%s is ok", code)
-                        .isEqualTo(code >= 200 && code < 300);
-                softly.assertThat(statusCode.isRedirect()).as("%s is redirect", code)
-                        .isEqualTo(code >= 300 && code < 400);
-                softly.assertThat(statusCode.isClientError()).as("%s is client error", code)
-                        .isEqualTo(code >= 400 && code < 500);
-                softly.assertThat(statusCode.isServerError()).as("%s is server error", code)
-                        .isEqualTo(code >= 500 && code < 600);
-                softly.assertThat(statusCode.isError()).as("%s is error", code)
-                        .isEqualTo(code >= 400 && code < 600);
-                softly.assertThat(statusCode.isValid()).as("%s is valid", code).isTrue();
-
-                softly.assertThat(statusCode.getReason()).as("%s reason phrase is not valid", code)
-                        .isEqualTo(Reasons.getReasonPhrase(code));
-            }
+            softly.assertThat(statusCode.getReason()).as("%s reason phrase is not valid", code)
+                    .isEqualTo(Reasons.getReasonPhrase(code));
         }
     }
 

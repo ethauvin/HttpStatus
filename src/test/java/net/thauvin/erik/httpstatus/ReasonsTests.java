@@ -33,12 +33,18 @@
 package net.thauvin.erik.httpstatus;
 
 import org.assertj.core.api.AutoCloseableSoftAssertions;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.MethodSource;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Modifier;
 import java.util.ResourceBundle;
+import java.util.stream.Stream;
 
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.assertInstanceOf;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -65,6 +71,14 @@ class ReasonsTests {
         }
     }
 
+    @ParameterizedTest
+    @MethodSource("provideBundleKeys")
+    void reasonPhrase(String key) {
+        assertThat(Reasons.getReasonPhrase(key))
+                .as("getReasonPhrase(%s)", key)
+                .isEqualTo(BUNDLE.getString(key));
+    }
+
     @Test
     void reasonPhrase() {
         try (var softly = new AutoCloseableSoftAssertions()) {
@@ -76,7 +90,7 @@ class ReasonsTests {
     }
 
     @Test
-    void reasonPhraseWithInts() {
+    void reasonPhraseWithIntStatuses() {
         try (var softly = new AutoCloseableSoftAssertions()) {
             for (var key : BUNDLE.keySet()) {
                 softly.assertThat(Reasons.getReasonPhrase(Integer.parseInt(key))).as("getReasonPhrase(%s)", key)

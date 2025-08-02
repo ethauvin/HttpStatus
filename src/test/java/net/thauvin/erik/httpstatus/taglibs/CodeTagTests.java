@@ -44,7 +44,7 @@ import static org.mockito.Mockito.when;
 
 class CodeTagTests {
     @Test
-    void testDoTagWithStatusCode() throws IOException {
+    void doTagWithStatusCode() throws IOException {
         var mockPageContext = mock(PageContext.class);
         var mockWriter = new MockJspWriter();
         var mockErrorData = mock(ErrorData.class);

@@ -76,6 +76,7 @@ class ReasonsMainTests {
         }
     }
 
+
     @Test
     void mainWithInvalidArg() {
         Reasons.main("aaa");

@@ -35,6 +35,10 @@ package net.thauvin.erik.httpstatus.taglibs;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.EmptySource;
+import org.junit.jupiter.params.provider.NullSource;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -57,22 +61,24 @@ class XmlSupportTests {
                     "The defaultValue should be set correctly.");
         }
 
-        @Test
-        void setEmptyDefaultValue() {
+        @ParameterizedTest
+        @EmptySource
+        @ValueSource(strings = {" ", "  "})
+        void setEmptyDefaultValue(String input) {
             var xmlSupport = new XmlSupportImpl();
-            var defaultValue = "";
 
-            xmlSupport.setDefault(defaultValue);
+            xmlSupport.setDefault(input);
 
-            assertEquals(defaultValue, xmlSupport.defaultValue,
+            assertEquals(input, xmlSupport.defaultValue,
                     "The defaultValue should be set to an empty string.");
         }
 
-        @Test
-        void setNullDefaultValue() {
+        @ParameterizedTest
+        @NullSource
+        void setNullDefaultValue(String input) {
             var xmlSupport = new XmlSupportImpl();
 
-            xmlSupport.setDefault(null);
+            xmlSupport.setDefault(input);
 
             assertNull(xmlSupport.defaultValue, "The defaultValue should be set to null.");
         }

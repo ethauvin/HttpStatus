@@ -35,6 +35,10 @@ package net.thauvin.erik.httpstatus;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.EmptySource;
+import org.junit.jupiter.params.provider.NullAndEmptySource;
+import org.junit.jupiter.params.provider.NullSource;
 
 import java.io.IOException;
 import java.io.StringWriter;
@@ -83,9 +87,10 @@ class UtilsTest {
             assertThat(Utils.escapeXml(input)).isEqualTo(expected);
         }
 
-        @Test
-        void escapeXmlWithEmptyString() {
-            assertThat(Utils.escapeXml("")).isEqualTo("");
+        @ParameterizedTest
+        @EmptySource
+        void escapeXmlWithEmptyString(String input) {
+            assertThat(Utils.escapeXml(input)).isEmpty();
         }
 
         @Test
@@ -151,26 +156,37 @@ class UtilsTest {
             }
         }
 
-        @Test
-        void outWriteWithEmptyValue() throws IOException {
+        @ParameterizedTest
+        @EmptySource
+        void outWriteWithEmptyValue(String input) throws IOException {
             try (var sw = new StringWriter()) {
-                Utils.outWrite(sw, "", DEFAULT_VALUE, false);
+                Utils.outWrite(sw, input, DEFAULT_VALUE, false);
                 assertThat(sw.toString()).as("outWrite(value empty)").isEmpty();
             }
         }
 
         @Test
-        void outWriteWithEmptyValueAsXml() throws IOException {
+        void outWriteWithEmptyValueAndNullDefaultValue() throws IOException {
             try (var sw = new StringWriter()) {
-                Utils.outWrite(sw, "", DEFAULT_VALUE, true);
+                Utils.outWrite(sw, "", null, true);
+                assertThat(sw.toString()).as("outWrite(default empty)").isEmpty();
+            }
+        }
+
+        @ParameterizedTest
+        @EmptySource
+        void outWriteWithEmptyValueAsXml(String input) throws IOException {
+            try (var sw = new StringWriter()) {
+                Utils.outWrite(sw, input, DEFAULT_VALUE, true);
                 assertThat(sw.toString()).as("outWrite(value empty).as(xml)").isEmpty();
             }
         }
 
-        @Test
-        void outWriteWithNullValue() throws IOException {
+        @ParameterizedTest
+        @NullAndEmptySource
+        void outWriteWithNullValue(String input) throws IOException {
             try (var sw = new StringWriter()) {
-                Utils.outWrite(sw, null, null, true);
+                Utils.outWrite(sw, input, input, true);
                 assertThat(sw.toString()).as("outWrite(null)").isEmpty();
             }
         }
@@ -183,10 +199,11 @@ class UtilsTest {
             }
         }
 
-        @Test
-        void outWriteWithNullValueAndNullDefaultValue() throws IOException {
+        @ParameterizedTest
+        @NullSource
+        void outWriteWithNullValueAndNullDefaultValue(String input) throws IOException {
             try (var sw = new StringWriter()) {
-                Utils.outWrite(sw, null, null, true);
+                Utils.outWrite(sw, input, input, true);
                 assertThat(sw.toString()).as("outWrite(null).as(xml)").isEmpty();
             }
         }

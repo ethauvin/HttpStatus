@@ -33,11 +33,14 @@
 package net.thauvin.erik.httpstatus;
 
 import org.assertj.core.api.AutoCloseableSoftAssertions;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.MethodSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
 import java.util.ResourceBundle;
+import java.util.stream.Stream;
+
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 /**
  * StatusCode Tests.
@@ -47,9 +50,46 @@ import java.util.ResourceBundle;
  */
 @SuppressWarnings("PMD.AvoidDuplicateLiterals")
 class StatusCodeTests {
-    @Test
-    void statusCode() {
+    static Stream<Integer> statusCodes() {
         var bundle = ResourceBundle.getBundle(Reasons.BUNDLE_BASENAME);
+        return bundle.keySet().stream()
+                .map(Integer::parseInt);
+    }
+
+    @ParameterizedTest
+    @MethodSource("statusCodes")
+    void statusCode(int code) {
+        if (code >= 100 && code < 200) {
+            assertThat(StatusCode.isInfo(code)).as("%s is info", code).isTrue();
+        }
+        if (code >= 100 && code < 200) {
+            assertThat(StatusCode.isInformational(code)).as("%s is info", code).isTrue();
+        }
+        if (code >= 200 && code < 300) {
+            assertThat(StatusCode.isSuccess(code)).as("%s is ok", code).isTrue();
+        }
+        if (code >= 200 && code < 300) {
+            assertThat(StatusCode.isSuccessful(code)).as("%s is ok", code).isTrue();
+        }
+        if (code >= 300 && code < 400) {
+            assertThat(StatusCode.isRedirect(code)).as("%s is redirect", code).isTrue();
+        }
+        if (code >= 400 && code < 500) {
+            assertThat(StatusCode.isClientError(code)).as("%s is client error", code).isTrue();
+        }
+        if (code >= 500 && code < 600) {
+            assertThat(StatusCode.isServerError(code)).as("%s is server error", code).isTrue();
+        }
+        if (code >= 400 && code < 600) {
+            assertThat(StatusCode.isError(code)).as("%s is error", code).isTrue();
+        }
+
+        assertThat(StatusCode.isValid(code)).as("%s is valid", code).isTrue();
+    }
+
+    @ParameterizedTest
+    @MethodSource("statusCodes")
+    void statusCodeObject(int code) {
         var statusCode = new StatusCode();
         statusCode.setCode(code);
 

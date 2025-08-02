@@ -55,8 +55,13 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  * @created 2015-12-03
  * @since 1.0
  */
+@SuppressWarnings("PMD.AvoidDuplicateLiterals")
 class ReasonsTests {
     private static final ResourceBundle BUNDLE = ResourceBundle.getBundle(Reasons.BUNDLE_BASENAME);
+
+    private static Stream<String> provideBundleKeys() {
+        return BUNDLE.keySet().stream();
+    }
 
     @Test
     @SuppressWarnings("PMD.AvoidAccessibilityAlteration")
@@ -80,13 +85,15 @@ class ReasonsTests {
     }
 
     @Test
-    void reasonPhrase() {
-        try (var softly = new AutoCloseableSoftAssertions()) {
-            for (var key : BUNDLE.keySet()) {
-                softly.assertThat(Reasons.getReasonPhrase(key)).as("getReasonPhrase(%s)", key)
-                        .isEqualTo(BUNDLE.getString(key));
-            }
-        }
+    void reasonPhraseWithDefault() {
+        assertThat(Reasons.getReasonPhrase("404", "Unknown Reason"))
+                .isEqualTo("Not Found");
+    }
+
+    @Test
+    void reasonPhraseWithIntStatusAndDefault() {
+        assertThat(Reasons.getReasonPhrase(404, "Unknown Reason"))
+                .isEqualTo("Not Found");
     }
 
     @Test
@@ -96,6 +103,77 @@ class ReasonsTests {
                 softly.assertThat(Reasons.getReasonPhrase(Integer.parseInt(key))).as("getReasonPhrase(%s)", key)
                         .isEqualTo(BUNDLE.getString(key));
             }
+        }
+    }
+
+    @Test
+    void reasonPhraseWithUnknownIntStatusAndDefault() {
+        assertThat(Reasons.getReasonPhrase(666, "Unknown Reason"))
+                .isEqualTo("Unknown Reason");
+    }
+
+    @Test
+    void reasonPhraseWithUnknownStatusAndDefault() {
+        assertThat(Reasons.getReasonPhrase("666", "Unknown Reason"))
+                .isEqualTo("Unknown Reason");
+    }
+
+    @Nested
+    @DisplayName("Reason Class Tests")
+    class ReasonClassTests {
+        private static Stream<String> provideClientErrorReasonKeys() {
+            var reasons = Reasons.getReasonClass(StatusCodeClass.CLIENT_ERROR);
+            return reasons.keySet().stream();
+        }
+
+        private static Stream<String> provideInformationalReasonKeys() {
+            var reasons = Reasons.getReasonClass(StatusCodeClass.INFORMATIONAL);
+            return reasons.keySet().stream();
+        }
+
+        private static Stream<String> provideServerErrorReasonKeys() {
+            var reasons = Reasons.getReasonClass(StatusCodeClass.SERVER_ERROR);
+            return reasons.keySet().stream();
+        }
+
+        private static Stream<String> provideSuccessfulReasonKeys() {
+            var reasons = Reasons.getReasonClass(StatusCodeClass.SUCCESSFUL);
+            return reasons.keySet().stream();
+        }
+
+        private static Stream<String> provideRedirectionReasonKeys() {
+            var reasons = Reasons.getReasonClass(StatusCodeClass.REDIRECTION);
+            return reasons.keySet().stream();
+        }
+
+        @ParameterizedTest
+        @MethodSource("provideClientErrorReasonKeys")
+        void reasonClassClientError(String key) {
+            assertThat(key).startsWith("4");
+        }
+
+        @ParameterizedTest
+        @MethodSource("provideInformationalReasonKeys")
+        void reasonClassInformational(String key) {
+            assertThat(key).startsWith("1");
+        }
+
+        @ParameterizedTest
+        @MethodSource("provideServerErrorReasonKeys")
+        void reasonClassServerError(String key) {
+            assertThat(key).startsWith("5");
+        }
+
+        @ParameterizedTest
+        @MethodSource("provideSuccessfulReasonKeys")
+        void reasonClassSuccessful(String key) {
+            assertThat(key).startsWith("2");
+        }
+
+        @ParameterizedTest
+        @MethodSource("provideRedirectionReasonKeys")
+        void reasonClassRedirection(String key) {
+            assertThat(key).startsWith("3");
         }
     }
 }

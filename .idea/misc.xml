@@ -1,11 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="EntryPointsManager">
+    <entry_points version="2.0">
+      <entry_point TYPE="field" FQNAME="net.thauvin.erik.httpstatus.ReasonClass CLIENT_ERROR" />
+      <entry_point TYPE="field" FQNAME="net.thauvin.erik.httpstatus.ReasonClass INFORMATIONAL" />
+      <entry_point TYPE="field" FQNAME="net.thauvin.erik.httpstatus.ReasonClass REDIRECTION" />
+      <entry_point TYPE="field" FQNAME="net.thauvin.erik.httpstatus.ReasonClass SERVER_ERROR" />
+      <entry_point TYPE="field" FQNAME="net.thauvin.erik.httpstatus.ReasonClass SUCCESSFUL" />
+    </entry_points>
     <pattern value="net.thauvin.erik.httpstatus.HttpStatusBuild" />
     <pattern value="net.thauvin.erik.httpstatus.HttpStatusBuild" method="pmd" />
     <pattern value="net.thauvin.erik.httpstatus.HttpStatusBuild" method="jacoco" />
     <pattern value="net.thauvin.erik.httpstatus.taglibs.ReasonTag" method="setCode" />
     <pattern value="net.thauvin.erik.httpstatus.HttpStatusBuild" method="pmdCli" />
+    <pattern value="net.thauvin.erik.httpstatus.ReasonClass" method="getFirstDigit" />
+    <pattern value="net.thauvin.erik.httpstatus.ReasonClass" />
   </component>
   <component name="PDMPlugin">
     <option name="customRuleSets">

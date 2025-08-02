@@ -153,10 +153,7 @@ public final class Reasons {
                     if (reasonClass.isPresent()) {
                         var reasons = getReasonClass(reasonClass.get());
                         reasons.forEach((k, v) -> System.out.println(k + ": " + v));
-                    } else {
-                        System.out.println("Invalid reason class: " + arg);
                     }
-
                 } else { // e.g.: 404
                     var value = REASON_PHRASES.get(arg);
                     if (value != null) {

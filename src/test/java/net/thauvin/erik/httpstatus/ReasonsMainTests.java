@@ -65,7 +65,7 @@ class ReasonsMainTests {
     }
 
     @Test
-    void mainWithArgsClass() {
+    void mainWithClassArg() {
         Reasons.main("2xx");
         var lines = OUTPUT_STREAM.toString().split("\n");
         assertThat(lines).as("should be 13 reasons for 2xx").hasSize(13);
@@ -76,11 +76,16 @@ class ReasonsMainTests {
         }
     }
 
-
     @Test
     void mainWithInvalidArg() {
         Reasons.main("aaa");
         assertThat(OUTPUT_STREAM.toString()).as("invalid argument: aaa").isEmpty();
+    }
+
+    @Test
+    void mainWithInvalidClassArg() {
+        Reasons.main("6xx");
+        assertThat(OUTPUT_STREAM.toString()).as("invalid argument: 6xx").isEmpty();
     }
 
     @Test

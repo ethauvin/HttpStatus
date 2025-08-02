@@ -92,11 +92,11 @@ class CauseTagTests {
     @Nested
     @DisplayName("GetCause Tests")
     class GetCauseTests {
-        final static String message = "This is the cause";
+        static final String MESSAGE = "This is the cause";
 
         @Test
         void cause() {
-            assertThat(tag.getCause(new Exception(message))).as("has cause").isEqualTo(message);
+            assertThat(tag.getCause(new Exception(MESSAGE))).as("has cause").isEqualTo(MESSAGE);
         }
 
         @Test

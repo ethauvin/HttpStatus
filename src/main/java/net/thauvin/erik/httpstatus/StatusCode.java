@@ -64,6 +64,18 @@ public class StatusCode implements Serializable {
     }
 
     /**
+     * Returns the reason for the status code.
+     *
+     * @param code the status code
+     * @return The reason, or <code>null</code>
+     * @see Reasons#getReasonPhrase(Object)
+     * @since 2.0.0
+     */
+    public static String getReason(int code) {
+        return Reasons.getReasonPhrase(code);
+    }
+
+    /**
      * Checks if the status code is a client error. (e.g.: <code>Internal Server Error</code>)
      *
      * @param code the status code
@@ -176,7 +188,7 @@ public class StatusCode implements Serializable {
      * Returns the reason for the status code.
      *
      * @return The reason, or <code>null</code>
-     * @see Reasons#getReasonPhrase(int)
+     * @see Reasons#getReasonPhrase(Object)
      */
     public String getReason() {
         return Reasons.getReasonPhrase(code);

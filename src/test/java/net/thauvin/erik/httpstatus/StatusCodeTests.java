@@ -33,7 +33,10 @@
 package net.thauvin.erik.httpstatus;
 
 import org.assertj.core.api.AutoCloseableSoftAssertions;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
@@ -48,12 +51,11 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
  * @author <a href="mailto:erik@thauvin.net">Erik C. Thauvin</a>
  * @since 1.1.0
  */
-@SuppressWarnings("PMD.AvoidDuplicateLiterals")
+@SuppressWarnings({"PMD.AvoidDuplicateLiterals"})
 class StatusCodeTests {
     static Stream<Integer> statusCodes() {
         var bundle = ResourceBundle.getBundle(Reasons.BUNDLE_BASENAME);
-        return bundle.keySet().stream()
-                .map(Integer::parseInt);
+        return bundle.keySet().stream().map(Integer::parseInt);
     }
 
     @ParameterizedTest
@@ -132,6 +134,23 @@ class StatusCodeTests {
             softly.assertThat(statusCode.isError()).as("%s is error", code).isFalse();
             softly.assertThat(statusCode.isValid()).as("%s is invalid", code).isFalse();
             softly.assertThat(statusCode.getReason()).as("%s reason phrase is not null.", code).isNull();
+        }
+    }
+
+    @Nested
+    @DisplayName("Get Reason Tests")
+    @SuppressWarnings("PMD.LinguisticNaming")
+    class GetReasonTests {
+        @ParameterizedTest
+        @CsvSource({"100, Continue", "101, Switching Protocols", "102, Processing", "103, Early Hints"})
+        void getReason(int code, String reason) {
+            assertThat(StatusCode.getReason(code)).isEqualTo(reason);
+        }
+
+        @ParameterizedTest
+        @ValueSource(ints = {666, 999})
+        void getReasonWithInvalidCode(int code) {
+            assertThat(StatusCode.getReason(code)).isNull();
         }
     }
 }

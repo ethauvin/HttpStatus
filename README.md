@@ -86,7 +86,7 @@ Include the following in your `bld` build file:
 repositories = List.of(MAVEN_CENTRAL, CENTRAL_SNAPSHOTS);
 
 scope(compile).include(
-        dependency("net.thauvin.erik.httpstatus","httpstatus", version(1, 1, 1))
+        dependency("net.thauvin.erik.httpstatus","httpstatus", version(2, 0, 0, "SNAPSHOT"))
 );
 ```
 
@@ -104,7 +104,7 @@ repositories {
 }
 
 dependencies {
-    implementation 'net.thauvin.erik.httpstatus:httpstatus:1.1.1'
+    implementation 'net.thauvin.erik.httpstatus:httpstatus:2.0.0-SNAPSHOT'
 }
 ```
 
@@ -114,7 +114,7 @@ Instructions for using with Maven, Ivy, etc. can be found on [Maven Central](htt
 
 ## JSP Tags
 
-### hs:cause
+### [hs:cause](https://ethauvin.github.io/HttpStatus/net/thauvin/erik/httpstatus/taglibs/CauseTag.html)
 
 The `<hs:cause/>` tag displays the cause of current HTTP status code, if any. A shorthand for:
 
@@ -129,7 +129,7 @@ Optional attributes are:
 | `default`    | The fallback value to output, if no cause is                                                                                                      |
 | `escapeXml`  | Converts &lt;, &gt;, &amp;, ', " to their corresponding [entity codes](http://dev.w3.org/html5/html-author/charref). Value is `true` by default.  |
 
-### hs:code
+### [hs:code](https://ethauvin.github.io/HttpStatus/net/thauvin/erik/httpstatus/taglibs/CodeTag.html)
 
 The `<hs:code/>` tag displays the current HTTP status code, if any. A shorthand for:
 
@@ -137,7 +137,7 @@ The `<hs:code/>` tag displays the current HTTP status code, if any. A shorthand 
 <%= pageContext.getErrorData().getStatusCode() %>
 ```
 
-### hs:message
+### [hs:message](https://ethauvin.github.io/HttpStatus/net/thauvin/erik/httpstatus/taglibs/MessageTag.html)
 
 The `<hs:message/>` tag displays the current error message, if any. A shorthand for:
 
@@ -152,7 +152,7 @@ Optional attributes are:
 | `default`   | The fallback value to output, if no error message is available.                                                                                   |
 | `escapeXml` | Converts &lt;, &gt;, &amp;, ', " to their corresponding [entity codes](http://dev.w3.org/html5/html-author/charref). Value is `true` by default.  |
 
-### hs:reason
+### [hs:reason](https://ethauvin.github.io/HttpStatus/net/thauvin/erik/httpstatus/taglibs/ReasonTag.html)
 
 The `<hs:reason/>` tag displays the reason for an HTTP status code, if any. Optional attributes are:
 
@@ -164,13 +164,14 @@ The `<hs:reason/>` tag displays the reason for an HTTP status code, if any. Opti
 
 ## StatusCode
 
-The `StatusCode` bean can be used to check the class of the status code error.
+The [StatusCode](https://ethauvin.github.io/HttpStatus/net/thauvin/erik/httpstatus/StatusCode.html) bean can be used to check the class of the status code error.
 
 For example, in Java:
 
 ```java
-if (StatusCode.isServerError(500)) {
-    System.out.println(Reasons.getReasonPhrase(500)); // Internal Server Error
+var statusCode = new StatusCode(500);
+if (statusCode.isError()) {
+    System.out.println(statusCode.getReason()); // Internal Server Error
 }
 ```
 
@@ -212,37 +213,39 @@ public class ExampleServlet extends HttpServlet {
 }
 ```
 
-The `StatusCode` bean methods are:
+The [StatusCode](https://ethauvin.github.io/HttpStatus/net/thauvin/erik/httpstatus/StatusCode.html) bean methods are:
 
-| Method           | Description                                                           |
-|:-----------------|:----------------------------------------------------------------------|
-| `getReason`      | Returns the reason for the status code (e.g. `Internal Server Error`) |
-| `isClientError`  | Checks if the status code is a client error.                          |
-| `isError`        | Checks if the status code is a server or client error.                |
-| `isInfo`         | Checks if the status code is informational.                           |
-| `isRedirect`     | Checks if the status code is a redirect.                              |
-| `isServerError`  | Checks if the status code is a server error.                          |
-| `isSuccess`      | Checks if the status code is a success. (`OK`)                        |
-| `isValid`        | Checks if the status code is valid.                                   |
+| Method                                                                                                             | Description                                                           |
+|:-------------------------------------------------------------------------------------------------------------------|:----------------------------------------------------------------------|
+| [getReason](https://ethauvin.github.io/HttpStatus/net/thauvin/erik/httpstatus/StatusCode.html#getReason())         | Returns the reason for the status code (e.g. `Internal Server Error`) |
+| [isClientError](https://ethauvin.github.io/HttpStatus/net/thauvin/erik/httpstatus/StatusCode.html#isClientError()) | Checks if the status code is a client error.                          |
+| [isError](https://ethauvin.github.io/HttpStatus/net/thauvin/erik/httpstatus/StatusCode.html#isError())             | Checks if the status code is a server or client error.                |
+| [isInfo](https://ethauvin.github.io/HttpStatus/net/thauvin/erik/httpstatus/StatusCode.html#isInfo())               | Checks if the status code is informational.                           |
+| [isRedirect](https://ethauvin.github.io/HttpStatus/net/thauvin/erik/httpstatus/StatusCode.html#isRedirect())       | Checks if the status code is a redirect.                              |
+| [isServerError](https://ethauvin.github.io/HttpStatus/net/thauvin/erik/httpstatus/StatusCode.html#isServerError()) | Checks if the status code is a server error.                          |
+| [isSuccess](https://ethauvin.github.io/HttpStatus/net/thauvin/erik/httpstatus/StatusCode.html#isSuccess())         | Checks if the status code is a success. (`OK`)                        |
+| [isValid](https://ethauvin.github.io/HttpStatus/net/thauvin/erik/httpstatus/StatusCode.html#isValid())             | Checks if the status code is valid.                                   |
+
+These methods are also available as [static methods](https://ethauvin.github.io/HttpStatus/net/thauvin/erik/httpstatus/StatusCode.html#method-summary`).
 
 ### Status Code Class
 
-You can also retrieve all status codes in a specific [class](https://www.rfc-editor.org/rfc/rfc9110.html#name-status-codes):
+The [StatusCodeClass](https://ethauvin.github.io/HttpStatus/net/thauvin/erik/httpstatus/StatusCodeClass.html) can be used to retrieve all status codes in a specific [class](https://www.rfc-editor.org/rfc/rfc9110.html#name-status-codes):
 
 ```java
 var reasons = Reasons.getReasonClass(StatusCodeClass.SERVER_ERROR); // 5xx
 reasons.forEach((code, reason) -> System.out.println(code + ": " + reason)); // 500: Internal Server Error
 ```
 
-The [standard classes](https://www.rfc-editor.org/rfc/rfc9110.html#name-status-codes) are:
+The defined [standard classes](https://ethauvin.github.io/HttpStatus/net/thauvin/erik/httpstatus/StatusCodeClass.html#enum-constant-summary) are:
 
-| StatusCodeClass | Value  | Description                                                     |
-|:----------------|:------:|:----------------------------------------------------------------|
-| 'INFORMATIONAL' |  1xx   | The request was received, continuing process                    |
-| 'SUCCESSFUL'    |  2xx   | The request was successfully received, understood, and accepted |
-| 'REDIRECTION'   |  3xx   | Further action needs to be taken to complete the request        |
-| 'CLIENT_ERROR'  |  4xx   | The request contains bad syntax or cannot be fulfilled          |
-| 'SERVER_ERROR'  |  5xx   | The server failed to fulfil an apparently valid request         |
+| StatusCodeClass                                                                                                       | Values | Description                                                     |
+|:----------------------------------------------------------------------------------------------------------------------|:------:|:----------------------------------------------------------------|
+| [INFORMATIONAL](https://ethauvin.github.io/HttpStatus/net/thauvin/erik/httpstatus/StatusCodeClass.html#INFORMATIONAL) |  1xx   | The request was received, continuing process                    |
+| [SUCCESSFUL](https://ethauvin.github.io/HttpStatus/net/thauvin/erik/httpstatus/StatusCodeClass.html#SUCCESSFUL)       |  2xx   | The request was successfully received, understood, and accepted |
+| [REDIRECTION](https://ethauvin.github.io/HttpStatus/net/thauvin/erik/httpstatus/StatusCodeClass.html#REDIRECTION)     |  3xx   | Further action needs to be taken to complete the request        |
+| [CLIENT_ERROR](https://ethauvin.github.io/HttpStatus/net/thauvin/erik/httpstatus/StatusCodeClass.html#CLIENT_ERROR)   |  4xx   | The request contains bad syntax or cannot be fulfilled          |
+| [SERVER_ERROR](https://ethauvin.github.io/HttpStatus/net/thauvin/erik/httpstatus/StatusCodeClass.html#SERVER_ERROR)   |  5xx   | The server failed to fulfil an apparently valid request         |
 
 ## Reasons
 

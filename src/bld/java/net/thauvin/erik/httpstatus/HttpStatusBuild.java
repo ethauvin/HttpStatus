@@ -47,7 +47,8 @@ import java.util.List;
 import java.util.jar.Attributes;
 
 import static rife.bld.dependencies.Repository.*;
-import static rife.bld.dependencies.Scope.*;
+import static rife.bld.dependencies.Scope.provided;
+import static rife.bld.dependencies.Scope.test;
 import static rife.bld.operations.JavadocOptions.DocLinkOption.NO_MISSING;
 
 public class HttpStatusBuild extends Project {

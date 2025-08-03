@@ -100,6 +100,12 @@ class UtilsTest {
             assertThat(Utils.escapeXml(input)).isEqualTo(expected);
         }
 
+        @ParameterizedTest
+        @NullSource
+        void escapeXmlWithNullString(String input) {
+            assertThat(Utils.escapeXml(input)).isNull();
+        }
+
         @Test
         void escapeXmlWithNumericCharacters() {
             var input = "1234567890";
@@ -143,8 +149,8 @@ class UtilsTest {
         @Test
         void outWriteWithApostrophe() throws IOException {
             try (var sw = new StringWriter()) {
-                Utils.outWrite(sw, "wan't", DEFAULT_VALUE, true);
-                assertThat(sw.toString()).as("outWrite(wan't)").isEqualTo("wan&apos;t");
+                Utils.outWrite(sw, "she's", DEFAULT_VALUE, true);
+                assertThat(sw.toString()).as("outWrite(she's)").isEqualTo("she&apos;s");
             }
         }
 

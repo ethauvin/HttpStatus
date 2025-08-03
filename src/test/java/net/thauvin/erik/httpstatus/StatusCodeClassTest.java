@@ -33,8 +33,6 @@
 package net.thauvin.erik.httpstatus;
 
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.NullAndEmptySource;
 
 import java.util.Optional;
 
@@ -43,13 +41,13 @@ import static org.assertj.core.api.Assertions.assertThat;
 class StatusCodeClassTest {
     @Test
     void fromFirstDigitWithBoundaryValueString() {
-        Optional<StatusCodeClass> result = StatusCodeClass.fromFirstDigit("5");
+        Optional<StatusCodeClass> result = StatusCodeClass.fromFirstDigit(5);
         assertThat(result).isPresent().contains(StatusCodeClass.SERVER_ERROR);
     }
 
     @Test
     void fromFirstDigitWithInvalidString() {
-        Optional<StatusCodeClass> result = StatusCodeClass.fromFirstDigit("9");
+        Optional<StatusCodeClass> result = StatusCodeClass.fromFirstDigit(9);
         assertThat(result).isNotPresent();
     }
 
@@ -60,28 +58,9 @@ class StatusCodeClassTest {
     }
 
     @Test
-    void fromFirstDigitWithNonNumericString() {
-        Optional<StatusCodeClass> result = StatusCodeClass.fromFirstDigit("A");
-        assertThat(result).isNotPresent();
-    }
-
-    @ParameterizedTest
-    @NullAndEmptySource
-    void fromFirstDigitWithNullString(String input) {
-        Optional<StatusCodeClass> result = StatusCodeClass.fromFirstDigit(input);
-        assertThat(result).isNotPresent();
-    }
-
-    @Test
     void fromFirstDigitWithValidInt() {
         Optional<StatusCodeClass> result = StatusCodeClass.fromFirstDigit(3);
         assertThat(result).isPresent().contains(StatusCodeClass.REDIRECTION);
-    }
-
-    @Test
-    void fromFirstDigitWithValidString() {
-        Optional<StatusCodeClass> result = StatusCodeClass.fromFirstDigit("2");
-        assertThat(result).isPresent().contains(StatusCodeClass.SUCCESSFUL);
     }
 
     @Test

@@ -51,20 +51,22 @@ import java.util.stream.Collectors;
  * <li>{@link #CLIENT_ERROR}: Represents HTTP responses with a status code starting with {@code 4}</li>
  * <li>{@link #SERVER_ERROR}: Represents HTTP responses with a status code starting with {@code 5}</li>
  * </ul>
+ *
  * @since 2.0.0
  */
 public enum StatusCodeClass {
-    INFORMATIONAL("1"), SUCCESSFUL("2"), REDIRECTION("3"), CLIENT_ERROR("4"),
-    SERVER_ERROR("5");
+    INFORMATIONAL(1), SUCCESSFUL(2), REDIRECTION(3), CLIENT_ERROR(4),
+    SERVER_ERROR(5);
 
     // Static map for O(1) lookup - initialized once
-    private static final Map<String, StatusCodeClass> LOOKUP_MAP =
+    private static final Map<Integer, StatusCodeClass> LOOKUP_MAP =
             Arrays.stream(values()).collect(Collectors.toMap(StatusCodeClass::getFirstDigit, Function.identity()));
-    private final String firstDigit;
+    private final int firstDigit;
 
-    StatusCodeClass(String firstDigit) {
+    StatusCodeClass(int firstDigit) {
         this.firstDigit = firstDigit;
     }
+
 
     /**
      * Retrieves the {@link StatusCodeClass} corresponding to the given first digit.
@@ -74,23 +76,11 @@ public enum StatusCodeClass {
      * or an empty {@link Optional} if no match is found.
      * @see #fromFirstDigit(int)
      */
-    public static Optional<StatusCodeClass> fromFirstDigit(String firstDigit) {
+    public static Optional<StatusCodeClass> fromFirstDigit(int firstDigit) {
         return Optional.ofNullable(LOOKUP_MAP.get(firstDigit));
     }
 
-    /**
-     * Retrieves the {@link StatusCodeClass} corresponding to the given first digit of an HTTP status code.
-     *
-     * @param firstDigit The first digit of the HTTP status code as an integer.
-     * @return An {@link Optional} containing the matching {@link StatusCodeClass} for the provided digit,
-     * or an empty {@link Optional} if no match is found.
-     * @see #fromFirstDigit(String)
-     */
-    public static Optional<StatusCodeClass> fromFirstDigit(int firstDigit) {
-        return fromFirstDigit(String.valueOf(firstDigit));
-    }
-
-    public String getFirstDigit() {
+    public int getFirstDigit() {
         return firstDigit;
     }
 }

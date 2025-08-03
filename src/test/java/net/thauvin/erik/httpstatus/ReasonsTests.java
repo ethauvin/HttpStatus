@@ -131,6 +131,11 @@ class ReasonsTests {
             return reasons.keySet().stream();
         }
 
+        private static Stream<String> provideRedirectionReasonKeys() {
+            var reasons = Reasons.getReasonClass(StatusCodeClass.REDIRECTION);
+            return reasons.keySet().stream();
+        }
+
         private static Stream<String> provideServerErrorReasonKeys() {
             var reasons = Reasons.getReasonClass(StatusCodeClass.SERVER_ERROR);
             return reasons.keySet().stream();
@@ -138,11 +143,6 @@ class ReasonsTests {
 
         private static Stream<String> provideSuccessfulReasonKeys() {
             var reasons = Reasons.getReasonClass(StatusCodeClass.SUCCESSFUL);
-            return reasons.keySet().stream();
-        }
-
-        private static Stream<String> provideRedirectionReasonKeys() {
-            var reasons = Reasons.getReasonClass(StatusCodeClass.REDIRECTION);
             return reasons.keySet().stream();
         }
 
@@ -159,6 +159,12 @@ class ReasonsTests {
         }
 
         @ParameterizedTest
+        @MethodSource("provideRedirectionReasonKeys")
+        void reasonClassRedirection(String key) {
+            assertThat(key).startsWith("3");
+        }
+
+        @ParameterizedTest
         @MethodSource("provideServerErrorReasonKeys")
         void reasonClassServerError(String key) {
             assertThat(key).startsWith("5");
@@ -168,12 +174,6 @@ class ReasonsTests {
         @MethodSource("provideSuccessfulReasonKeys")
         void reasonClassSuccessful(String key) {
             assertThat(key).startsWith("2");
-        }
-
-        @ParameterizedTest
-        @MethodSource("provideRedirectionReasonKeys")
-        void reasonClassRedirection(String key) {
-            assertThat(key).startsWith("3");
         }
     }
 }

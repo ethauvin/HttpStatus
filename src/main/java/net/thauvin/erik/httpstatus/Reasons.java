@@ -32,7 +32,10 @@
 
 package net.thauvin.erik.httpstatus;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.Map;
+import java.util.Optional;
+import java.util.ResourceBundle;
 import java.util.concurrent.ConcurrentSkipListMap;
 
 /**
@@ -81,8 +84,9 @@ public final class Reasons {
      */
     public static Map<String, String> getReasonClass(StatusCodeClass reasonClass) {
         var reasons = new ConcurrentSkipListMap<String, String>();
+        var firstDigit = String.valueOf(reasonClass.getFirstDigit());
         REASON_PHRASES.keySet().forEach(k -> {
-            if (k.startsWith(reasonClass.getFirstDigit())) {
+            if (k.startsWith(firstDigit)) {
                 reasons.put(k, REASON_PHRASES.get(k));
             }
         });
@@ -92,49 +96,28 @@ public final class Reasons {
     /**
      * Returns the reason phrase for the specified status code.
      *
+     * @param <T>        The type of the status code ({@link String} or {@link Integer})
      * @param statusCode The status code for which the reason phrase is to be retrieved
-     * @return The reason phrase, or {@code null}
+     * @return The reason phrase or null if not match is found
      */
-    public static String getReasonPhrase(String statusCode) {
-        return REASON_PHRASES.get(statusCode);
-    }
-
-
-    /**
-     * Returns the reason phrase for the specified status code. If no reason phrase is found, the default reason is
-     * returned.
-     *
-     * @param statusCode    The status code for which the reason phrase is to be retrieved
-     * @param defaultReason The default reason phrase to return if no reason phrase is found for the given status code
-     * @return The reason phrase, or the default reason if no match is found
-     * @since 2.0.0
-     */
-    public static String getReasonPhrase(String statusCode, String defaultReason) {
-        var reason = getReasonPhrase(statusCode);
-        return Objects.requireNonNullElse(reason, defaultReason);
-    }
-
-    /**
-     * Returns the reason phrase for the specified status code. If no reason phrase is found, the default reason is
-     * returned.
-     *
-     * @param statusCode    The status code for which the reason phrase is to be retrieved
-     * @param defaultReason The default reason phrase to return if no reason phrase is found for the given status code
-     * @return The reason phrase, or the default reason if no match is found
-     * @since 2.0.0
-     */
-    public static String getReasonPhrase(int statusCode, String defaultReason) {
-        return getReasonPhrase(Integer.toString(statusCode), defaultReason);
+    public static <T> String getReasonPhrase(T statusCode) {
+        return REASON_PHRASES.get(toStatusCodeString(statusCode));
     }
 
     /**
      * Returns the reason phrase for the specified status code.
      *
-     * @param statusCode The status code for which the reason phrase is to be retrieved
-     * @return The reason phrase, or {@code null}
+     * @param <T>           The type of the status code ({@link String} or {@link Integer})
+     * @param statusCode    The status code for which the reason phrase is to be retrieved
+     * @param defaultReason The default reason phrase to return if no reason phrase is found
+     * @return The reason phrase, or the default reason if no match is found, or null if no default provided
      */
-    public static String getReasonPhrase(int statusCode) {
-        return getReasonPhrase(Integer.toString(statusCode));
+    public static <T> String getReasonPhrase(T statusCode, String defaultReason) {
+        var reason = REASON_PHRASES.get(toStatusCodeString(statusCode));
+        if (reason == null) {
+            return defaultReason;
+        }
+        return reason;
     }
 
     private static boolean isStatusCodeClass(String code) {
@@ -185,7 +168,13 @@ public final class Reasons {
 
     private static void processStatusCodeClass(String code) {
         var firstDigit = code.substring(0, 1);
-        StatusCodeClass.fromFirstDigit(firstDigit)
+        StatusCodeClass.fromFirstDigit(Integer.parseInt(firstDigit))
                 .ifPresent(reasonClass -> printReasonClassPhrases(getReasonClass(reasonClass)));
+    }
+
+    private static <T> String toStatusCodeString(T statusCode) {
+        return (statusCode instanceof Integer)
+                ? Integer.toString((Integer) statusCode)
+                : String.valueOf(statusCode);
     }
 }

@@ -12,7 +12,7 @@
 [![GitHub CI](https://github.com/ethauvin/httpstatus/actions/workflows/bld.yml/badge.svg)](https://github.com/ethauvin/httpstatus/actions/workflows/bld.yml)
 [![CircleCI](https://circleci.com/gh/ethauvin/HttpStatus/tree/master.svg?style=shield)](https://circleci.com/gh/ethauvin/HttpStatus/tree/master)
 
-A simple library to search for and display information about [HTTP status codes](http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html).
+A simple library to search for and display information about [HTTP status codes](https://datatracker.ietf.org/doc/html/rfc9110#name-status-codes).
 
 ## Table of Contents
 
@@ -70,7 +70,7 @@ or
 <%= Reasons.getReasonPhrase(pageContext.getErrorData().getStatusCode()) %>
 ```
 
-would display on a [501 status code](https://www.rfc-editor.org/rfc/rfc9110.html#name-501-not-implemented):
+would display on a [501 status code](https://datatracker.ietf.org/doc/html/rfc9110#section-15.6.2):
 
 ```console
 Not Implemented
@@ -226,11 +226,11 @@ The [StatusCode](https://ethauvin.github.io/HttpStatus/net/thauvin/erik/httpstat
 | [isSuccess](https://ethauvin.github.io/HttpStatus/net/thauvin/erik/httpstatus/StatusCode.html#isSuccess())         | Checks if the status code is a success. (`OK`)                        |
 | [isValid](https://ethauvin.github.io/HttpStatus/net/thauvin/erik/httpstatus/StatusCode.html#isValid())             | Checks if the status code is valid.                                   |
 
-These methods are also available as [static methods](https://ethauvin.github.io/HttpStatus/net/thauvin/erik/httpstatus/StatusCode.html#method-summary`).
+These methods are also available as [static methods](https://ethauvin.github.io/HttpStatus/net/thauvin/erik/httpstatus/StatusCode.html#method-summary).
 
 ### Status Code Class
 
-The [StatusCodeClass](https://ethauvin.github.io/HttpStatus/net/thauvin/erik/httpstatus/StatusCodeClass.html) can be used to retrieve all status codes in a specific [class](https://www.rfc-editor.org/rfc/rfc9110.html#name-status-codes):
+The [StatusCodeClass](https://ethauvin.github.io/HttpStatus/net/thauvin/erik/httpstatus/StatusCodeClass.html) can be used to retrieve all status codes in a specific [class](https://datatracker.ietf.org/doc/html/rfc7231#section-6):
 
 ```java
 var reasons = Reasons.getReasonClass(StatusCodeClass.SERVER_ERROR); // 5xx
@@ -361,7 +361,7 @@ The reasons are defined in a [ResourceBundle](https://docs.oracle.com/en/java/ja
 You can query the reason phrase for status codes as follows:
 
 ```console
-$ java -jar httpstatus-1.1.1.jar 404 500
+> java -jar httpstatus-2.0.0.jar 404 500
 404: Not Found
 500: Internal Server Error
 ```
@@ -369,7 +369,7 @@ $ java -jar httpstatus-1.1.1.jar 404 500
 If no status code is specified, all will be printed:
 
 ```console
-$ java -jar httpstatus-1.1.1.jar
+> java -jar httpstatus-2.0.0.jar
 100: Continue
 101: Switching Protocols
 102: Processing
@@ -386,10 +386,10 @@ $ java -jar httpstatus-1.1.1.jar
 ...
 ```
 
-You can also print status codes by [classes](https://www.rfc-editor.org/rfc/rfc9110.html#name-status-codes):
+You can also print status codes by [classes](https://datatracker.ietf.org/doc/html/rfc7231#section-6):
 
 ```console
-$ java -jar httpstatus-1.1.1.jar 2xx
+> java -jar httpstatus-2.0.0.jar 2xx
 200: OK
 201: Created
 202: Accepted

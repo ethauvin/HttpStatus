@@ -55,7 +55,25 @@ import java.util.stream.Collectors;
  * @since 2.0.0
  */
 public enum StatusCodeClass {
-    INFORMATIONAL(1), SUCCESSFUL(2), REDIRECTION(3), CLIENT_ERROR(4),
+    /**
+     * Represents HTTP responses with a status code starting with {@code 1}.
+     */
+    INFORMATIONAL(1),
+    /**
+     * Represents HTTP responses with a status code starting with {@code 2}.
+     */
+    SUCCESSFUL(2),
+    /**
+     * Represents HTTP responses with a status code starting with {@code 3}.
+     */
+    REDIRECTION(3),
+    /**
+     * Represents HTTP responses with a status code starting with {@code 4}.
+     */
+    CLIENT_ERROR(4),
+    /**
+     * Represents HTTP responses with a status code starting with {@code 5}.
+     */
     SERVER_ERROR(5);
 
     // Static map for O(1) lookup - initialized once
@@ -63,6 +81,12 @@ public enum StatusCodeClass {
             Arrays.stream(values()).collect(Collectors.toMap(StatusCodeClass::getFirstDigit, Function.identity()));
     private final int firstDigit;
 
+    /**
+     * Constructs a new instance of {@link StatusCodeClass} with the specified first digit.
+     *
+     * @param firstDigit The first digit of the HTTP status code class. This value determines the classification of the
+     *                   HTTP status codes (e.g., {@code 1} for informational, {@code 2} for successful, etc.)
+     */
     StatusCodeClass(int firstDigit) {
         this.firstDigit = firstDigit;
     }
@@ -80,6 +104,11 @@ public enum StatusCodeClass {
         return Optional.ofNullable(LOOKUP_MAP.get(firstDigit));
     }
 
+    /**
+     * Retrieves the first digit representing the classification of HTTP status codes.
+     *
+     * @return The first digit of the HTTP status code class.
+     */
     public int getFirstDigit() {
         return firstDigit;
     }

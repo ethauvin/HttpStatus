@@ -34,6 +34,7 @@
  * A simple library to search for and display information about
  * <a href="https://datatracker.ietf.org/doc/html/rfc7231#section-6.1">HTTP status codes</a>.
  *
+ * @author <a hrfe="https://erik.thauvin.net/">Erik C. Thauvin</a>
  * @since 1.0
  */
 package net.thauvin.erik.httpstatus;

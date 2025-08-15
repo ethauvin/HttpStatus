@@ -198,11 +198,11 @@ public class MockJspWriter extends JspWriter {
     }
 
     @Override
-    public void write(char @NotNull [] cbuf, int off, int len) {
-        if (off < 0 || len < 0 || off + len > cbuf.length) {
+    public void write(char @NotNull [] buf, int off, int len) {
+        if (off < 0 || len < 0 || off + len > buf.length) {
             throw new IndexOutOfBoundsException();
         }
-        buffer.append(cbuf, off, len);
+        buffer.append(buf, off, len);
     }
 
     @Override

@@ -61,7 +61,7 @@ class XmlSupportTests {
                     "The defaultValue should be set correctly.");
         }
 
-        @ParameterizedTest
+        @ParameterizedTest(name = "[{index}] ''{0}''")
         @EmptySource
         @ValueSource(strings = {" ", "  "})
         void setEmptyDefaultValue(String input) {
@@ -87,7 +87,6 @@ class XmlSupportTests {
     @Nested
     @DisplayName("Escape XML Tests")
     class EscapeXmlTests {
-
         @Test
         void setEscapeXmlDefault() {
             var xmlSupport = new XmlSupportImpl();

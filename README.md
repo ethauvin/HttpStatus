@@ -234,7 +234,7 @@ The [StatusCodeClass](https://ethauvin.github.io/HttpStatus/net/thauvin/erik/htt
 
 ```java
 var reasons = Reasons.getReasonClass(StatusCodeClass.SERVER_ERROR); // 5xx
-reasons.forEach((code, reason) -> System.out.println(code + ": " + reason)); // 500: Internal Server Error
+reasons.forEach((code, reason) -> System.out.println(code + ": " + reason)); // 500: Internal Server Error, etc.
 ```
 
 The defined [standard classes](https://ethauvin.github.io/HttpStatus/net/thauvin/erik/httpstatus/StatusCodeClass.html#enum-constant-summary) are:

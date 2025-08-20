@@ -23,13 +23,13 @@ A simple library to search for and display information about [HTTP status codes]
   - [bld](#bld)
   - [Gradle](#gradle)
   - [Maven](#maven)
+- [StatusCode](#statuscode)
+    - [Status Code Class](#status-code-class)
 - [JSP Tags](#jsp-tags)
   - [hs:cause](#hscause)
   - [hs:code](#hscode)
   - [hs:message](#hsmessage)
   - [hs:reason](#hsreason)
-- [StatusCode](#statuscode)
-  - [Status Code Class](#status-code-class)
 - [Reasons](#reasons)
 - [Command Line Usage](#command-line-usage)
 - [Contributing](#contributing)
@@ -108,59 +108,9 @@ dependencies {
 }
 ```
 
-### Maven
+### [Maven](https://maven.apache.org/)
 
 Instructions for using with Maven, Ivy, etc. can be found on [Maven Central](https://central.sonatype.com/artifact/net.thauvin.erik.httpstatus/httpstatus).
-
-## JSP Tags
-
-### [hs:cause](https://ethauvin.github.io/HttpStatus/net/thauvin/erik/httpstatus/taglibs/CauseTag.html)
-
-The `<hs:cause/>` tag displays the cause of current HTTP status code, if any. A shorthand for:
-
-```jsp
-<%= pageContext.getErrorData().getThrowable().getCause().getLocalizedMessage() %>
-```
-
-Optional attributes are:
-
-| Attribute    | Description                                                                                                                                       |
-|:-------------|:--------------------------------------------------------------------------------------------------------------------------------------------------|
-| `default`    | The fallback value to output, if no cause is                                                                                                      |
-| `escapeXml`  | Converts &lt;, &gt;, &amp;, ', " to their corresponding [entity codes](http://dev.w3.org/html5/html-author/charref). Value is `true` by default.  |
-
-### [hs:code](https://ethauvin.github.io/HttpStatus/net/thauvin/erik/httpstatus/taglibs/CodeTag.html)
-
-The `<hs:code/>` tag displays the current HTTP status code, if any. A shorthand for:
-
-```jsp
-<%= pageContext.getErrorData().getStatusCode() %>
-```
-
-### [hs:message](https://ethauvin.github.io/HttpStatus/net/thauvin/erik/httpstatus/taglibs/MessageTag.html)
-
-The `<hs:message/>` tag displays the current error message, if any. A shorthand for:
-
-```jsp
-<%= request.getAttribute("javax.servlet.error.message") %>
-```
-
-Optional attributes are:
-
-| Attribute   | Description                                                                                                                                       |
-|:------------|:--------------------------------------------------------------------------------------------------------------------------------------------------|
-| `default`   | The fallback value to output, if no error message is available.                                                                                   |
-| `escapeXml` | Converts &lt;, &gt;, &amp;, ', " to their corresponding [entity codes](http://dev.w3.org/html5/html-author/charref). Value is `true` by default.  |
-
-### [hs:reason](https://ethauvin.github.io/HttpStatus/net/thauvin/erik/httpstatus/taglibs/ReasonTag.html)
-
-The `<hs:reason/>` tag displays the reason for an HTTP status code, if any. Optional attributes are:
-
-| Attribute    | Description                                                                                                                                       |
-|:-------------|:--------------------------------------------------------------------------------------------------------------------------------------------------|
-| `default`    | The fallback value to output, if no reason is available.                                                                                          |
-| `code`       | The HTTP status error code. If not specified the current status code is used.                                                                     |
-| `escapeXml`  | Converts &lt;, &gt;, &amp;, ', " to their corresponding [entity codes](http://dev.w3.org/html5/html-author/charref). Value is `true` by default.  |
 
 ## StatusCode
 
@@ -246,6 +196,56 @@ The defined [standard classes](https://ethauvin.github.io/HttpStatus/net/thauvin
 | [REDIRECTION](https://ethauvin.github.io/HttpStatus/net/thauvin/erik/httpstatus/StatusCodeClass.html#REDIRECTION)     |  3xx   | Further action needs to be taken to complete the request        |
 | [CLIENT_ERROR](https://ethauvin.github.io/HttpStatus/net/thauvin/erik/httpstatus/StatusCodeClass.html#CLIENT_ERROR)   |  4xx   | The request contains bad syntax or cannot be fulfilled          |
 | [SERVER_ERROR](https://ethauvin.github.io/HttpStatus/net/thauvin/erik/httpstatus/StatusCodeClass.html#SERVER_ERROR)   |  5xx   | The server failed to fulfil an apparently valid request         |
+
+## JSP Tags
+
+### [hs:cause](https://ethauvin.github.io/HttpStatus/net/thauvin/erik/httpstatus/taglibs/CauseTag.html)
+
+The `<hs:cause/>` tag displays the cause of current HTTP status code, if any. A shorthand for:
+
+```jsp
+<%= pageContext.getErrorData().getThrowable().getCause().getLocalizedMessage() %>
+```
+
+Optional attributes are:
+
+| Attribute    | Description                                                                                                                                       |
+|:-------------|:--------------------------------------------------------------------------------------------------------------------------------------------------|
+| `default`    | The fallback value to output, if no cause is                                                                                                      |
+| `escapeXml`  | Converts &lt;, &gt;, &amp;, ', " to their corresponding [entity codes](http://dev.w3.org/html5/html-author/charref). Value is `true` by default.  |
+
+### [hs:code](https://ethauvin.github.io/HttpStatus/net/thauvin/erik/httpstatus/taglibs/CodeTag.html)
+
+The `<hs:code/>` tag displays the current HTTP status code, if any. A shorthand for:
+
+```jsp
+<%= pageContext.getErrorData().getStatusCode() %>
+```
+
+### [hs:message](https://ethauvin.github.io/HttpStatus/net/thauvin/erik/httpstatus/taglibs/MessageTag.html)
+
+The `<hs:message/>` tag displays the current error message, if any. A shorthand for:
+
+```jsp
+<%= request.getAttribute("javax.servlet.error.message") %>
+```
+
+Optional attributes are:
+
+| Attribute   | Description                                                                                                                                       |
+|:------------|:--------------------------------------------------------------------------------------------------------------------------------------------------|
+| `default`   | The fallback value to output, if no error message is available.                                                                                   |
+| `escapeXml` | Converts &lt;, &gt;, &amp;, ', " to their corresponding [entity codes](http://dev.w3.org/html5/html-author/charref). Value is `true` by default.  |
+
+### [hs:reason](https://ethauvin.github.io/HttpStatus/net/thauvin/erik/httpstatus/taglibs/ReasonTag.html)
+
+The `<hs:reason/>` tag displays the reason for an HTTP status code, if any. Optional attributes are:
+
+| Attribute    | Description                                                                                                                                       |
+|:-------------|:--------------------------------------------------------------------------------------------------------------------------------------------------|
+| `default`    | The fallback value to output, if no reason is available.                                                                                          |
+| `code`       | The HTTP status error code. If not specified the current status code is used.                                                                     |
+| `escapeXml`  | Converts &lt;, &gt;, &amp;, ', " to their corresponding [entity codes](http://dev.w3.org/html5/html-author/charref). Value is `true` by default.  |
 
 ## Reasons
 

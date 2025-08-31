@@ -33,13 +33,9 @@
 package net.thauvin.erik.httpstatus;
 
 import org.assertj.core.api.AutoCloseableSoftAssertions;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import java.io.ByteArrayOutputStream;
-import java.io.PrintStream;
+import rife.bld.extension.testing.CaptureOutput;
+import rife.bld.extension.testing.CapturedOutput;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -51,23 +47,11 @@ import static org.assertj.core.api.Assertions.assertThat;
  * @since 1.0
  */
 class ReasonsMainTests {
-    private static final ByteArrayOutputStream OUTPUT_STREAM = new ByteArrayOutputStream();
-    private static final PrintStream SYSTEM_OUT = System.out;
-
-    @AfterAll
-    public static void restoreStreams() {
-        System.setOut(SYSTEM_OUT);
-    }
-
-    @BeforeAll
-    public static void setUpStreams() {
-        System.setOut(new PrintStream(OUTPUT_STREAM));
-    }
-
     @Test
-    void mainWithClassArg() {
+    @CaptureOutput
+    void mainWithClassArg(CapturedOutput output) {
         Reasons.main("2xx");
-        var lines = OUTPUT_STREAM.toString().split("\n");
+        var lines = output.getOut().split("\n");
         assertThat(lines).as("should be 13 reasons for 2xx").hasSize(13);
         try (var softly = new AutoCloseableSoftAssertions()) {
             for (var line : lines) {
@@ -77,41 +61,41 @@ class ReasonsMainTests {
     }
 
     @Test
-    void mainWithInvalidArg() {
+    @CaptureOutput
+    void mainWithInvalidArg(CapturedOutput output) {
         Reasons.main("aaa");
-        assertThat(OUTPUT_STREAM.toString()).as("invalid argument: aaa").isEmpty();
+        assertThat(output.getOut()).as("invalid argument: aaa").isEmpty();
     }
 
     @Test
-    void mainWithInvalidClassArg() {
+    @CaptureOutput
+    void mainWithInvalidClassArg(CapturedOutput output) {
         Reasons.main("6xx");
-        assertThat(OUTPUT_STREAM.toString()).as("invalid argument: 6xx").isEmpty();
+        assertThat(output.getAll()).as("invalid argument: 6xx").isEmpty();
     }
 
     @Test
-    void mainWithMultipleArgs() {
+    @CaptureOutput
+    void mainWithMultipleArgs(CapturedOutput output) {
         Reasons.main("500", "302");
-        assertThat(OUTPUT_STREAM.toString()).contains(Reasons.getReasonPhrase("500")).as("500 (302)");
-        assertThat(OUTPUT_STREAM.toString()).contains(Reasons.getReasonPhrase("302")).as("(500) 302");
-        assertThat(OUTPUT_STREAM.toString()).doesNotContain("404").as("500/302 not 404");
+        assertThat(output.getOut()).contains(Reasons.getReasonPhrase("500")).as("500 (302)");
+        assertThat(output.getOut()).contains(Reasons.getReasonPhrase("302")).as("(500) 302");
+        assertThat(output.getOut()).doesNotContain("404").as("500/302 not 404");
     }
 
     @Test
-    void mainWithSingleArg() {
+    @CaptureOutput
+    void mainWithSingleArg(CapturedOutput output) {
         Reasons.main("401");
-        assertThat(OUTPUT_STREAM.toString()).contains(Reasons.getReasonPhrase("401")).as("401");
-        assertThat(OUTPUT_STREAM.toString()).doesNotContain("500").as("401 no 500");
+        assertThat(output.contains(Reasons.getReasonPhrase("401"))).as("401").isTrue();
+        assertThat(output.getOut().contains("500")).as("401 no 500").isFalse();
     }
 
     @Test
-    void mainWithoutArgs() {
+    @CaptureOutput
+    void mainWithoutArgs(CapturedOutput output) {
         Reasons.main();
-        assertThat(OUTPUT_STREAM.toString()).contains(Reasons.getReasonPhrase(301)).as("301");
-        assertThat(OUTPUT_STREAM.toString()).contains(Reasons.getReasonPhrase(404)).as("404");
-    }
-
-    @BeforeEach
-    public void resetStreams() {
-        OUTPUT_STREAM.reset();
+        assertThat(output.getOut().contains(Reasons.getReasonPhrase(301))).as("301").isTrue();
+        assertThat(output.getOut().contains(Reasons.getReasonPhrase(404))).as("404").isTrue();
     }
 }

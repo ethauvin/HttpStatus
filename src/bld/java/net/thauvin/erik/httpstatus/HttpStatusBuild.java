@@ -72,7 +72,7 @@ public class HttpStatusBuild extends Project {
 
         downloadSources = true;
         autoDownloadPurge = true;
-        repositories = List.of(MAVEN_CENTRAL, SONATYPE_SNAPSHOTS);
+        repositories = List.of(MAVEN_CENTRAL, CENTRAL_SNAPSHOTS, RIFE2_RELEASES, RIFE2_SNAPSHOTS);
 
         scope(provided)
                 .include(dependency("jakarta.servlet", "jakarta.servlet-api",
@@ -82,6 +82,8 @@ public class HttpStatusBuild extends Project {
                 .include(dependency("jakarta.el", "jakarta.el-api",
                         version(6, 0, 1)));
         scope(test)
+                .include(dependency("com.uwyn.rife2", "bld-extensions-testing-helpers",
+                        version(0, 9, 1)))
                 .include(dependency("org.jetbrains", "annotations",
                         version(26, 0, 2)))
                 .include(dependency("org.mockito", "mockito-core",

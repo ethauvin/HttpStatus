@@ -35,6 +35,7 @@ package net.thauvin.erik.httpstatus;
 import rife.bld.BuildCommand;
 import rife.bld.Project;
 import rife.bld.extension.ExecOperation;
+import rife.bld.extension.JUnitReporterOperation;
 import rife.bld.extension.JacocoReportOperation;
 import rife.bld.extension.PmdOperation;
 import rife.bld.publish.*;
@@ -187,6 +188,14 @@ public class HttpStatusBuild extends Project {
                         .execute();
             }
         }
+    }
+
+    @BuildCommand(summary = "Runs the JUnit reporter")
+    public void reporter() throws Exception {
+        new JUnitReporterOperation()
+                .fromProject(this)
+                .failOnSummary(true)
+                .execute();
     }
 
     @Override

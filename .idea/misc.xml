@@ -15,6 +15,7 @@
     <pattern value="net.thauvin.erik.httpstatus.HttpStatusBuild" method="pmdCli" />
     <pattern value="net.thauvin.erik.httpstatus.ReasonClass" method="getFirstDigit" />
     <pattern value="net.thauvin.erik.httpstatus.ReasonClass" />
+    <pattern value="net.thauvin.erik.httpstatus.HttpStatusBuild" method="reporter" />
   </component>
   <component name="PDMPlugin">
     <option name="customRuleSets">

@@ -46,12 +46,12 @@ import static org.assertj.core.api.Assertions.assertThat;
  * @created 2019-05-06
  * @since 1.0
  */
+@CaptureOutput
 class ReasonsMainTests {
     @Test
-    @CaptureOutput
     void mainWithClassArg(CapturedOutput output) {
         Reasons.main("2xx");
-        var lines = output.getOut().split("\n");
+        var lines = output.getOutLines();
         assertThat(lines).as("should be 13 reasons for 2xx").hasSize(13);
         try (var softly = new AutoCloseableSoftAssertions()) {
             for (var line : lines) {
@@ -61,21 +61,18 @@ class ReasonsMainTests {
     }
 
     @Test
-    @CaptureOutput
     void mainWithInvalidArg(CapturedOutput output) {
         Reasons.main("aaa");
         assertThat(output.getOut()).as("invalid argument: aaa").isEmpty();
     }
 
     @Test
-    @CaptureOutput
     void mainWithInvalidClassArg(CapturedOutput output) {
         Reasons.main("6xx");
         assertThat(output.getAll()).as("invalid argument: 6xx").isEmpty();
     }
 
     @Test
-    @CaptureOutput
     void mainWithMultipleArgs(CapturedOutput output) {
         Reasons.main("500", "302");
         assertThat(output.getOut()).contains(Reasons.getReasonPhrase("500")).as("500 (302)");
@@ -84,7 +81,6 @@ class ReasonsMainTests {
     }
 
     @Test
-    @CaptureOutput
     void mainWithSingleArg(CapturedOutput output) {
         Reasons.main("401");
         assertThat(output.contains(Reasons.getReasonPhrase("401"))).as("401").isTrue();
@@ -92,7 +88,6 @@ class ReasonsMainTests {
     }
 
     @Test
-    @CaptureOutput
     void mainWithoutArgs(CapturedOutput output) {
         Reasons.main();
         assertThat(output.getOut().contains(Reasons.getReasonPhrase(301))).as("301").isTrue();

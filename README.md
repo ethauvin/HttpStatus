@@ -86,7 +86,7 @@ Include the following in your `bld` build file:
 repositories = List.of(MAVEN_CENTRAL, CENTRAL_SNAPSHOTS);
 
 scope(compile).include(
-        dependency("net.thauvin.erik.httpstatus","httpstatus", version(2, 0, 0, "SNAPSHOT"))
+        dependency("net.thauvin.erik.httpstatus","httpstatus", version(2, 0, 0))
 );
 ```
 
@@ -104,7 +104,7 @@ repositories {
 }
 
 dependencies {
-    implementation 'net.thauvin.erik.httpstatus:httpstatus:2.0.0-SNAPSHOT'
+    implementation 'net.thauvin.erik.httpstatus:httpstatus:2.0.0'
 }
 ```
 

@@ -62,7 +62,7 @@ public class HttpStatusBuild extends Project {
     public HttpStatusBuild() {
         pkg = "net.thauvin.erik.httpstatus";
         name = "HttpStatus";
-        version = version(2, 0, 0, "SNAPSHOT");
+        version = version(2, 0, 0);
 
         var description = "HTTP Status Codes & JSP Tag Library";
         var url = "https://github.com/ethauvin/HttpStatus";

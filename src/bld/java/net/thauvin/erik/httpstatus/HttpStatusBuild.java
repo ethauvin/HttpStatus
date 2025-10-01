@@ -75,6 +75,7 @@ public class HttpStatusBuild extends Project {
         autoDownloadPurge = true;
         repositories = List.of(MAVEN_CENTRAL, CENTRAL_SNAPSHOTS, RIFE2_RELEASES, RIFE2_SNAPSHOTS);
 
+        var junit = version(6, 0, 0);
         scope(provided)
                 .include(dependency("jakarta.servlet", "jakarta.servlet-api",
                         version(6, 1, 0)))
@@ -91,10 +92,8 @@ public class HttpStatusBuild extends Project {
                         version(5, 20, 0)))
                 .include(dependency("org.assertj", "assertj-core",
                         version(3, 27, 6)))
-                .include(dependency("org.junit.jupiter", "junit-jupiter",
-                        version(5, 13, 4)))
-                .include(dependency("org.junit.platform", "junit-platform-console-standalone",
-                        version(1, 13, 4)));
+                .include(dependency("org.junit.jupiter", "junit-jupiter", junit))
+                .include(dependency("org.junit.platform", "junit-platform-console-standalone", junit));
 
         jarOperation().manifestAttribute(Attributes.Name.MAIN_CLASS, pkg + '.' + "Reasons");
 

@@ -85,7 +85,7 @@ public class HttpStatusBuild extends Project {
                         version(6, 0, 1)));
         scope(test)
                 .include(dependency("com.uwyn.rife2", "bld-extensions-testing-helpers",
-                        version(0, 9, 3)))
+                        version(0, 9, 4)))
                 .include(dependency("org.jetbrains", "annotations",
                         version(26, 0, 2)))
                 .include(dependency("org.mockito", "mockito-core",

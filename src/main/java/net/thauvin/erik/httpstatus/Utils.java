@@ -63,25 +63,6 @@ public final class Utils {
     }
 
     /**
-     * Converts <code>&lt;</code>, <code>&gt;</code>, <code>&amp;</code>, <code>'</code>, <code>"</code>
-     * to their corresponding entity codes.
-     *
-     * @param value The string value to convert
-     * @return The converted string value
-     */
-    public static String escapeXml(String value) {
-        if (value == null || value.isEmpty()) {
-            return value;
-        }
-
-        var escaped = new StringBuilder(value.length() * 2);
-        for (char c : value.toCharArray()) {
-            escaped.append(XML_ENTITIES.getOrDefault(c, String.valueOf(c)));
-        }
-        return escaped.toString();
-    }
-
-    /**
      * Writes a string value to the specified writer, with optional XML escaping.
      * The default value is used when the actual value is null.
      *
@@ -105,5 +86,24 @@ public final class Utils {
     private static void writeEscapedText(Writer out, String text, boolean shouldEscape)
             throws IOException {
         out.write(shouldEscape ? escapeXml(text) : text);
+    }
+
+    /**
+     * Converts <code>&lt;</code>, <code>&gt;</code>, <code>&amp;</code>, <code>'</code>, <code>"</code>
+     * to their corresponding entity codes.
+     *
+     * @param value The string value to convert
+     * @return The converted string value
+     */
+    public static String escapeXml(String value) {
+        if (value == null || value.isEmpty()) {
+            return value;
+        }
+
+        var escaped = new StringBuilder(value.length() * 2);
+        for (char c : value.toCharArray()) {
+            escaped.append(XML_ENTITIES.getOrDefault(c, String.valueOf(c)));
+        }
+        return escaped.toString();
     }
 }

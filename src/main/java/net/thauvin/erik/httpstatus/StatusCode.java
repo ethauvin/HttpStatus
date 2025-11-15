@@ -32,6 +32,8 @@
 
 package net.thauvin.erik.httpstatus;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 import java.io.Serial;
 import java.io.Serializable;
 
@@ -41,6 +43,7 @@ import java.io.Serializable;
  * @author <a href="mailto:erik@thauvin.net">Erik C. Thauvin</a>
  * @since 1.1.0
  */
+@SuppressFBWarnings("MOM_MISLEADING_OVERLOAD_MODEL")
 public class StatusCode implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
@@ -76,25 +79,15 @@ public class StatusCode implements Serializable {
     }
 
     /**
-     * Checks if the status code is a client error. (e.g.: <code>Internal Server Error</code>)
+     * Checks if the status code is informational.
      *
      * @param code the status code
-     * @return <code>true</code> if the status code is a client error, <code>false</code> otherwise
+     * @return <code>true</code> if the status code is informational, <code>false</code>
+     * @see #isInfo(int)
      * @since 2.0.0
      */
-    public static boolean isClientError(int code) {
-        return code >= 400 && code < 500;
-    }
-
-    /**
-     * Checks if the status code is a client or server error.
-     *
-     * @param code the status code
-     * @return <code>true</code> if the status code is an error, <code>false</code> otherwise
-     * @since 2.0.0
-     */
-    public static boolean isError(int code) {
-        return code >= 400 && code < 600;
+    public static boolean isInformational(int code) {
+        return isInfo(code);
     }
 
     /**
@@ -110,37 +103,15 @@ public class StatusCode implements Serializable {
     }
 
     /**
-     * Checks if the status code is informational.
+     * Checks if the status code is a (<code>OK</code>) success.
      *
      * @param code the status code
-     * @return <code>true</code> if the status code is informational, <code>false</code>
-     * @see #isInfo(int)
+     * @return <code>true</code> if the status code is a success, <code>false</code> otherwise
+     * @see #isSuccess(int)
      * @since 2.0.0
      */
-    public static boolean isInformational(int code) {
-        return isInfo(code);
-    }
-
-    /**
-     * Checks if the status code is a redirect.
-     *
-     * @param code the status code
-     * @return <code>true</code> if the status code is a redirect, <code>false</code> otherwise
-     * @since 2.0.0
-     */
-    public static boolean isRedirect(int code) {
-        return code >= 300 && code < 400;
-    }
-
-    /**
-     * Checks if the status code is a server error.
-     *
-     * @param code the status code
-     * @return <code>true</code> if the status code is a server error, <code>false</code> otherwise
-     * @since 2.0.0
-     */
-    public static boolean isServerError(int code) {
-        return code >= 500 && code < 600;
+    public static boolean isSuccessful(int code) {
+        return isSuccess(code);
     }
 
     /**
@@ -156,32 +127,19 @@ public class StatusCode implements Serializable {
     }
 
     /**
-     * Checks if the status code is a (<code>OK</code>) success.
-     *
-     * @param code the status code
-     * @return <code>true</code> if the status code is a success, <code>false</code> otherwise
-     * @see #isSuccess(int)
-     * @since 2.0.0
-     */
-    public static boolean isSuccessful(int code) {
-        return isSuccess(code);
-    }
-
-    /**
-     * Checks if the status code is valid.
-     *
-     * @param code the status code
-     * @return <code>true</code> if the status code is valid, <code>false</code> otherwise
-     */
-    public static boolean isValid(int code) {
-        return code == 783 || (code >= 100 && code < 600);
-    }
-
-    /**
      * Returns the status code.
      */
     public int getCode() {
         return code;
+    }
+
+    /**
+     * Sets the status code.
+     *
+     * @param code The HTTP status code
+     */
+    public void setCode(int code) {
+        this.code = code;
     }
 
     /**
@@ -204,12 +162,34 @@ public class StatusCode implements Serializable {
     }
 
     /**
+     * Checks if the status code is a client error. (e.g.: <code>Internal Server Error</code>)
+     *
+     * @param code the status code
+     * @return <code>true</code> if the status code is a client error, <code>false</code> otherwise
+     * @since 2.0.0
+     */
+    public static boolean isClientError(int code) {
+        return code >= 400 && code < 500;
+    }
+
+    /**
      * Checks if the status code is a client or server error.
      *
      * @return <code>true</code> if the status code is an error, <code>false</code> otherwise
      */
     public boolean isError() {
         return isError(code);
+    }
+
+    /**
+     * Checks if the status code is a client or server error.
+     *
+     * @param code the status code
+     * @return <code>true</code> if the status code is an error, <code>false</code> otherwise
+     * @since 2.0.0
+     */
+    public static boolean isError(int code) {
+        return code >= 400 && code < 600;
     }
 
     /**
@@ -241,12 +221,34 @@ public class StatusCode implements Serializable {
     }
 
     /**
+     * Checks if the status code is a redirect.
+     *
+     * @param code the status code
+     * @return <code>true</code> if the status code is a redirect, <code>false</code> otherwise
+     * @since 2.0.0
+     */
+    public static boolean isRedirect(int code) {
+        return code >= 300 && code < 400;
+    }
+
+    /**
      * Checks if the status code is a server error.
      *
      * @return <code>true</code> if the status code is a server error, <code>false</code> otherwise
      */
     public boolean isServerError() {
         return isServerError(code);
+    }
+
+    /**
+     * Checks if the status code is a server error.
+     *
+     * @param code the status code
+     * @return <code>true</code> if the status code is a server error, <code>false</code> otherwise
+     * @since 2.0.0
+     */
+    public static boolean isServerError(int code) {
+        return code >= 500 && code < 600;
     }
 
     /**
@@ -278,11 +280,12 @@ public class StatusCode implements Serializable {
     }
 
     /**
-     * Sets the status code.
+     * Checks if the status code is valid.
      *
-     * @param code The HTTP status code
+     * @param code the status code
+     * @return <code>true</code> if the status code is valid, <code>false</code> otherwise
      */
-    public void setCode(int code) {
-        this.code = code;
+    public static boolean isValid(int code) {
+        return code == 783 || (code >= 100 && code < 600);
     }
 }

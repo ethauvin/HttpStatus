@@ -34,16 +34,14 @@ package net.thauvin.erik.httpstatus;
 
 import rife.bld.BuildCommand;
 import rife.bld.Project;
-import rife.bld.extension.ExecOperation;
 import rife.bld.extension.JUnitReporterOperation;
 import rife.bld.extension.JacocoReportOperation;
 import rife.bld.extension.PmdOperation;
+import rife.bld.extension.SpotBugsOperation;
 import rife.bld.publish.*;
 import rife.tools.exceptions.FileUtilsErrorException;
 
 import java.io.File;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.List;
 import java.util.jar.Attributes;
 
@@ -62,7 +60,7 @@ public class HttpStatusBuild extends Project {
     public HttpStatusBuild() {
         pkg = "net.thauvin.erik.httpstatus";
         name = "HttpStatus";
-        version = version(2, 0, 0);
+        version = version(2, 0, 1, "SNAPSHOT");
 
         var description = "HTTP Status Codes & JSP Tag Library";
         var url = "https://github.com/ethauvin/HttpStatus";
@@ -75,14 +73,16 @@ public class HttpStatusBuild extends Project {
         autoDownloadPurge = true;
         repositories = List.of(MAVEN_CENTRAL, CENTRAL_SNAPSHOTS, RIFE2_RELEASES, RIFE2_SNAPSHOTS);
 
-        var junit = version(6, 0, 0);
+        var junit = version(6, 0, 1);
         scope(provided)
                 .include(dependency("jakarta.servlet", "jakarta.servlet-api",
                         version(6, 1, 0)))
                 .include(dependency("jakarta.servlet.jsp", "jakarta.servlet.jsp-api",
                         version(4, 0, 0)))
                 .include(dependency("jakarta.el", "jakarta.el-api",
-                        version(6, 0, 1)));
+                        version(6, 0, 1)))
+                .include(dependency("com.github.spotbugs", "spotbugs-annotations",
+                        version(4, 9, 8)));
         scope(test)
                 .include(dependency("com.uwyn.rife2", "bld-extensions-testing-helpers",
                         version(0, 9, 4)))
@@ -134,86 +134,11 @@ public class HttpStatusBuild extends Project {
                         .signPassphrase(property("sign.passphrase")));
     }
 
-    public static void main(String[] args) {
-        new HttpStatusBuild().start(args);
-    }
-
-    @BuildCommand(summary = "Generates JaCoCo Reports")
-    public void jacoco() throws Exception {
-        var op = new JacocoReportOperation().fromProject(this);
-        op.testToolOptions("--reports-dir=" + TEST_RESULTS_DIR);
-
-        Exception ex = null;
-        try {
-            op.execute();
-        } catch (Exception e) {
-            ex = e;
-        }
-
-        renderWithXunitViewer();
-
-        if (ex != null) {
-            throw ex;
-        }
-    }
-
-    @BuildCommand(summary = "Runs PMD analysis")
-    public void pmd() throws Exception {
-        pmdOp.execute();
-    }
-
-    @BuildCommand(value = "pmd-cli", summary = "Runs PMD analysis (CLI)")
-    public void pmdCli() throws Exception {
-        pmdOp.includeLineNumber(false).execute();
-    }
-
-    private void pomRoot() throws FileUtilsErrorException {
-        PomBuilder.generateInto(publishOperation().fromProject(this).info(), dependencies(),
-                new File(workDirectory, "pom.xml"));
-    }
-
-    private void renderWithXunitViewer() throws Exception {
-        var npmPackagesEnv = System.getenv("NPM_PACKAGES");
-        if (npmPackagesEnv != null && !npmPackagesEnv.isEmpty()) {
-            var xunitViewer = Path.of(npmPackagesEnv, "bin", "xunit-viewer").toFile();
-            if (xunitViewer.exists() && xunitViewer.canExecute()) {
-                var reportsDir = "build/reports/tests/test/";
-
-                Files.createDirectories(Path.of(reportsDir));
-
-                new ExecOperation()
-                        .fromProject(this)
-                        .command(xunitViewer.getPath(), "-r", TEST_RESULTS_DIR, "-o", reportsDir + "index.html")
-                        .execute();
-            }
-        }
-    }
-
-    @BuildCommand(summary = "Runs the JUnit reporter")
-    public void reporter() throws Exception {
-        new JUnitReporterOperation()
-                .fromProject(this)
-                .failOnSummary(true)
-                .execute();
-    }
-
     @Override
     public void test() throws Exception {
         var op = testOperation().fromProject(this);
         op.testToolOptions().reportsDir(new File(TEST_RESULTS_DIR));
-
-        Exception ex = null;
-        try {
-            op.execute();
-        } catch (Exception e) {
-            ex = e;
-        }
-
-        renderWithXunitViewer();
-
-        if (ex != null) {
-            throw ex;
-        }
+        op.execute();
     }
 
     @Override
@@ -226,5 +151,47 @@ public class HttpStatusBuild extends Project {
     public void publishLocal() throws Exception {
         super.publishLocal();
         pomRoot();
+    }
+
+    private void pomRoot() throws FileUtilsErrorException {
+        PomBuilder.generateInto(publishOperation().fromProject(this).info(), dependencies(),
+                new File("pom.xml"));
+    }
+
+    public static void main(String[] args) {
+        new HttpStatusBuild().start(args);
+    }
+
+    @BuildCommand(summary = "Generates JaCoCo Reports")
+    public void jacoco() throws Exception {
+        var op = new JacocoReportOperation().fromProject(this);
+        op.testToolOptions("--reports-dir=" + TEST_RESULTS_DIR);
+        op.execute();
+    }
+
+    @BuildCommand(summary = "Runs PMD analysis")
+    public void pmd() throws Exception {
+        pmdOp.execute();
+    }
+
+    @BuildCommand(value = "pmd-cli", summary = "Runs PMD analysis (CLI)")
+    public void pmdCli() throws Exception {
+        pmdOp.includeLineNumber(false).execute();
+    }
+
+    @BuildCommand(summary = "Runs the JUnit reporter")
+    public void reporter() throws Exception {
+        new JUnitReporterOperation()
+                .fromProject(this)
+                .failOnSummary(true)
+                .execute();
+    }
+
+    @BuildCommand(summary = "Runs SpotBugs on this project")
+    public void spotbugs() throws Exception {
+        new SpotBugsOperation()
+                .fromProject(this)
+                .home("/opt/spotbugs")
+                .execute();
     }
 }

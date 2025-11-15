@@ -50,16 +50,6 @@ public class MockJspWriter extends JspWriter {
         this.buffer = buffer != null ? buffer : new StringBuilder();
     }
 
-    @SuppressWarnings("unused")
-    public StringBuilder getBuffer() {
-        return buffer;
-    }
-
-    // Get the accumulated content
-    public String getContent() {
-        return buffer.toString();
-    }
-
     @Override
     public void newLine() {
         buffer.append(System.lineSeparator());
@@ -213,5 +203,15 @@ public class MockJspWriter extends JspWriter {
     @Override
     public void write(@NotNull String str, int off, int len) {
         buffer.append(str, off, off + len);
+    }
+
+    @SuppressWarnings("unused")
+    public StringBuilder getBuffer() {
+        return buffer;
+    }
+
+    // Get the accumulated content
+    public String getContent() {
+        return buffer.toString();
     }
 }

@@ -56,15 +56,6 @@ class CauseTagTests {
     @Nested
     @DisplayName("DoTag Tests")
     class DoTagTests {
-        private PageContext createMockPageContext(Throwable throwable) {
-            var pageContext = mock(PageContext.class);
-            var errorData = mock(ErrorData.class);
-            when(errorData.getThrowable()).thenReturn(throwable);
-            when(pageContext.getErrorData()).thenReturn(errorData);
-            when(pageContext.getOut()).thenReturn(new MockJspWriter());
-            return pageContext;
-        }
-
         @Test
         void doTagHandlesNullCause() throws Exception {
             var pageContext = createMockPageContext(new Exception());
@@ -74,6 +65,20 @@ class CauseTagTests {
             assertThat(getOutputFromPageContext(pageContext)).isEqualTo("No error");
         }
 
+        private PageContext createMockPageContext(Throwable throwable) {
+            var pageContext = mock(PageContext.class);
+            var errorData = mock(ErrorData.class);
+            when(errorData.getThrowable()).thenReturn(throwable);
+            when(pageContext.getErrorData()).thenReturn(errorData);
+            when(pageContext.getOut()).thenReturn(new MockJspWriter());
+            return pageContext;
+        }
+
+        private String getOutputFromPageContext(PageContext pageContext) {
+            var writer = (MockJspWriter) pageContext.getOut();
+            return writer.getContent();
+        }
+
         @Test
         void doTagWritesCause() throws Exception {
             var pageContext = createMockPageContext(new Exception("Exception", new Exception("Test Cause")));
@@ -81,11 +86,6 @@ class CauseTagTests {
             tag.setDefault(null); // Ensure the default value is not used
             tag.doTag();
             assertThat(getOutputFromPageContext(pageContext)).isEqualTo("Test Cause");
-        }
-
-        private String getOutputFromPageContext(PageContext pageContext) {
-            var writer = (MockJspWriter) pageContext.getOut();
-            return writer.getContent();
         }
     }
 

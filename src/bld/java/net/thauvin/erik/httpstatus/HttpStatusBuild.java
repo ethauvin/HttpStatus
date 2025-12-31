@@ -71,7 +71,7 @@ public class HttpStatusBuild extends Project {
 
         downloadSources = true;
         autoDownloadPurge = true;
-        repositories = List.of(MAVEN_CENTRAL, CENTRAL_SNAPSHOTS, RIFE2_RELEASES, RIFE2_SNAPSHOTS);
+        repositories = List.of(MAVEN_CENTRAL, CENTRAL_SNAPSHOTS, RIFE2_RELEASES);
 
         var junit = version(6, 0, 1);
         scope(provided)
@@ -89,7 +89,7 @@ public class HttpStatusBuild extends Project {
                 .include(dependency("org.jetbrains", "annotations",
                         version(26, 0, 2)))
                 .include(dependency("org.mockito", "mockito-core",
-                        version(5, 20, 0)))
+                        version(5, 21, 0)))
                 .include(dependency("org.assertj", "assertj-core",
                         version(3, 27, 6)))
                 .include(dependency("org.junit.jupiter", "junit-jupiter", junit))

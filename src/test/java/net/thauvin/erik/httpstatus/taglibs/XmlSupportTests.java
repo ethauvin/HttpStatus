@@ -61,7 +61,7 @@ class XmlSupportTests {
                     "The defaultValue should be set correctly.");
         }
 
-        @ParameterizedTest(name = "[{index}] ''{0}''")
+        @ParameterizedTest
         @EmptySource
         @ValueSource(strings = {" ", "  "})
         void setEmptyDefaultValue(String input) {

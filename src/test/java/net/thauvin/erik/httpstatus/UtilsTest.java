@@ -188,7 +188,7 @@ class UtilsTest {
             }
         }
 
-        @ParameterizedTest(name = "[{index}] ''{0}''")
+        @ParameterizedTest
         @NullAndEmptySource
         void outWriteWithNullValue(String input) throws IOException {
             try (var sw = new StringWriter()) {

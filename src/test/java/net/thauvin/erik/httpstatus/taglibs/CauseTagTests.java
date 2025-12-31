@@ -133,7 +133,7 @@ class CauseTagTests {
             assertThat(tag.getCause(new Exception(message))).as("special characters").isEqualTo(message);
         }
 
-        @ParameterizedTest(name = "[{index}] ''{0}''")
+        @ParameterizedTest
         @ValueSource(strings = {" ", "  ", "\t", "\n", "\r"})
         void causeWithWhitespace(String message) {
             assertThat(tag.getCause(new Exception(message))).as("whitespace").isEqualTo(message);

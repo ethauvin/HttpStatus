@@ -1,7 +1,7 @@
 /*
  * CauseTagTests.java
  *
- * Copyright 2015-2025 Erik C. Thauvin (erik@thauvin.net)
+ * Copyright 2015-2026 Erik C. Thauvin (erik@thauvin.net)
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -56,15 +56,6 @@ class CauseTagTests {
     @Nested
     @DisplayName("DoTag Tests")
     class DoTagTests {
-        @Test
-        void doTagHandlesNullCause() throws Exception {
-            var pageContext = createMockPageContext(new Exception());
-            tag.setJspContext(pageContext);
-            tag.setDefault("No error"); // Set a default value
-            tag.doTag();
-            assertThat(getOutputFromPageContext(pageContext)).isEqualTo("No error");
-        }
-
         private PageContext createMockPageContext(Throwable throwable) {
             var pageContext = mock(PageContext.class);
             var errorData = mock(ErrorData.class);
@@ -74,9 +65,13 @@ class CauseTagTests {
             return pageContext;
         }
 
-        private String getOutputFromPageContext(PageContext pageContext) {
-            var writer = (MockJspWriter) pageContext.getOut();
-            return writer.getContent();
+        @Test
+        void doTagHandlesNullCause() throws Exception {
+            var pageContext = createMockPageContext(new Exception());
+            tag.setJspContext(pageContext);
+            tag.setDefault("No error"); // Set a default value
+            tag.doTag();
+            assertThat(getOutputFromPageContext(pageContext)).isEqualTo("No error");
         }
 
         @Test
@@ -86,6 +81,11 @@ class CauseTagTests {
             tag.setDefault(null); // Ensure the default value is not used
             tag.doTag();
             assertThat(getOutputFromPageContext(pageContext)).isEqualTo("Test Cause");
+        }
+
+        private String getOutputFromPageContext(PageContext pageContext) {
+            var writer = (MockJspWriter) pageContext.getOut();
+            return writer.getContent();
         }
     }
 

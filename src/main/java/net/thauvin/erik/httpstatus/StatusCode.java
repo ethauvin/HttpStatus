@@ -1,7 +1,7 @@
 /*
  * StatusCode.java
  *
- * Copyright 2015-2025 Erik C. Thauvin (erik@thauvin.net)
+ * Copyright 2015-2026 Erik C. Thauvin (erik@thauvin.net)
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -79,15 +79,25 @@ public class StatusCode implements Serializable {
     }
 
     /**
-     * Checks if the status code is informational.
+     * Checks if the status code is a client error. (e.g.: <code>Internal Server Error</code>)
      *
      * @param code the status code
-     * @return <code>true</code> if the status code is informational, <code>false</code>
-     * @see #isInfo(int)
+     * @return <code>true</code> if the status code is a client error, <code>false</code> otherwise
      * @since 2.0.0
      */
-    public static boolean isInformational(int code) {
-        return isInfo(code);
+    public static boolean isClientError(int code) {
+        return code >= 400 && code < 500;
+    }
+
+    /**
+     * Checks if the status code is a client or server error.
+     *
+     * @param code the status code
+     * @return <code>true</code> if the status code is an error, <code>false</code> otherwise
+     * @since 2.0.0
+     */
+    public static boolean isError(int code) {
+        return code >= 400 && code < 600;
     }
 
     /**
@@ -103,15 +113,37 @@ public class StatusCode implements Serializable {
     }
 
     /**
-     * Checks if the status code is a (<code>OK</code>) success.
+     * Checks if the status code is informational.
      *
      * @param code the status code
-     * @return <code>true</code> if the status code is a success, <code>false</code> otherwise
-     * @see #isSuccess(int)
+     * @return <code>true</code> if the status code is informational, <code>false</code>
+     * @see #isInfo(int)
      * @since 2.0.0
      */
-    public static boolean isSuccessful(int code) {
-        return isSuccess(code);
+    public static boolean isInformational(int code) {
+        return isInfo(code);
+    }
+
+    /**
+     * Checks if the status code is a redirect.
+     *
+     * @param code the status code
+     * @return <code>true</code> if the status code is a redirect, <code>false</code> otherwise
+     * @since 2.0.0
+     */
+    public static boolean isRedirect(int code) {
+        return code >= 300 && code < 400;
+    }
+
+    /**
+     * Checks if the status code is a server error.
+     *
+     * @param code the status code
+     * @return <code>true</code> if the status code is a server error, <code>false</code> otherwise
+     * @since 2.0.0
+     */
+    public static boolean isServerError(int code) {
+        return code >= 500 && code < 600;
     }
 
     /**
@@ -124,6 +156,28 @@ public class StatusCode implements Serializable {
      */
     public static boolean isSuccess(int code) {
         return code >= 200 && code < 300;
+    }
+
+    /**
+     * Checks if the status code is a (<code>OK</code>) success.
+     *
+     * @param code the status code
+     * @return <code>true</code> if the status code is a success, <code>false</code> otherwise
+     * @see #isSuccess(int)
+     * @since 2.0.0
+     */
+    public static boolean isSuccessful(int code) {
+        return isSuccess(code);
+    }
+
+    /**
+     * Checks if the status code is valid.
+     *
+     * @param code the status code
+     * @return <code>true</code> if the status code is valid, <code>false</code> otherwise
+     */
+    public static boolean isValid(int code) {
+        return code == 783 || (code >= 100 && code < 600);
     }
 
     /**
@@ -162,34 +216,12 @@ public class StatusCode implements Serializable {
     }
 
     /**
-     * Checks if the status code is a client error. (e.g.: <code>Internal Server Error</code>)
-     *
-     * @param code the status code
-     * @return <code>true</code> if the status code is a client error, <code>false</code> otherwise
-     * @since 2.0.0
-     */
-    public static boolean isClientError(int code) {
-        return code >= 400 && code < 500;
-    }
-
-    /**
      * Checks if the status code is a client or server error.
      *
      * @return <code>true</code> if the status code is an error, <code>false</code> otherwise
      */
     public boolean isError() {
         return isError(code);
-    }
-
-    /**
-     * Checks if the status code is a client or server error.
-     *
-     * @param code the status code
-     * @return <code>true</code> if the status code is an error, <code>false</code> otherwise
-     * @since 2.0.0
-     */
-    public static boolean isError(int code) {
-        return code >= 400 && code < 600;
     }
 
     /**
@@ -221,34 +253,12 @@ public class StatusCode implements Serializable {
     }
 
     /**
-     * Checks if the status code is a redirect.
-     *
-     * @param code the status code
-     * @return <code>true</code> if the status code is a redirect, <code>false</code> otherwise
-     * @since 2.0.0
-     */
-    public static boolean isRedirect(int code) {
-        return code >= 300 && code < 400;
-    }
-
-    /**
      * Checks if the status code is a server error.
      *
      * @return <code>true</code> if the status code is a server error, <code>false</code> otherwise
      */
     public boolean isServerError() {
         return isServerError(code);
-    }
-
-    /**
-     * Checks if the status code is a server error.
-     *
-     * @param code the status code
-     * @return <code>true</code> if the status code is a server error, <code>false</code> otherwise
-     * @since 2.0.0
-     */
-    public static boolean isServerError(int code) {
-        return code >= 500 && code < 600;
     }
 
     /**
@@ -277,15 +287,5 @@ public class StatusCode implements Serializable {
      */
     public boolean isValid() {
         return isValid(code);
-    }
-
-    /**
-     * Checks if the status code is valid.
-     *
-     * @param code the status code
-     * @return <code>true</code> if the status code is valid, <code>false</code> otherwise
-     */
-    public static boolean isValid(int code) {
-        return code == 783 || (code >= 100 && code < 600);
     }
 }

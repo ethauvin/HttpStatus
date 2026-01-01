@@ -1,7 +1,7 @@
 /*
  * Reasons.java
  *
- * Copyright 2015-2025 Erik C. Thauvin (erik@thauvin.net)
+ * Copyright 2015-2026 Erik C. Thauvin (erik@thauvin.net)
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -73,6 +73,27 @@ public final class Reasons {
     }
 
     /**
+     * Retrieves a map of reason phrases associated with a specific standard HTTP response class.
+     * <p>
+     * The response class is determined by the first digit of the status codes provided by the {@code StatusCodeClass}.
+     * This method filters and collects those reason phrases whose status code starts with the specified class digit.
+     *
+     * @param reasonClass The {@code StatusCodeClass} enum representing the HTTP response class
+     * @return A map where the keys are status code strings and the values are the corresponding reason phrases
+     * @since 2.0.0
+     */
+    public static Map<String, String> getReasonClass(StatusCodeClass reasonClass) {
+        var reasons = new ConcurrentSkipListMap<String, String>();
+        var firstDigit = String.valueOf(reasonClass.getFirstDigit());
+        REASON_PHRASES.keySet().forEach(k -> {
+            if (k.startsWith(firstDigit)) {
+                reasons.put(k, REASON_PHRASES.get(k));
+            }
+        });
+        return reasons;
+    }
+
+    /**
      * Returns the reason phrase for the specified status code.
      *
      * @param <T>        The type of the status code ({@link String} or {@link Integer})
@@ -81,12 +102,6 @@ public final class Reasons {
      */
     public static <T> String getReasonPhrase(T statusCode) {
         return REASON_PHRASES.get(toStatusCodeString(statusCode));
-    }
-
-    private static <T> String toStatusCodeString(T statusCode) {
-        return (statusCode instanceof Integer)
-                ? Integer.toString((Integer) statusCode)
-                : String.valueOf(statusCode);
     }
 
     /**
@@ -103,6 +118,10 @@ public final class Reasons {
             return defaultReason;
         }
         return reason;
+    }
+
+    private static boolean isStatusCodeClass(String code) {
+        return code.matches("[1-5]xx");
     }
 
     /**
@@ -125,6 +144,20 @@ public final class Reasons {
         System.out.println("Total: " + REASON_PHRASES.size());
     }
 
+    private static void printReasonClassPhrases(Map<String, String> reasons) {
+        reasons.forEach(Reasons::printReasonPhrase);
+    }
+
+    @SuppressWarnings("PMD.SystemPrintln")
+    private static void printReasonPhrase(String code, String phrase) {
+        System.out.println(code + ": " + phrase);
+    }
+
+    private static void printSingleStatusCode(String code) {
+        Optional.ofNullable(REASON_PHRASES.get(code))
+                .ifPresent(phrase -> printReasonPhrase(code, phrase));
+    }
+
     private static void processStatusCode(String code) {
         if (isStatusCodeClass(code)) {
             processStatusCodeClass(code);
@@ -133,48 +166,15 @@ public final class Reasons {
         }
     }
 
-    @SuppressWarnings("PMD.SystemPrintln")
-    private static void printReasonPhrase(String code, String phrase) {
-        System.out.println(code + ": " + phrase);
-    }
-
-    private static boolean isStatusCodeClass(String code) {
-        return code.matches("[1-5]xx");
-    }
-
     private static void processStatusCodeClass(String code) {
         var firstDigit = code.substring(0, 1);
         StatusCodeClass.fromFirstDigit(Integer.parseInt(firstDigit))
                 .ifPresent(reasonClass -> printReasonClassPhrases(getReasonClass(reasonClass)));
     }
 
-    private static void printSingleStatusCode(String code) {
-        Optional.ofNullable(REASON_PHRASES.get(code))
-                .ifPresent(phrase -> printReasonPhrase(code, phrase));
-    }
-
-    private static void printReasonClassPhrases(Map<String, String> reasons) {
-        reasons.forEach(Reasons::printReasonPhrase);
-    }
-
-    /**
-     * Retrieves a map of reason phrases associated with a specific standard HTTP response class.
-     * <p>
-     * The response class is determined by the first digit of the status codes provided by the {@code StatusCodeClass}.
-     * This method filters and collects those reason phrases whose status code starts with the specified class digit.
-     *
-     * @param reasonClass The {@code StatusCodeClass} enum representing the HTTP response class
-     * @return A map where the keys are status code strings and the values are the corresponding reason phrases
-     * @since 2.0.0
-     */
-    public static Map<String, String> getReasonClass(StatusCodeClass reasonClass) {
-        var reasons = new ConcurrentSkipListMap<String, String>();
-        var firstDigit = String.valueOf(reasonClass.getFirstDigit());
-        REASON_PHRASES.keySet().forEach(k -> {
-            if (k.startsWith(firstDigit)) {
-                reasons.put(k, REASON_PHRASES.get(k));
-            }
-        });
-        return reasons;
+    private static <T> String toStatusCodeString(T statusCode) {
+        return (statusCode instanceof Integer)
+                ? Integer.toString((Integer) statusCode)
+                : String.valueOf(statusCode);
     }
 }

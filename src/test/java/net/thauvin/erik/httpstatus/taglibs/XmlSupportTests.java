@@ -43,13 +43,16 @@ import org.junit.jupiter.params.provider.ValueSource;
 import static org.junit.jupiter.api.Assertions.*;
 
 class XmlSupportTests {
+
     // Simple concrete implementation of the abstract XmlSupport class for testing purposes
     static class XmlSupportImpl extends XmlSupport {
+
     }
 
     @Nested
     @DisplayName("Default Value Tests")
     class DefaultValueTests {
+
         @Test
         void setDefaultValue() {
             var xmlSupport = new XmlSupportImpl();
@@ -87,6 +90,7 @@ class XmlSupportTests {
     @Nested
     @DisplayName("Escape XML Tests")
     class EscapeXmlTests {
+
         @Test
         void setEscapeXmlDefault() {
             var xmlSupport = new XmlSupportImpl();

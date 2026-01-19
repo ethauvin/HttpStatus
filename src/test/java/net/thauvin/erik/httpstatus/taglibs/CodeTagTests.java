@@ -43,6 +43,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 class CodeTagTests {
+
     @Test
     void doTagWithStatusCode() throws IOException {
         var mockPageContext = mock(PageContext.class);

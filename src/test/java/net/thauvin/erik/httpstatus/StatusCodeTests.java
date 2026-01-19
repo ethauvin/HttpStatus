@@ -53,6 +53,7 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
  */
 @SuppressWarnings({"PMD.AvoidDuplicateLiterals"})
 class StatusCodeTests {
+
     static Stream<Integer> statusCodes() {
         var bundle = ResourceBundle.getBundle(Reasons.BUNDLE_BASENAME);
         return bundle.keySet().stream().map(Integer::parseInt);
@@ -141,6 +142,7 @@ class StatusCodeTests {
     @DisplayName("Get Reason Tests")
     @SuppressWarnings("PMD.LinguisticNaming")
     class GetReasonTests {
+
         @ParameterizedTest
         @CsvSource({"100, Continue", "101, Switching Protocols", "102, Processing", "103, Early Hints"})
         void getReason(int code, String reason) {

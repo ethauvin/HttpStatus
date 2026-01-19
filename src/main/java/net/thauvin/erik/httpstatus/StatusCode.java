@@ -45,6 +45,7 @@ import java.io.Serializable;
  */
 @SuppressFBWarnings("MOM_MISLEADING_OVERLOAD_MODEL")
 public class StatusCode implements Serializable {
+
     @Serial
     private static final long serialVersionUID = 1L;
     private int code;

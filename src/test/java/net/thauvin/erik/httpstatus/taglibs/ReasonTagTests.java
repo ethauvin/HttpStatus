@@ -44,6 +44,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 class ReasonTagTests {
+
     @Test
     void doTagWithDefaultErrorData() throws IOException {
         var reasonTag = new ReasonTag();

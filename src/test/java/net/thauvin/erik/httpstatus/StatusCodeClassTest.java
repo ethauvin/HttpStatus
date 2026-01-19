@@ -39,6 +39,7 @@ import java.util.Optional;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class StatusCodeClassTest {
+
     @Test
     void fromFirstDigitWithBoundaryValueString() {
         Optional<StatusCodeClass> result = StatusCodeClass.fromFirstDigit(5);

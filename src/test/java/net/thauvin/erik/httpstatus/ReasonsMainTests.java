@@ -48,6 +48,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  */
 @CaptureOutput
 class ReasonsMainTests {
+
     @Test
     void mainWithClassArg(CapturedOutput output) {
         Reasons.main("2xx");

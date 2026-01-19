@@ -46,6 +46,7 @@ import java.io.IOException;
  * @since 1.0
  */
 public class CauseTag extends XmlSupport {
+
     /**
      * Prints the cause (if any) for the current HTTP Status Error Code.
      *

@@ -57,6 +57,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  * @since 1.0
  */
 class UtilsTest {
+
     @Test
     @SuppressWarnings("PMD.AvoidAccessibilityAlteration")
     void privateConstructor() throws Exception {
@@ -73,6 +74,7 @@ class UtilsTest {
     @Nested
     @DisplayName("EscapeXml Tests")
     class EscapeXmlTests {
+
         @Test
         void escapeXml() {
             var xmlInput = "<xml>&data>'text'\"more data\"&more</xml>";
@@ -128,6 +130,7 @@ class UtilsTest {
     @Nested
     @DisplayName("OutWrite Tests")
     class OutWriteTests {
+
         private static final String DEFAULT_VALUE = "default";
 
         @Test

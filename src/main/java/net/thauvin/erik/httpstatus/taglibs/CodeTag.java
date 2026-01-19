@@ -45,6 +45,7 @@ import java.io.IOException;
  * @since 1.0
  */
 public class CodeTag extends SimpleTagSupport {
+
     /**
      * Writes the HTTP Status Error Code to the current JspWriter.
      *

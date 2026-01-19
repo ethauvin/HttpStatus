@@ -57,6 +57,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  */
 @SuppressWarnings("PMD.AvoidDuplicateLiterals")
 class ReasonsTests {
+
     private static final ResourceBundle BUNDLE = ResourceBundle.getBundle(Reasons.BUNDLE_BASENAME);
 
     private static Stream<String> provideBundleKeys() {
@@ -121,6 +122,7 @@ class ReasonsTests {
     @Nested
     @DisplayName("Reason Class Tests")
     class ReasonClassTests {
+
         private static Stream<String> provideClientErrorReasonKeys() {
             var reasons = Reasons.getReasonClass(StatusCodeClass.CLIENT_ERROR);
             return reasons.keySet().stream();

@@ -36,6 +36,7 @@ import jakarta.servlet.jsp.JspWriter;
 import org.jetbrains.annotations.NotNull;
 
 public class MockJspWriter extends JspWriter {
+
     @SuppressWarnings("PMD.AvoidStringBufferField")
     private final StringBuilder buffer;
 

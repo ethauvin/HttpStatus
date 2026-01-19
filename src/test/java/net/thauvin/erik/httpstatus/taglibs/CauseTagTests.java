@@ -51,11 +51,13 @@ import static org.mockito.Mockito.when;
  * @since 1.1.0
  */
 class CauseTagTests {
+
     private final CauseTag tag = new CauseTag();
 
     @Nested
     @DisplayName("DoTag Tests")
     class DoTagTests {
+
         private PageContext createMockPageContext(Throwable throwable) {
             var pageContext = mock(PageContext.class);
             var errorData = mock(ErrorData.class);
@@ -92,6 +94,7 @@ class CauseTagTests {
     @Nested
     @DisplayName("GetCause Tests")
     class GetCauseTests {
+
         static final String MESSAGE = "This is the cause";
 
         @Test

@@ -47,6 +47,7 @@ import java.io.IOException;
  * @since 1.0
  */
 public class ReasonTag extends XmlSupport {
+
     private int statusCode = -1;
 
     /**

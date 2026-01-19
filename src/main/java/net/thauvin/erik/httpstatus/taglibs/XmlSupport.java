@@ -42,6 +42,7 @@ import jakarta.servlet.jsp.tagext.SimpleTagSupport;
  * @since 1.0
  */
 public abstract class XmlSupport extends SimpleTagSupport {
+
     /**
      * Default value string.
      */

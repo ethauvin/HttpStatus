@@ -45,6 +45,7 @@ import java.util.Objects;
  * @since 1.0
  */
 public final class Utils {
+
     private static final Map<Character, String> XML_ENTITIES = Map.of(
             '<', "&lt;",
             '>', "&gt;",

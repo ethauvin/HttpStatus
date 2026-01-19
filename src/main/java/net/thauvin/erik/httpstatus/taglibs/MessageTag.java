@@ -45,6 +45,7 @@ import java.io.IOException;
  * @since 1.0.5
  */
 public class MessageTag extends XmlSupport {
+
     /**
      * Writes the error message associated with the current HTTP Status Error Code.
      *

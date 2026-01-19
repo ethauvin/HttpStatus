@@ -47,6 +47,7 @@ import java.util.concurrent.ConcurrentSkipListMap;
  * @since 1.0
  */
 public final class Reasons {
+
     /**
      * The resource bundle base name.
      */

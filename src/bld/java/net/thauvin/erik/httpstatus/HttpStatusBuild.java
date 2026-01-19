@@ -38,6 +38,7 @@ import rife.bld.extension.JUnitReporterOperation;
 import rife.bld.extension.JacocoReportOperation;
 import rife.bld.extension.PmdOperation;
 import rife.bld.extension.SpotBugsOperation;
+import rife.bld.extension.tools.IOUtils;
 import rife.bld.publish.*;
 import rife.tools.exceptions.FileUtilsErrorException;
 
@@ -51,11 +52,12 @@ import static rife.bld.dependencies.Scope.test;
 import static rife.bld.operations.JavadocOptions.DocLinkOption.NO_MISSING;
 
 public class HttpStatusBuild extends Project {
-    static final String TEST_RESULTS_DIR = "build/test-results/test/";
+
     final PmdOperation pmdOp = new PmdOperation()
             .fromProject(this)
             .failOnViolation(true)
             .ruleSets("config/pmd.xml");
+    final File testResultsDirectory = IOUtils.resolveFile(buildDirectory(), "test-results", "test");
 
     public HttpStatusBuild() {
         pkg = "net.thauvin.erik.httpstatus";
@@ -137,7 +139,7 @@ public class HttpStatusBuild extends Project {
     @Override
     public void test() throws Exception {
         var op = testOperation().fromProject(this);
-        op.testToolOptions().reportsDir(new File(TEST_RESULTS_DIR));
+        op.testToolOptions().reportsDir(testResultsDirectory);
         op.execute();
     }
 
@@ -160,7 +162,7 @@ public class HttpStatusBuild extends Project {
     @BuildCommand(summary = "Generates JaCoCo Reports")
     public void jacoco() throws Exception {
         var op = new JacocoReportOperation().fromProject(this);
-        op.testToolOptions("--reports-dir=" + TEST_RESULTS_DIR);
+        op.testToolOptions("--reports-dir=" + testResultsDirectory.getAbsolutePath());
         op.execute();
     }
 

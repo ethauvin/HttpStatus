@@ -44,6 +44,10 @@ jobs:
         if: success() && matrix.java-version == env.COVERAGE_JDK && matrix.os == 'ubuntu-latest'
         run: rm -rf pom.xml
 
+      - name: Add Sonar jdkHome
+        if: success() && matrix.java-version == env.COVERAGE_JDK && matrix.os == 'ubuntu-latest'
+        run: echo sonar.java.jdkHome=${{ env.JAVA_HOME }} >> sonar-project.properties
+
       - name: SonarCloud Scan
         uses: SonarSource/sonarqube-scan-action@v7.0.0
         if: success() && matrix.java-version == env.COVERAGE_JDK && matrix.os == 'ubuntu-latest'

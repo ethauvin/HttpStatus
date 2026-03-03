@@ -4,7 +4,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>net.thauvin.erik.httpstatus</groupId>
   <artifactId>httpstatus</artifactId>
-  <version>2.0.0</version>
+  <version>2.0.1-SNAPSHOT</version>
   <name>HttpStatus</name>
   <description>HTTP Status Codes &amp; JSP Tag Library</description>
   <url>https://github.com/ethauvin/HttpStatus</url>
@@ -31,6 +31,12 @@
       <groupId>jakarta.el</groupId>
       <artifactId>jakarta.el-api</artifactId>
       <version>6.0.1</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.github.spotbugs</groupId>
+      <artifactId>spotbugs-annotations</artifactId>
+      <version>4.9.8</version>
       <scope>provided</scope>
     </dependency>
   </dependencies>

@@ -91,7 +91,7 @@ public class HttpStatusBuild extends Project {
                 .include(dependency("org.jetbrains", "annotations",
                         version(26, 1, 0)))
                 .include(dependency("org.mockito", "mockito-core",
-                        version(5, 22, 0)))
+                        version(5, 23, 0)))
                 .include(dependency("org.assertj", "assertj-core",
                         version(3, 27, 7)))
                 .include(dependency("org.junit.jupiter", "junit-jupiter", junit))

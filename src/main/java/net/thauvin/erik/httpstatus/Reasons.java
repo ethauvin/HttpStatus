@@ -32,121 +32,109 @@
 
 package net.thauvin.erik.httpstatus;
 
-import java.util.Arrays;
 import java.util.Map;
 import java.util.Optional;
 import java.util.ResourceBundle;
-import java.util.concurrent.ConcurrentSkipListMap;
+import java.util.TreeMap;
 
 /**
- * Populates the {@link #REASON_PHRASES reason phrases} map from {@link #BUNDLE_BASENAME bundle properties}, and
- * implements accessor methods.
- *
- * @author <a href="mailto:erik@thauvin.net">Erik C. Thauvin</a>
- * @created 2015-12-02
- * @since 1.0
+ * Loads HTTP status reason phrases from the resource bundle and provides
+ * lookup utilities for individual status codes and status code classes.
+ * <p>
+ * The reason phrases are stored in a sorted, immutable map for predictable
+ * iteration order and thread‑safe access.
  */
 public final class Reasons {
 
     /**
-     * The resource bundle base name.
+     * The resource bundle base name containing the reason phrases.
      */
     static final String BUNDLE_BASENAME = "net.thauvin.erik.httpstatus.reasons";
-    /**
-     * The reason phrases map.
-     */
-    @SuppressWarnings("PMD.UseConcurrentHashMap")
-    private static final Map<String, String> REASON_PHRASES = new ConcurrentSkipListMap<>();
 
-    // Initializes the reason phrases map.
+    /**
+     * Immutable map of status code strings to their reason phrases.
+     * <p>
+     * Populated once at class initialization.
+     */
+    private static final Map<String, String> REASON_PHRASES;
+
     static {
         var bundle = ResourceBundle.getBundle(BUNDLE_BASENAME);
+        var map = new TreeMap<String, String>();
         for (var key : bundle.keySet()) {
-            REASON_PHRASES.put(key, bundle.getString(key));
+            map.put(key, bundle.getString(key));
         }
+        REASON_PHRASES = Map.copyOf(map);
     }
 
     /**
-     * Disables the default constructor.
+     * Prevents instantiation of this utility class.
      */
     private Reasons() {
         throw new UnsupportedOperationException("Illegal constructor call.");
     }
 
     /**
-     * Retrieves a map of reason phrases associated with a specific standard HTTP response class.
+     * Returns all reason phrases belonging to the given status code class.
      * <p>
-     * The response class is determined by the first digit of the status codes provided by the {@code StatusCodeClass}.
-     * This method filters and collects those reason phrases whose status code starts with the specified class digit.
-     *
-     * @param reasonClass The {@code StatusCodeClass} enum representing the HTTP response class
-     * @return A map where the keys are status code strings and the values are the corresponding reason phrases
-     * @since 2.0.0
+     * The returned map is sorted by status code.
      */
     public static Map<String, String> getReasonClass(StatusCodeClass reasonClass) {
-        var reasons = new ConcurrentSkipListMap<String, String>();
-        var firstDigit = String.valueOf(reasonClass.getFirstDigit());
-        REASON_PHRASES.keySet().forEach(k -> {
-            if (k.startsWith(firstDigit)) {
-                reasons.put(k, REASON_PHRASES.get(k));
+        var firstDigit = Character.forDigit(reasonClass.getFirstDigit(), 10);
+        var result = new TreeMap<String, String>();
+
+        for (var entry : REASON_PHRASES.entrySet()) {
+            if (entry.getKey().charAt(0) == firstDigit) {
+                result.put(entry.getKey(), entry.getValue());
             }
-        });
-        return reasons;
+        }
+        return result;
     }
 
     /**
-     * Returns the reason phrase for the specified status code.
-     *
-     * @param <T>        The type of the status code ({@link String} or {@link Integer})
-     * @param statusCode The status code for which the reason phrase is to be retrieved
-     * @return The reason phrase or null if not match is found
+     * Returns the reason phrase for the given status code, or null if none exists.
+     * <p>
+     * Accepts either an integer or string representation of the status code.
      */
-    public static <T> String getReasonPhrase(T statusCode) {
+    public static String getReasonPhrase(Object statusCode) {
         return REASON_PHRASES.get(toStatusCodeString(statusCode));
     }
 
     /**
-     * Returns the reason phrase for the specified status code.
-     *
-     * @param <T>           The type of the status code ({@link String} or {@link Integer})
-     * @param statusCode    The status code for which the reason phrase is to be retrieved
-     * @param defaultReason The default reason phrase to return if no reason phrase is found
-     * @return The reason phrase, or the default reason if no match is found, or null if no default provided
+     * Returns the reason phrase for the given status code, or the provided
+     * default value if no phrase is defined.
      */
-    public static <T> String getReasonPhrase(T statusCode, String defaultReason) {
-        var reason = REASON_PHRASES.get(toStatusCodeString(statusCode));
-        if (reason == null) {
-            return defaultReason;
-        }
-        return reason;
+    public static String getReasonPhrase(Object statusCode, String defaultReason) {
+        return Optional.ofNullable(getReasonPhrase(statusCode)).orElse(defaultReason);
     }
 
     private static boolean isStatusCodeClass(String code) {
-        return code.matches("[1-5]xx");
+        return code.length() == 3
+                && code.charAt(0) >= '1'
+                && code.charAt(0) <= '5'
+                && code.charAt(1) == 'x'
+                && code.charAt(2) == 'x';
     }
 
     /**
-     * Prints the reason phrase for the given status code(s).
-     *
-     * @param args The status code(s) or response class(es), prints all if none
+     * Prints reason phrases for the given status code(s) or status code class(es).
+     * <p>
+     * If no arguments are provided, prints all reason phrases.
      */
     public static void main(String... args) {
         if (args.length == 0) {
             printAllReasonPhrases();
             return;
         }
-
-        Arrays.stream(args).forEach(Reasons::processStatusCode);
+        for (var arg : args) {
+            processStatusCode(arg);
+        }
     }
 
     @SuppressWarnings("PMD.SystemPrintln")
     private static void printAllReasonPhrases() {
         REASON_PHRASES.forEach(Reasons::printReasonPhrase);
         System.out.println("Total: " + REASON_PHRASES.size());
-    }
-
-    private static void printReasonClassPhrases(Map<String, String> reasons) {
-        reasons.forEach(Reasons::printReasonPhrase);
     }
 
     @SuppressWarnings("PMD.SystemPrintln")
@@ -168,14 +156,20 @@ public final class Reasons {
     }
 
     private static void processStatusCodeClass(String code) {
-        var firstDigit = code.substring(0, 1);
-        StatusCodeClass.fromFirstDigit(Integer.parseInt(firstDigit))
-                .ifPresent(reasonClass -> printReasonClassPhrases(getReasonClass(reasonClass)));
+        var firstDigit = code.charAt(0) - '0';
+        StatusCodeClass.fromFirstDigit(firstDigit)
+                .ifPresent(reasonClass ->
+                        getReasonClass(reasonClass).forEach(Reasons::printReasonPhrase));
     }
 
-    private static <T> String toStatusCodeString(T statusCode) {
-        return (statusCode instanceof Integer)
-                ? Integer.toString((Integer) statusCode)
+    /**
+     * Converts a status code to its string representation.
+     * <p>
+     * Supports both integer and string inputs.
+     */
+    private static String toStatusCodeString(Object statusCode) {
+        return (statusCode instanceof Integer i)
+                ? Integer.toString(i)
                 : String.valueOf(statusCode);
     }
 }

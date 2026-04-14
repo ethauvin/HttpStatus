@@ -38,7 +38,13 @@ import java.io.Serial;
 import java.io.Serializable;
 
 /**
- * The <code>StatusCode</code> bean implements methods to check the class of an HTTP status code.
+ * Represents an HTTP status code and provides convenience methods for determining
+ * its classification (informational, success, redirect, client error, server error,
+ * or project-defined extension codes).
+ * <p>
+ * Static methods operate on a raw status code, while instance methods operate on
+ * the stored {@code code} value. Several methods have both short and long forms
+ * (e.g., {@code isInfo} and {@code isInformational}) for readability.
  *
  * @author <a href="mailto:erik@thauvin.net">Erik C. Thauvin</a>
  * @since 1.1.0
@@ -48,17 +54,18 @@ public class StatusCode implements Serializable {
 
     @Serial
     private static final long serialVersionUID = 1L;
+
     private int code;
 
     /**
-     * Creates a new StatusCode object.
+     * Creates a new StatusCode with no initial value.
      */
     public StatusCode() {
         // Default constructor.
     }
 
     /**
-     * Creates a new StatusCode object.
+     * Creates a new StatusCode with the given value.
      *
      * @param code the status code
      * @since 2.0.0
@@ -68,7 +75,8 @@ public class StatusCode implements Serializable {
     }
 
     /**
-     * Returns the reason for the status code.
+     * Returns the reason phrase for the given status code, or {@code null}
+     * if no reason is defined.
      *
      * @param code the status code
      * @return The reason, or <code>null</code>
@@ -80,7 +88,8 @@ public class StatusCode implements Serializable {
     }
 
     /**
-     * Checks if the status code is a client error. (e.g.: <code>Internal Server Error</code>)
+     * Returns {@code true} if the code represents a client error (4xx).
+     * Example: {@code 404 Not Found}.
      *
      * @param code the status code
      * @return <code>true</code> if the status code is a client error, <code>false</code> otherwise
@@ -91,7 +100,7 @@ public class StatusCode implements Serializable {
     }
 
     /**
-     * Checks if the status code is a client or server error.
+     * Returns {@code true} if the code represents any error (4xx or 5xx).
      *
      * @param code the status code
      * @return <code>true</code> if the status code is an error, <code>false</code> otherwise
@@ -102,7 +111,7 @@ public class StatusCode implements Serializable {
     }
 
     /**
-     * Checks if the status code is informational.
+     * Returns {@code true} if the code represents an informational response (1xx).
      *
      * @param code the status code
      * @return <code>true</code> if the status code is informational, <code>false</code> otherwise
@@ -114,7 +123,7 @@ public class StatusCode implements Serializable {
     }
 
     /**
-     * Checks if the status code is informational.
+     * Alias for {@link #isInfo(int)}.
      *
      * @param code the status code
      * @return <code>true</code> if the status code is informational, <code>false</code>
@@ -126,7 +135,7 @@ public class StatusCode implements Serializable {
     }
 
     /**
-     * Checks if the status code is a redirect.
+     * Returns {@code true} if the code represents a redirect (3xx).
      *
      * @param code the status code
      * @return <code>true</code> if the status code is a redirect, <code>false</code> otherwise
@@ -137,7 +146,7 @@ public class StatusCode implements Serializable {
     }
 
     /**
-     * Checks if the status code is a server error.
+     * Returns {@code true} if the code represents a server error (5xx).
      *
      * @param code the status code
      * @return <code>true</code> if the status code is a server error, <code>false</code> otherwise
@@ -148,7 +157,7 @@ public class StatusCode implements Serializable {
     }
 
     /**
-     * Checks if the status code is a (<code>OK</code>) success.
+     * Returns {@code true} if the code represents a successful response (2xx).
      *
      * @param code the status code
      * @return <code>true</code> if the status code is a success, <code>false</code> otherwise
@@ -160,7 +169,7 @@ public class StatusCode implements Serializable {
     }
 
     /**
-     * Checks if the status code is a (<code>OK</code>) success.
+     * Alias for {@link #isSuccess(int)}.
      *
      * @param code the status code
      * @return <code>true</code> if the status code is a success, <code>false</code> otherwise
@@ -172,7 +181,7 @@ public class StatusCode implements Serializable {
     }
 
     /**
-     * Checks if the status code is valid.
+     * Returns {@code true} if the code is a valid HTTP status code.
      *
      * @param code the status code
      * @return <code>true</code> if the status code is valid, <code>false</code> otherwise
@@ -182,14 +191,14 @@ public class StatusCode implements Serializable {
     }
 
     /**
-     * Returns the status code.
+     * Returns the stored status code.
      */
     public int getCode() {
         return code;
     }
 
     /**
-     * Sets the status code.
+     * Sets the stored status code.
      *
      * @param code The HTTP status code
      */
@@ -198,7 +207,8 @@ public class StatusCode implements Serializable {
     }
 
     /**
-     * Returns the reason for the status code.
+     * Returns the reason phrase for the stored status code, or {@code null}
+     * if no reason is defined.
      *
      * @return The reason, or <code>null</code>
      * @see Reasons#getReasonPhrase(Object)
@@ -208,7 +218,7 @@ public class StatusCode implements Serializable {
     }
 
     /**
-     * Checks if the status code is a client error. (e.g.: <code>Internal Server Error</code>)
+     * Returns {@code true} if the stored code represents a client error (4xx).
      *
      * @return <code>true</code> if the status code is a client error, <code>false</code> otherwise
      */
@@ -217,7 +227,7 @@ public class StatusCode implements Serializable {
     }
 
     /**
-     * Checks if the status code is a client or server error.
+     * Returns {@code true} if the stored code represents any error (4xx or 5xx).
      *
      * @return <code>true</code> if the status code is an error, <code>false</code> otherwise
      */
@@ -226,7 +236,7 @@ public class StatusCode implements Serializable {
     }
 
     /**
-     * Checks if the status code is informational.
+     * Returns {@code true} if the stored code represents an informational response (1xx).
      *
      * @return <code>true</code> if the status code is informational, <code>false</code> otherwise
      */
@@ -235,7 +245,7 @@ public class StatusCode implements Serializable {
     }
 
     /**
-     * Checks if the status code is informational.
+     * Alias for {@link #isInfo()}.
      *
      * @return <code>true</code> if the status code is informational, <code>false</code> otherwise
      * @since 2.0.0
@@ -245,7 +255,7 @@ public class StatusCode implements Serializable {
     }
 
     /**
-     * Checks if the status code is a redirect.
+     * Returns {@code true} if the stored code represents a redirect (3xx).
      *
      * @return <code>true</code> if the status code is a redirect, <code>false</code> otherwise
      */
@@ -254,7 +264,7 @@ public class StatusCode implements Serializable {
     }
 
     /**
-     * Checks if the status code is a server error.
+     * Returns {@code true} if the stored code represents a server error (5xx).
      *
      * @return <code>true</code> if the status code is a server error, <code>false</code> otherwise
      */
@@ -263,7 +273,7 @@ public class StatusCode implements Serializable {
     }
 
     /**
-     * Checks if the status code is a (<code>OK</code>) success.
+     * Returns {@code true} if the stored code represents a successful response (2xx).
      *
      * @return <code>true</code> if the status code is a success, <code>false</code> otherwise
      */
@@ -272,7 +282,7 @@ public class StatusCode implements Serializable {
     }
 
     /**
-     * Checks if the status code is a (<code>OK</code>) success.
+     * Alias for {@link #isSuccess()}.
      *
      * @return <code>true</code> if the status code is a success, <code>false</code> otherwise
      * @since 2.0.0
@@ -282,7 +292,7 @@ public class StatusCode implements Serializable {
     }
 
     /**
-     * Checks if the status code is valid.
+     * Returns {@code true} if the stored code is a valid HTTP status code.
      *
      * @return <code>true</code> if the status code is valid, <code>false</code> otherwise
      */

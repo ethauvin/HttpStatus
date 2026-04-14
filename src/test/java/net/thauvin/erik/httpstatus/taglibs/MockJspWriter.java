@@ -33,8 +33,7 @@
 package net.thauvin.erik.httpstatus.taglibs;
 
 import jakarta.servlet.jsp.JspWriter;
-import org.jetbrains.annotations.NotNull;
-
+import org.jspecify.annotations.NonNull;
 public class MockJspWriter extends JspWriter {
 
     @SuppressWarnings("PMD.AvoidStringBufferField")
@@ -189,7 +188,7 @@ public class MockJspWriter extends JspWriter {
     }
 
     @Override
-    public void write(char @NotNull [] buf, int off, int len) {
+    public void write(char @NonNull [] buf, int off, int len) {
         if (off < 0 || len < 0 || off + len > buf.length) {
             throw new IndexOutOfBoundsException();
         }
@@ -197,12 +196,12 @@ public class MockJspWriter extends JspWriter {
     }
 
     @Override
-    public void write(@NotNull String str) {
+    public void write(@NonNull String str) {
         buffer.append(str);
     }
 
     @Override
-    public void write(@NotNull String str, int off, int len) {
+    public void write(@NonNull String str, int off, int len) {
         buffer.append(str, off, off + len);
     }
 

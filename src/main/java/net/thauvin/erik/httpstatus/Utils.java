@@ -32,17 +32,21 @@
 
 package net.thauvin.erik.httpstatus;
 
+import org.jspecify.annotations.NonNull;
+
 import java.io.IOException;
 import java.io.Writer;
 import java.util.Map;
 import java.util.Objects;
 
 /**
- * The <code>Utils</code> class implements a collection of utility methods used throughout this project.
+ * A collection of utility methods used throughout the project.
+ * This class is not intended to be instantiated.
+ * <p>
+ * Provides helpers for XML escaping and safe writer output.
  *
  * @author <a href="mailto:erik@thauvin.net">Erik C. Thauvin</a>
- * @created 2015-12-03
- * @since 1.0
+ * @since 1.0.0
  */
 public final class Utils {
 
@@ -55,56 +59,57 @@ public final class Utils {
     );
 
     /**
-     * Disables the default constructor.
-     *
-     * @throws UnsupportedOperationException If the constructor is called
+     * Prevents instantiation of this utility class.
+     * <p>
+     * Throws an exception if invoked to ensure the class is used only statically.
      */
     private Utils() {
         throw new UnsupportedOperationException("Illegal constructor call.");
     }
 
     /**
-     * Converts <code>&lt;</code>, <code>&gt;</code>, <code>&amp;</code>, <code>'</code>, <code>"</code>
-     * to their corresponding entity codes.
-     *
-     * @param value The string value to convert
-     * @return The converted string value
+     * Converts the characters {@code <}, {@code >}, {@code &}, {@code '}, and {@code "}
+     * to their corresponding XML entity codes.
+     * <p>
+     * Returns the original value when null or empty. Only the predefined XML entities
+     * are escaped; all other characters are preserved as-is.
      */
+    @SuppressWarnings("PMD.ForLoopVariableCount")
     public static String escapeXml(String value) {
         if (value == null || value.isEmpty()) {
             return value;
         }
 
         var escaped = new StringBuilder(value.length() * 2);
-        for (char c : value.toCharArray()) {
-            escaped.append(XML_ENTITIES.getOrDefault(c, String.valueOf(c)));
+        for (int i = 0, len = value.length(); i < len; i++) {
+            char c = value.charAt(i);
+            var entity = XML_ENTITIES.get(c);
+            if (entity != null) {
+                escaped.append(entity);
+            } else {
+                escaped.append(c);
+            }
         }
         return escaped.toString();
     }
 
     /**
-     * Writes a string value to the specified writer, with optional XML escaping.
-     * The default value is used when the actual value is null.
+     * Writes a string value to the given writer, optionally escaping XML characters.
+     * When the value is null, the provided default value is used instead. If both are
+     * null, nothing is written.
+     * <p>
+     * The writer must not be null. XML escaping is performed using {@link #escapeXml(String)}.
      *
-     * @param out          The writer to output the value to
-     * @param value        The string value
-     * @param defaultValue The default value
-     * @param xml          The {@link #escapeXml(String) xml} flag
-     * @throws IOException          If an I/O error occurs
+     * @throws IOException          If an I/O error occurs while writing
      * @throws NullPointerException If the writer is null
      */
-    public static void outWrite(Writer out, String value, String defaultValue, boolean xml)
+    public static void outWrite(@NonNull Writer out, String value, String defaultValue, boolean xml)
             throws IOException {
         Objects.requireNonNull(out, "Writer cannot be null");
 
         var textToWrite = value != null ? value : defaultValue;
         if (textToWrite != null) {
-            writeEscapedText(out, textToWrite, xml);
+            out.write(xml ? escapeXml(textToWrite) : textToWrite);
         }
-    }
-
-    private static void writeEscapedText(Writer out, String text, boolean shouldEscape)
-            throws IOException {
-        out.write(shouldEscape ? escapeXml(text) : text);
     }
 }

@@ -32,6 +32,7 @@
 
 package net.thauvin.erik.httpstatus.taglibs;
 
+import org.apache.catalina.LifecycleException;
 import org.apache.catalina.startup.Tomcat;
 import org.apache.catalina.webresources.DirResourceSet;
 import org.apache.catalina.webresources.StandardRoot;
@@ -48,13 +49,11 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class TagIntegrationTest {
 
-    @SuppressWarnings({"PMD.RelianceOnDefaultCharset", "PMD.SignatureDeclareThrowsException"})
-    private String renderJsp(String jspName) throws Exception {
+    @SuppressWarnings({"PMD.RelianceOnDefaultCharset"})
+    private String renderJsp(String jspName) throws LifecycleException, IOException {
         var baseDir = new File("build/tomcat");
-        if (!baseDir.mkdirs()) {
-            if (!baseDir.exists() && !baseDir.isDirectory()) {
-                throw new IOException("Unable to create base directory: " + baseDir.getAbsolutePath());
-            }
+        if (!baseDir.exists() && !baseDir.mkdirs()) {
+            throw new IOException("Unable to create base directory: " + baseDir.getAbsolutePath());
         }
 
         Tomcat tomcat = new Tomcat();

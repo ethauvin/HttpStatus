@@ -34,6 +34,8 @@ package net.thauvin.erik.httpstatus;
 
 import org.assertj.core.api.AutoCloseableSoftAssertions;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import rife.bld.extension.testing.CaptureOutput;
 import rife.bld.extension.testing.CapturedOutput;
 
@@ -49,16 +51,29 @@ import static org.assertj.core.api.Assertions.assertThat;
 @CaptureOutput
 class ReasonsMainTest {
 
-    @Test
-    void mainWithClassArg(CapturedOutput output) {
-        Reasons.main("2xx");
+    @ParameterizedTest
+    @CsvSource({
+            "2xx, 13",
+            "3xx, 9",
+            "4xx, 44",
+            "5xx, 26"
+    })
+    void mainWithClassArg(String codeClass, int count, CapturedOutput output) {
+        Reasons.main(codeClass);
         var lines = output.getOutLines();
-        assertThat(lines).as("should be 13 reasons for 2xx").hasSize(13);
+        assertThat(lines).as("should be %s reasons for %s", count, codeClass).hasSize(count);
         try (var softly = new AutoCloseableSoftAssertions()) {
             for (var line : lines) {
-                softly.assertThat(line).startsWith("2").as("%s starts with 2", line);
+                softly.assertThat(line).startsWith(codeClass.substring(0, 1))
+                        .as("%s doesn't start with %s", line, codeClass);
             }
         }
+    }
+
+    @Test
+    void mainWithEmptyArg(CapturedOutput output) {
+        Reasons.main("");
+        assertThat(output.getOut()).isEmpty();
     }
 
     @Test
@@ -74,6 +89,18 @@ class ReasonsMainTest {
     }
 
     @Test
+    void mainWithInvalidLastChar(CapturedOutput output) {
+        Reasons.main("2x3");
+        assertThat(output.getOut()).isEmpty();
+    }
+
+    @Test
+    void mainWithInvalidMiddleChar(CapturedOutput output) {
+        Reasons.main("2yx");
+        assertThat(output.getOut()).isEmpty();
+    }
+
+    @Test
     void mainWithMultipleArgs(CapturedOutput output) {
         Reasons.main("500", "302");
         assertThat(output.getOut()).contains(Reasons.getReasonPhrase("500")).as("500 (302)");
@@ -82,10 +109,47 @@ class ReasonsMainTest {
     }
 
     @Test
+    void mainWithNonDigitFirstChar(CapturedOutput output) {
+        Reasons.main("axx");
+        assertThat(output.getOut()).isEmpty();
+    }
+
+    @Test
     void mainWithSingleArg(CapturedOutput output) {
         Reasons.main("401");
         assertThat(output.contains(Reasons.getReasonPhrase("401"))).as("401").isTrue();
         assertThat(output.getOut().contains("500")).as("401 no 500").isFalse();
+    }
+
+    @Test
+    void mainWithTooLongArg(CapturedOutput output) {
+        Reasons.main("22xx");
+        assertThat(output.getOut()).isEmpty();
+    }
+
+    @Test
+    void mainWithTooShortArg(CapturedOutput output) {
+        Reasons.main("2x");
+        assertThat(output.getOut()).isEmpty();
+    }
+
+    @Test
+    void mainWithUnsupportedClassDigit(CapturedOutput output) {
+        // Pattern matches, but StatusCodeClass.fromFirstDigit(6) returns empty
+        Reasons.main("6xx");
+        assertThat(output.getOut()).isEmpty();
+    }
+
+    @Test
+    void mainWithUppercaseX(CapturedOutput output) {
+        Reasons.main("2Xx");
+        assertThat(output.getOut()).isEmpty();
+    }
+
+    @Test
+    void mainWithZeroClassDigit(CapturedOutput output) {
+        Reasons.main("0xx");
+        assertThat(output.getOut()).isEmpty();
     }
 
     @Test

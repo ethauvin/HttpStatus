@@ -34,6 +34,7 @@ package net.thauvin.erik.httpstatus.taglibs;
 
 import jakarta.servlet.jsp.JspWriter;
 import org.jspecify.annotations.NonNull;
+
 public class MockJspWriter extends JspWriter {
 
     @SuppressWarnings("PMD.AvoidStringBufferField")

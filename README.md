@@ -86,7 +86,7 @@ Include the following in your `bld` build file:
 repositories = List.of(MAVEN_CENTRAL, CENTRAL_SNAPSHOTS);
 
 scope(compile).include(
-        dependency("net.thauvin.erik.httpstatus","httpstatus", version(2, 0, 0))
+    dependency("net.thauvin.erik.httpstatus", "httpstatus", version(3, 0, 0, "SNAPSHOT"))
 );
 ```
 
@@ -104,7 +104,7 @@ repositories {
 }
 
 dependencies {
-    implementation 'net.thauvin.erik.httpstatus:httpstatus:2.0.0'
+    implementation 'net.thauvin.erik.httpstatus:httpstatus:3.0.0-SNAPSHOT'
 }
 ```
 
@@ -361,7 +361,7 @@ The reasons are defined in a [ResourceBundle](https://docs.oracle.com/en/java/ja
 You can query the reason phrase for status codes as follows:
 
 ```console
-> java -jar httpstatus-2.0.0.jar 404 500
+> java -jar httpstatus-3.0.0.jar 404 500
 404: Not Found
 500: Internal Server Error
 ```
@@ -369,7 +369,7 @@ You can query the reason phrase for status codes as follows:
 If no status code is specified, all will be printed:
 
 ```console
-> java -jar httpstatus-2.0.0.jar
+> java -jar httpstatus-3.0.0.jar
 100: Continue
 101: Switching Protocols
 102: Processing
@@ -389,7 +389,7 @@ If no status code is specified, all will be printed:
 You can also print status codes by [classes](https://datatracker.ietf.org/doc/html/rfc7231#section-6):
 
 ```console
-> java -jar httpstatus-2.0.0.jar 2xx
+> java -jar httpstatus-3.0.0.jar 2xx
 200: OK
 201: Created
 202: Accepted

@@ -38,24 +38,33 @@ import jakarta.servlet.jsp.tagext.SimpleTagSupport;
 import java.io.IOException;
 
 /**
- * The <code>&lt;hs:code&gt;</code> tag returns the HTTP Status Error Code.
+ * Outputs the HTTP status code associated with the current error being
+ * processed by the JSP container. If no error information is available,
+ * the tag produces no output.
  *
- * @author <a href="mailto:erik@thauvin.net">Erik C. Thauvin</a>
+ * <p>This tag is typically used on JSP error pages to display the numeric
+ * status code that triggered the error handling mechanism.</p>
+ *
+ * @author Erik C. Thauvin
  * @created 2015-12-03
  * @since 1.0
  */
 public class CodeTag extends SimpleTagSupport {
 
     /**
-     * Writes the HTTP Status Error Code to the current JspWriter.
+     * Writes the HTTP status code to the current output stream. If the
+     * page is not processing an error, no output is generated.
      *
-     * @throws IOException If an I/O error occurs
+     * @throws IOException If an error occurs while writing output
      */
     @Override
     public void doTag() throws IOException {
         var pageContext = (PageContext) getJspContext();
         var out = pageContext.getOut();
 
-        out.write(String.valueOf(pageContext.getErrorData().getStatusCode()));
+        var errorData = pageContext.getErrorData();
+        if (errorData != null) {
+            out.write(String.valueOf(errorData.getStatusCode()));
+        }
     }
 }

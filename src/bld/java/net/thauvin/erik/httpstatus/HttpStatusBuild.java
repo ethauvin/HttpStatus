@@ -76,6 +76,7 @@ public class HttpStatusBuild extends Project {
         repositories = List.of(MAVEN_CENTRAL, CENTRAL_SNAPSHOTS, RIFE2_RELEASES);
 
         var junit = version(6, 0, 3);
+        var tomcat = version(11, 0, 21);
         scope(provided)
                 .include(dependency("jakarta.servlet", "jakarta.servlet-api",
                         version(6, 1, 0)))
@@ -97,7 +98,11 @@ public class HttpStatusBuild extends Project {
                 .include(dependency("org.assertj", "assertj-core",
                         version(3, 27, 7)))
                 .include(dependency("org.junit.jupiter", "junit-jupiter", junit))
-                .include(dependency("org.junit.platform", "junit-platform-console-standalone", junit));
+                .include(dependency("org.junit.platform", "junit-platform-console-standalone", junit))
+                .include(dependency("org.apache.tomcat.embed", "tomcat-embed-core", tomcat))
+                .include(dependency("org.apache.tomcat.embed", "tomcat-embed-jasper", tomcat))
+                .include(dependency("jakarta.servlet:jakarta.servlet-api:6.1.0"))
+                .include(dependency("jakarta.servlet.jsp:jakarta.servlet.jsp-api:4.0.0"));
 
         jarOperation().manifestAttribute(Attributes.Name.MAIN_CLASS, pkg + '.' + "Reasons");
 

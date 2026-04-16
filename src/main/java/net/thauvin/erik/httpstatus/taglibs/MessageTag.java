@@ -32,32 +32,39 @@
 
 package net.thauvin.erik.httpstatus.taglibs;
 
+import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.jsp.PageContext;
 import net.thauvin.erik.httpstatus.Utils;
 
 import java.io.IOException;
 
 /**
- * The <code>&lt;hs:message&gt;</code> tag returns the message (if any) for the current error.
+ * Outputs the error message associated with the current HTTP status error.
+ * If no message is available, the tag prints the configured default value.
+ * XML escaping is applied when enabled.
  *
- * @author <a href="mailto:erik@thauvin.net">Erik C. Thauvin</a>
+ * <p>This tag is typically used on JSP error pages to display the message
+ * supplied by the servlet container or application.</p>
+ *
+ * @author Erik C. Thauvin
  * @created 2022-03-16
  * @since 1.0.5
  */
 public class MessageTag extends XmlSupport {
 
     /**
-     * Writes the error message associated with the current HTTP Status Error Code.
+     * Writes the error message associated with the current request. If the
+     * request is not processing an error, the default value is used instead.
      *
-     * @throws IOException If an I/O error occurs
+     * @throws IOException If an error occurs while writing output
      */
     @Override
     public void doTag() throws IOException {
         var pageContext = (PageContext) getJspContext();
         var out = pageContext.getOut();
 
-        var message = (String) pageContext.getRequest().getAttribute(
-                jakarta.servlet.RequestDispatcher.ERROR_MESSAGE);
+        var message = (String) pageContext.getRequest()
+                .getAttribute(RequestDispatcher.ERROR_MESSAGE);
 
         Utils.outWrite(out, message, defaultValue, escapeXml);
     }

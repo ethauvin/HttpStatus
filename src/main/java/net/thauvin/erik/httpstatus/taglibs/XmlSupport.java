@@ -35,37 +35,38 @@ package net.thauvin.erik.httpstatus.taglibs;
 import jakarta.servlet.jsp.tagext.SimpleTagSupport;
 
 /**
- * Adds support for the <code>default</code> and <code>escapeXml</code> tag attributes.
+ * Base class providing support for the {@code default} and {@code escapeXml}
+ * attributes shared by several tags in the HttpStatus tag library.
  *
- * @author <a href="mailto:erik@thauvin.net">Erik C. Thauvin</a>
+ * <p>The {@code default} attribute supplies a fallback value when the tag
+ * produces no output. The {@code escapeXml} attribute controls whether the
+ * output is XML‑escaped.</p>
+ *
+ * @author Erik C. Thauvin
  * @created 2015-12-03
  * @since 1.0
  */
 public abstract class XmlSupport extends SimpleTagSupport {
 
     /**
-     * Default value string.
+     * The default value to use when the tag produces no output.
      */
-    String defaultValue;
+    protected String defaultValue;
 
     /**
-     * Escape XML flag.
+     * Whether XML escaping is enabled. Defaults to {@code true}.
      */
-    boolean escapeXml = true;
+    protected boolean escapeXml = true;
 
     /**
-     * Sets the default value.
-     *
-     * @param defaultValue The default value
+     * Sets the default value used when the tag produces no output.
      */
     public void setDefault(String defaultValue) {
         this.defaultValue = defaultValue;
     }
 
     /**
-     * Sets the {@link net.thauvin.erik.httpstatus.Utils#escapeXml(String) xml} flag.
-     *
-     * @param escapeXml <code>true</code> or <code>false</code>
+     * Enables or disables XML escaping for the tag output.
      */
     public void setEscapeXml(boolean escapeXml) {
         this.escapeXml = escapeXml;

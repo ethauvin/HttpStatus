@@ -37,42 +37,44 @@ import net.thauvin.erik.httpstatus.Utils;
 
 import java.io.IOException;
 
-
 /**
- * The <code>&lt;hs:cause&gt;</code> tag returns the cause (if any) for the current HTTP Status Error Code.
+ * Outputs the cause (if any) of the current HTTP status error. The cause is
+ * derived from the underlying {@link Throwable} associated with the error
+ * being processed by the JSP container.
  *
- * @author <a href="mailto:erik@thauvin.net">Erik C. Thauvin</a>
+ * <p>If no cause is available, the tag prints the configured default value.
+ * XML escaping is applied when enabled.</p>
+ *
+ * @author Erik C. Thauvin
  * @created 2015-12-03
  * @since 1.0
  */
 public class CauseTag extends XmlSupport {
 
     /**
-     * Prints the cause (if any) for the current HTTP Status Error Code.
+     * Writes the localized message of the cause associated with the current
+     * HTTP status error. If no error, throwable, or cause is available, the
+     * default value is used instead.
      *
-     * @throws IOException If an error occurs while writing the output
+     * @throws IOException If an error occurs while writing output
      */
     @Override
     public void doTag() throws IOException {
         var pageContext = (PageContext) getJspContext();
         var out = pageContext.getOut();
 
-        var cause = pageContext.getErrorData().getThrowable().getCause();
+        var errorData = pageContext.getErrorData();
+        var throwable = (errorData != null) ? errorData.getThrowable() : null;
+        var cause = (throwable != null) ? throwable.getCause() : null;
 
         Utils.outWrite(out, getCause(cause), defaultValue, escapeXml);
     }
 
     /**
-     * Returns the cause's localized message.
-     *
-     * @param cause The cause
-     * @return The cause or {@code null} if none
+     * Returns the localized message of the given cause, or {@code null} if
+     * no cause or message is available.
      */
     public String getCause(Throwable cause) {
-        if (cause != null && cause.getLocalizedMessage() != null) {
-            return cause.getLocalizedMessage();
-        } else {
-            return null;
-        }
+        return (cause != null) ? cause.getLocalizedMessage() : null;
     }
 }

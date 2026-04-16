@@ -1,8 +1,8 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!--
   ~ httpstatus.tld
   ~
-  ~ Copyright 2015-2025 Erik C. Thauvin (erik@thauvin.net)
+  ~ Copyright 2015-2026 Erik C. Thauvin (erik@thauvin.net)
   ~ All rights reserved.
   ~
   ~ Redistribution and use in source and binary forms, with or without
@@ -30,35 +30,32 @@
   ~ OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
   ~ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
   -->
-<taglib xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xmlns="http://java.sun.com/xml/ns/javaee"
-        xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-jsptaglibrary_2_1.xsd"
-        version="2.1">
+
+<taglib xmlns="https://jakarta.ee/xml/ns/jakartaee"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-jsptaglibrary_3_0.xsd"
+        version="3.0">
 
     <description>HttpStatus JSP Tag Library</description>
     <display-name>HttpStatus JSP Tags</display-name>
-    <tlib-version>1.1.1</tlib-version>
+    <tlib-version>1.2</tlib-version>
     <short-name>hs</short-name>
     <uri>http://erik.thauvin.net/taglibs/httpstatus</uri>
 
     <tag>
-        <description>
-            Returns the cause (if any) for the current HTTP Status Error Code.
-        </description>
+        <description>Returns the cause (if any) for the current HTTP Status Error Code.</description>
         <name>cause</name>
         <tag-class>net.thauvin.erik.httpstatus.taglibs.CauseTag</tag-class>
         <body-content>empty</body-content>
         <attribute>
-            <description>
-                Default value if the resulting cause is null.
-            </description>
+            <description>Default value if the resulting cause is null.</description>
             <name>default</name>
             <required>false</required>
             <rtexprvalue>true</rtexprvalue>
         </attribute>
         <attribute>
             <description>
-                Converts &lt;, &gt; ,&amp; ,' ," to their corresponding entity codes. Value is true by default.
+                Converts &lt;, &gt;, &amp;, ', " to their corresponding entity codes. Value is true by default.
             </description>
             <name>escapeXml</name>
             <required>false</required>
@@ -67,32 +64,26 @@
     </tag>
 
     <tag>
-        <description>
-            Returns the HTTP Status Error Code.
-        </description>
+        <description>Returns the HTTP Status Error Code.</description>
         <name>code</name>
         <tag-class>net.thauvin.erik.httpstatus.taglibs.CodeTag</tag-class>
         <body-content>empty</body-content>
     </tag>
 
     <tag>
-        <description>
-            Returns the message (if any) for the current error.
-        </description>
+        <description>Returns the message (if any) for the current error.</description>
         <name>message</name>
         <tag-class>net.thauvin.erik.httpstatus.taglibs.MessageTag</tag-class>
         <body-content>empty</body-content>
         <attribute>
-            <description>
-                Default value if the resulting error message is null.
-            </description>
+            <description>Default value if the resulting error message is null.</description>
             <name>default</name>
             <required>false</required>
             <rtexprvalue>true</rtexprvalue>
         </attribute>
         <attribute>
             <description>
-                Converts &lt;, &gt; ,&amp; ,' ," to their corresponding entity codes. Value is true by default.
+                Converts &lt;, &gt;, &amp;, ', " to their corresponding entity codes. Value is true by default.
             </description>
             <name>escapeXml</name>
             <required>false</required>
@@ -101,24 +92,18 @@
     </tag>
 
     <tag>
-        <description>
-            Returns the Reason Phrase for the current (or specified) HTTP Status Error Code.
-        </description>
+        <description>Returns the Reason Phrase for the current (or specified) HTTP Status Error Code.</description>
         <name>reason</name>
         <tag-class>net.thauvin.erik.httpstatus.taglibs.ReasonTag</tag-class>
         <body-content>empty</body-content>
         <attribute>
-            <description>
-                Default value if the resulting reason is null.
-            </description>
+            <description>Default value if the resulting reason is null.</description>
             <name>default</name>
             <required>false</required>
             <rtexprvalue>true</rtexprvalue>
         </attribute>
         <attribute>
-            <description>
-                HTTP Status Error Code to be looked up.
-            </description>
+            <description>HTTP Status Error Code to be looked up.</description>
             <name>code</name>
             <required>false</required>
             <rtexprvalue>true</rtexprvalue>
@@ -132,4 +117,5 @@
             <rtexprvalue>true</rtexprvalue>
         </attribute>
     </tag>
+
 </taglib>

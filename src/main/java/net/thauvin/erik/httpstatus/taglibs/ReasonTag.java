@@ -39,10 +39,14 @@ import net.thauvin.erik.httpstatus.Utils;
 import java.io.IOException;
 
 /**
- * The <code>&lt;hs:reason&gt;</code> tag returns the Reason Phrase for the current (or specified) HTTP Status Error
- * Code.
+ * Outputs the HTTP status Reason Phrase for either the explicitly supplied
+ * status code or, when none is provided, the status code associated with the
+ * current error being processed by the JSP container.
  *
- * @author <a href="mailto:erik@thauvin.net">Erik C. Thauvin</a>
+ * <p>If no reason phrase is available, the tag prints the configured default
+ * value. XML escaping is applied when enabled.</p>
+ *
+ * @author Erik C. Thauvin
  * @created 2015-12-02
  * @since 1.0
  */
@@ -51,26 +55,32 @@ public class ReasonTag extends XmlSupport {
     private int statusCode = -1;
 
     /**
-     * Writes the Reason Phrase for the current (or specified) HTTP Status Error Code.
+     * Writes the Reason Phrase for the current or specified HTTP status code.
+     * If the page is not processing an error and no explicit code is set,
+     * the default value is used instead.
+     *
+     * @throws IOException If an error occurs while writing output
      */
     @Override
     public void doTag() throws IOException {
         var pageContext = (PageContext) getJspContext();
         var out = pageContext.getOut();
 
-        if (statusCode > -1) {
-            Utils.outWrite(out, Reasons.getReasonPhrase(statusCode), defaultValue, escapeXml);
+        String reason;
+
+        if (statusCode >= 0) {
+            reason = Reasons.getReasonPhrase(statusCode);
         } else {
-            Utils.outWrite(out, Reasons.getReasonPhrase(pageContext.getErrorData().getStatusCode()), defaultValue,
-                    escapeXml);
+            var errorData = pageContext.getErrorData();
+            var code = (errorData != null) ? errorData.getStatusCode() : -1;
+            reason = (code >= 0) ? Reasons.getReasonPhrase(code) : null;
         }
 
+        Utils.outWrite(out, reason, defaultValue, escapeXml);
     }
 
     /**
-     * Sets the status code.
-     *
-     * @param statusCode The status code
+     * Sets the HTTP status code to be used when resolving the Reason Phrase.
      */
     public void setCode(int statusCode) {
         this.statusCode = statusCode;

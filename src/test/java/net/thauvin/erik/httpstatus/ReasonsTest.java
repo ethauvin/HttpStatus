@@ -56,7 +56,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  * @since 1.0
  */
 @SuppressWarnings("PMD.AvoidDuplicateLiterals")
-class ReasonsTests {
+class ReasonsTest {
 
     private static final ResourceBundle BUNDLE = ResourceBundle.getBundle(Reasons.BUNDLE_BASENAME);
 

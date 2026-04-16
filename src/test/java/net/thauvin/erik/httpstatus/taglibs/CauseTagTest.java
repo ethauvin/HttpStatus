@@ -40,6 +40,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
+import java.io.IOException;
+
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -50,7 +52,7 @@ import static org.mockito.Mockito.when;
  * @author <a href="https://erik.thauvin.net/">Erik C. Thauvin</a>
  * @since 1.1.0
  */
-class CauseTagTests {
+class CauseTagTest {
 
     private final CauseTag tag = new CauseTag();
 
@@ -74,6 +76,22 @@ class CauseTagTests {
             tag.setDefault("No error"); // Set a default value
             tag.doTag();
             assertThat(getOutputFromPageContext(pageContext)).isEqualTo("No error");
+        }
+
+        @Test
+        void doTagWithNoErrorData() throws IOException {
+            var causeTag = new CauseTag();
+            var pageContext = mock(PageContext.class);
+            var jspWriter = new MockJspWriter();
+
+            when(pageContext.getOut()).thenReturn(jspWriter);
+            when(pageContext.getErrorData()).thenReturn(null);
+
+            causeTag.setJspContext(pageContext);
+            causeTag.doTag();
+
+            // defaultValue is null → Utils.outWrite writes ""
+            assertThat(jspWriter.getContent()).isEqualTo("");
         }
 
         @Test

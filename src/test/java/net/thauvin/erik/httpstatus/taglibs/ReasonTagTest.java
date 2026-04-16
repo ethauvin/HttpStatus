@@ -1,5 +1,5 @@
 /*
- * CodeTagTests.java
+ * ReasonTagTests.java
  *
  * Copyright 2015-2026 Erik C. Thauvin (erik@thauvin.net)
  * All rights reserved.
@@ -34,31 +34,65 @@ package net.thauvin.erik.httpstatus.taglibs;
 
 import jakarta.servlet.jsp.ErrorData;
 import jakarta.servlet.jsp.PageContext;
+import net.thauvin.erik.httpstatus.Reasons;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-class CodeTagTests {
+class ReasonTagTest {
 
     @Test
-    void doTagWithStatusCode() throws IOException {
-        var mockPageContext = mock(PageContext.class);
-        var mockWriter = new MockJspWriter();
-        var mockErrorData = mock(ErrorData.class);
+    void doTagWithDefaultErrorData() throws IOException {
+        var reasonTag = new ReasonTag();
+        var code = 404;
+        var pageContext = mock(PageContext.class);
+        var jspWriter = new MockJspWriter();
+        var errorData = mock(ErrorData.class);
 
-        when(mockErrorData.getStatusCode()).thenReturn(404);
-        when(mockPageContext.getOut()).thenReturn(mockWriter);
-        when(mockPageContext.getErrorData()).thenReturn(mockErrorData);
+        when(pageContext.getOut()).thenReturn(jspWriter);
+        when(pageContext.getErrorData()).thenReturn(errorData);
+        when(errorData.getStatusCode()).thenReturn(code);
 
-        CodeTag codeTag = new CodeTag();
-        codeTag.setJspContext(mockPageContext);
+        reasonTag.setJspContext(pageContext);
+        reasonTag.doTag();
 
-        codeTag.doTag();
+        assertThat(jspWriter.getContent()).isEqualTo(Reasons.getReasonPhrase(code));
+    }
 
-        assertEquals("404", mockWriter.getContent());
+    @Test
+    void doTagWithNoErrorDataAndNoExplicitCode() throws IOException {
+        var reasonTag = new ReasonTag();
+        var pageContext = mock(PageContext.class);
+        var jspWriter = new MockJspWriter();
+
+        when(pageContext.getOut()).thenReturn(jspWriter);
+        when(pageContext.getErrorData()).thenReturn(null);
+
+        reasonTag.setJspContext(pageContext);
+        reasonTag.doTag();
+
+        // defaultValue is null → Utils.outWrite writes ""
+        assertThat(jspWriter.getContent()).isEqualTo("");
+    }
+
+    @Test
+    void doTagWithValidStatusCode() throws IOException {
+        var reasonTag = new ReasonTag();
+        var code = 200;
+        var pageContext = mock(PageContext.class);
+        var jspWriter = new MockJspWriter();
+
+        reasonTag.setCode(code);
+
+        when(pageContext.getOut()).thenReturn(jspWriter);
+
+        reasonTag.setJspContext(pageContext);
+        reasonTag.doTag();
+
+        assertThat(jspWriter.getContent()).isEqualTo(Reasons.getReasonPhrase(code));
     }
 }

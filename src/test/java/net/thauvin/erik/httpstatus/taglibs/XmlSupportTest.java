@@ -42,7 +42,7 @@ import org.junit.jupiter.params.provider.ValueSource;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class XmlSupportTests {
+class XmlSupportTest {
 
     // Simple concrete implementation of the abstract XmlSupport class for testing purposes
     static class XmlSupportImpl extends XmlSupport {

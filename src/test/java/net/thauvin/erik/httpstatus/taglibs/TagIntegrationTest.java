@@ -39,18 +39,23 @@ import org.junit.jupiter.api.Test;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-class HttpStatusTagIntegrationTest {
+class TagIntegrationTest {
 
     @SuppressWarnings({"PMD.RelianceOnDefaultCharset", "PMD.SignatureDeclareThrowsException"})
     private String renderJsp(String jspName) throws Exception {
         var baseDir = new File("build/tomcat");
-        var ignored = baseDir.mkdirs();
+        if (!baseDir.mkdirs()) {
+            if (!baseDir.exists() && !baseDir.isDirectory()) {
+                throw new IOException("Unable to create base directory: " + baseDir.getAbsolutePath());
+            }
+        }
 
         Tomcat tomcat = new Tomcat();
         tomcat.setBaseDir(baseDir.getAbsolutePath());

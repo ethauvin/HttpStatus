@@ -52,7 +52,7 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
  * @since 1.1.0
  */
 @SuppressWarnings({"PMD.AvoidDuplicateLiterals"})
-class StatusCodeTests {
+class StatusCodeTest {
 
     static Stream<Integer> statusCodes() {
         var bundle = ResourceBundle.getBundle(Reasons.BUNDLE_BASENAME);

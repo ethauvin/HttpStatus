@@ -76,7 +76,7 @@ public class HttpStatusBuild extends Project {
         repositories = List.of(MAVEN_CENTRAL, CENTRAL_SNAPSHOTS, RIFE2_RELEASES);
 
         var junit = version(6, 1, 3);
-        var tomcat = version(11, 0, 21);
+        var tomcat = version(11, 0, 24);
         scope(provided)
                 .include(dependency("jakarta.servlet", "jakarta.servlet-api",
                         version(6, 1, 0)))

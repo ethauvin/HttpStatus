@@ -32,10 +32,10 @@
 
 package net.thauvin.erik.httpstatus;
 
-import java.util.Map;
-import java.util.Optional;
-import java.util.ResourceBundle;
-import java.util.TreeMap;
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
+
+import java.util.*;
 
 /**
  * Loads HTTP status reason phrases from the resource bundle and provides
@@ -44,6 +44,8 @@ import java.util.TreeMap;
  * The reason phrases are stored in a sorted, immutable map for predictable
  * iteration order and thread‑safe access.
  */
+@NullMarked
+@SuppressWarnings("PMD.UseConcurrentHashMap")
 public final class Reasons {
 
     /**
@@ -52,19 +54,41 @@ public final class Reasons {
     static final String BUNDLE_BASENAME = "net.thauvin.erik.httpstatus.reasons";
 
     /**
-     * Immutable map of status code strings to their reason phrases.
+     * Immutable, sorted map of status code strings to their reason phrases.
      * <p>
      * Populated once at class initialization.
      */
     private static final Map<String, String> REASON_PHRASES;
 
+    /**
+     * Immutable, sorted per-class views of {@link #REASON_PHRASES}, keyed by
+     * {@link StatusCodeClass}.
+     * <p>
+     * Precomputed once at class initialization so repeated calls to
+     * {@link #getReasonClass(StatusCodeClass)} don't rescan the full map.
+     */
+    private static final Map<StatusCodeClass, Map<String, String>> REASON_PHRASES_BY_CLASS;
+
     static {
         var bundle = ResourceBundle.getBundle(BUNDLE_BASENAME);
-        var map = new TreeMap<String, String>();
-        for (var key : bundle.keySet()) {
-            map.put(key, bundle.getString(key));
+        var sorted = new TreeMap<String, String>();
+        bundle.keySet().forEach(k -> sorted.put(k, bundle.getString(k)));
+        REASON_PHRASES = Collections.unmodifiableSortedMap(sorted);
+
+        var mutable = new EnumMap<StatusCodeClass, SortedMap<String, String>>(StatusCodeClass.class);
+        REASON_PHRASES.forEach((code, phrase) ->
+                StatusCodeClass.fromFirstDigit(code.charAt(0) - '0')
+                        .ifPresent(rc -> mutable.computeIfAbsent(rc, x -> new TreeMap<>())
+                                .put(code, phrase))
+        );
+
+        Map<StatusCodeClass, Map<String, String>> byClass = new EnumMap<>(StatusCodeClass.class);
+        mutable.forEach((rc, m) -> byClass.put(rc, Collections.unmodifiableSortedMap(m)));
+        for (var rc : StatusCodeClass.values()) {
+            byClass.putIfAbsent(rc, Collections.emptySortedMap());
         }
-        REASON_PHRASES = Map.copyOf(map);
+
+        REASON_PHRASES_BY_CLASS = Collections.unmodifiableMap(byClass);
     }
 
     /**
@@ -78,36 +102,66 @@ public final class Reasons {
      * Returns all reason phrases belonging to the given status code class.
      * <p>
      * The returned map is sorted by status code.
+     *
+     * @param reasonClass the status code class to look up
+     * @return a sorted map of status codes to reason phrases for the given class
      */
     public static Map<String, String> getReasonClass(StatusCodeClass reasonClass) {
-        var firstDigit = Character.forDigit(reasonClass.getFirstDigit(), 10);
-        var result = new TreeMap<String, String>();
-
-        for (var entry : REASON_PHRASES.entrySet()) {
-            if (entry.getKey().charAt(0) == firstDigit) {
-                result.put(entry.getKey(), entry.getValue());
-            }
-        }
-        return result;
+        return REASON_PHRASES_BY_CLASS.get(reasonClass);
     }
 
     /**
      * Returns the reason phrase for the given status code, or null if none exists.
-     * <p>
-     * Accepts either an integer or string representation of the status code.
+     *
+     * @param statusCode the HTTP status code
+     * @return the reason phrase, or {@code null} if none exists
      */
-    public static String getReasonPhrase(Object statusCode) {
-        return REASON_PHRASES.get(toStatusCodeString(statusCode));
+    @Nullable
+    public static String getReasonPhrase(int statusCode) {
+        return REASON_PHRASES.get(Integer.toString(statusCode));
+    }
+
+    /**
+     * Returns the reason phrase for the given status code, or null if none exists.
+     *
+     * @param statusCode the HTTP status code as a string
+     * @return the reason phrase, or {@code null} if none exists
+     */
+    @Nullable
+    public static String getReasonPhrase(String statusCode) {
+        return REASON_PHRASES.get(statusCode);
     }
 
     /**
      * Returns the reason phrase for the given status code, or the provided
      * default value if no phrase is defined.
+     *
+     * @param statusCode    the HTTP status code
+     * @param defaultReason the default reason phrase to return if none exists
+     * @return the reason phrase, or {@code defaultReason} if none exists
      */
-    public static String getReasonPhrase(Object statusCode, String defaultReason) {
+    public static String getReasonPhrase(int statusCode, String defaultReason) {
         return Optional.ofNullable(getReasonPhrase(statusCode)).orElse(defaultReason);
     }
 
+    /**
+     * Returns the reason phrase for the given status code, or the provided
+     * default value if no phrase is defined.
+     *
+     * @param statusCode    the HTTP status code as a string
+     * @param defaultReason the default reason phrase to return if none exists
+     * @return the reason phrase, or {@code defaultReason} if none exists
+     */
+    public static String getReasonPhrase(String statusCode, String defaultReason) {
+        return Optional.ofNullable(getReasonPhrase(statusCode)).orElse(defaultReason);
+    }
+
+    /**
+     * Checks whether the given code represents a status code class pattern (e.g., {@code 2xx}).
+     *
+     * @param code the code to check
+     * @return {@code true} if the code is a status code class pattern, {@code false} otherwise
+     */
     private static boolean isStatusCodeClass(String code) {
         return code.length() == 3
                 && code.charAt(0) >= '1'
@@ -120,6 +174,8 @@ public final class Reasons {
      * Prints reason phrases for the given status code(s) or status code class(es).
      * <p>
      * If no arguments are provided, prints all reason phrases.
+     *
+     * @param args the status codes or status code classes to print (e.g., "404", "2xx")
      */
     public static void main(String... args) {
         if (args.length == 0) {
@@ -137,16 +193,32 @@ public final class Reasons {
         System.out.println("Total: " + REASON_PHRASES.size());
     }
 
+    /**
+     * Prints a single reason phrase.
+     *
+     * @param code   the status code
+     * @param phrase the reason phrase
+     */
     @SuppressWarnings("PMD.SystemPrintln")
     private static void printReasonPhrase(String code, String phrase) {
         System.out.println(code + ": " + phrase);
     }
 
+    /**
+     * Prints the reason phrase for a single status code if it exists.
+     *
+     * @param code the status code as a string
+     */
     private static void printSingleStatusCode(String code) {
         Optional.ofNullable(REASON_PHRASES.get(code))
                 .ifPresent(phrase -> printReasonPhrase(code, phrase));
     }
 
+    /**
+     * Processes a status code argument, handling both individual codes and class patterns.
+     *
+     * @param code the status code or class pattern to process
+     */
     private static void processStatusCode(String code) {
         if (isStatusCodeClass(code)) {
             processStatusCodeClass(code);
@@ -155,21 +227,15 @@ public final class Reasons {
         }
     }
 
+    /**
+     * Processes a status code class pattern and prints all matching reason phrases.
+     *
+     * @param code the status code class pattern (e.g., "4xx")
+     */
     private static void processStatusCodeClass(String code) {
         var firstDigit = code.charAt(0) - '0';
         StatusCodeClass.fromFirstDigit(firstDigit)
                 .ifPresent(reasonClass ->
                         getReasonClass(reasonClass).forEach(Reasons::printReasonPhrase));
-    }
-
-    /**
-     * Converts a status code to its string representation.
-     * <p>
-     * Supports both integer and string inputs.
-     */
-    private static String toStatusCodeString(Object statusCode) {
-        return (statusCode instanceof Integer i)
-                ? Integer.toString(i)
-                : String.valueOf(statusCode);
     }
 }

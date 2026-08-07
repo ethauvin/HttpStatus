@@ -54,9 +54,9 @@ import static rife.bld.operations.JavadocOptions.DocLinkOption.NO_MISSING;
 public class HttpStatusBuild extends Project {
 
     final PmdOperation pmdOp = new PmdOperation()
-            .fromProject(this)
             .failOnViolation(true)
-            .ruleSets("config/pmd.xml");
+            .ruleSets("config/pmd.xml")
+            .fromProject(this);
     final File testResultsDirectory = IOTools.resolveFile(buildDirectory(), "test-results", "test");
 
     public HttpStatusBuild() {
@@ -73,7 +73,7 @@ public class HttpStatusBuild extends Project {
 
         downloadSources = true;
         autoDownloadPurge = true;
-        repositories = List.of(MAVEN_CENTRAL, CENTRAL_SNAPSHOTS, RIFE2_RELEASES);
+        repositories = List.of(MAVEN_CENTRAL, CENTRAL_SNAPSHOTS, RIFE2_SNAPSHOTS);
 
         var junit = version(6, 1, 3);
         var tomcat = version(11, 0, 24);
@@ -84,13 +84,13 @@ public class HttpStatusBuild extends Project {
                         version(4, 0, 0)))
                 .include(dependency("jakarta.el", "jakarta.el-api",
                         version(6, 0, 1)))
-                .include(dependency("com.github.spotbugs", "spotbugs-annotations",
-                        version(4, 9, 8)))
+//                .include(dependency("com.github.spotbugs", "spotbugs-annotations",
+//                        version(4, 10, 3)))
                 .include(dependency("org.jspecify", "jspecify",
-                        version(1, 0, 0)));
+                        version(1, 0, 1)));
         scope(test)
-                .include(dependency("com.uwyn.rife2", "bld-extensions-testing-helpers",
-                        version(1, 0, 0)))
+                .include(dependency("com.uwyn.rife2", "bld-testing-helpers",
+                        version(1, 1, 0, "SNAPSHOT")))
                 .include(dependency("org.jetbrains", "annotations",
                         version(26, 1, 0)))
                 .include(dependency("org.mockito", "mockito-core",
@@ -110,7 +110,8 @@ public class HttpStatusBuild extends Project {
                 .docTitle(description + ' ' + version.toString())
                 .author()
                 .docLint(NO_MISSING)
-                .link("https://jakarta.ee/specifications/platform/9/apidocs/");
+                .link("https://jakarta.ee/specifications/platform/9/apidocs/")
+                .link("https://jspecify.dev/docs/api/");
 
         publishOperation()
                 .repository(version.isSnapshot() ? repository(CENTRAL_SNAPSHOTS.location())

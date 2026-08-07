@@ -88,6 +88,8 @@ public enum StatusCodeClass {
 
     /**
      * Creates a new classification based on the first digit of the status code.
+     *
+     * @param firstDigit the first digit of the HTTP status code (1-5)
      */
     StatusCodeClass(int firstDigit) {
         this.firstDigit = firstDigit;
@@ -99,6 +101,10 @@ public enum StatusCodeClass {
      * <p>
      * Returns an empty {@link Optional} if the digit does not correspond
      * to a known HTTP status code class.
+     *
+     * @param firstDigit the first digit of the HTTP status code
+     * @return an {@link Optional} containing the corresponding {@link StatusCodeClass},
+     * or an empty {@link Optional} if the digit is not between 1 and 5
      */
     public static Optional<StatusCodeClass> fromFirstDigit(int firstDigit) {
         return Optional.ofNullable(LOOKUP_MAP.get(firstDigit));
@@ -106,6 +112,8 @@ public enum StatusCodeClass {
 
     /**
      * Returns the first digit representing this HTTP status code class.
+     *
+     * @return the first digit (1-5) of this status code class
      */
     public int getFirstDigit() {
         return firstDigit;

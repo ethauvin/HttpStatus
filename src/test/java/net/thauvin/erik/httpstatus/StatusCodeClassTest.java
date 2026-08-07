@@ -41,6 +41,40 @@ import static org.assertj.core.api.Assertions.assertThat;
 class StatusCodeClassTest {
 
     @Test
+    void firstDigitClientError() {
+        assertThat(StatusCodeClass.CLIENT_ERROR.getFirstDigit()).isEqualTo(4);
+    }
+
+    @Test
+    void firstDigitInformational() {
+        assertThat(StatusCodeClass.INFORMATIONAL.getFirstDigit()).isEqualTo(1);
+    }
+
+    @Test
+    void firstDigitRedirection() {
+        assertThat(StatusCodeClass.REDIRECTION.getFirstDigit()).isEqualTo(3);
+    }
+
+    @Test
+    void firstDigitRoundTrip() {
+        for (var statusClass : StatusCodeClass.values()) {
+            var digit = statusClass.getFirstDigit();
+            var lookedUp = StatusCodeClass.fromFirstDigit(digit);
+            assertThat(lookedUp).isPresent().contains(statusClass);
+        }
+    }
+
+    @Test
+    void firstDigitServerError() {
+        assertThat(StatusCodeClass.SERVER_ERROR.getFirstDigit()).isEqualTo(5);
+    }
+
+    @Test
+    void firstDigitSuccessful() {
+        assertThat(StatusCodeClass.SUCCESSFUL.getFirstDigit()).isEqualTo(2);
+    }
+
+    @Test
     void fromFirstDigitWithBoundaryValueString() {
         Optional<StatusCodeClass> result = StatusCodeClass.fromFirstDigit(5);
         assertThat(result).isPresent().contains(StatusCodeClass.SERVER_ERROR);

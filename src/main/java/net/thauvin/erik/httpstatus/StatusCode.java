@@ -32,8 +32,6 @@
 
 package net.thauvin.erik.httpstatus;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
-
 import java.io.Serial;
 import java.io.Serializable;
 
@@ -49,7 +47,6 @@ import java.io.Serializable;
  * @author <a href="mailto:erik@thauvin.net">Erik C. Thauvin</a>
  * @since 1.1.0
  */
-@SuppressFBWarnings("MOM_MISLEADING_OVERLOAD_MODEL")
 public class StatusCode implements Serializable {
 
     @Serial
@@ -80,7 +77,7 @@ public class StatusCode implements Serializable {
      *
      * @param code the status code
      * @return The reason, or <code>null</code>
-     * @see Reasons#getReasonPhrase(Object)
+     * @see Reasons#getReasonPhrase(int)
      * @since 2.0.0
      */
     public static String getReason(int code) {
@@ -211,7 +208,7 @@ public class StatusCode implements Serializable {
      * if no reason is defined.
      *
      * @return The reason, or <code>null</code>
-     * @see Reasons#getReasonPhrase(Object)
+     * @see Reasons#getReasonPhrase(int)
      */
     public String getReason() {
         return Reasons.getReasonPhrase(code);

@@ -36,8 +36,8 @@ import org.assertj.core.api.AutoCloseableSoftAssertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
-import rife.bld.extension.testing.CaptureOutput;
-import rife.bld.extension.testing.CapturedOutput;
+import rife.bld.testing.CaptureOutput;
+import rife.bld.testing.CapturedOutput;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -115,6 +115,7 @@ class ReasonsMainTest {
     }
 
     @Test
+    @SuppressWarnings("DataFlowIssue")
     void mainWithSingleArg(CapturedOutput output) {
         Reasons.main("401");
         assertThat(output.contains(Reasons.getReasonPhrase("401"))).as("401").isTrue();
@@ -153,6 +154,7 @@ class ReasonsMainTest {
     }
 
     @Test
+    @SuppressWarnings("DataFlowIssue")
     void mainWithoutArgs(CapturedOutput output) {
         Reasons.main();
         assertThat(output.getOut().contains(Reasons.getReasonPhrase(301))).as("301").isTrue();

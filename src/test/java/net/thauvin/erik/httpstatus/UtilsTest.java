@@ -46,6 +46,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Modifier;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.junit.jupiter.api.Assertions.assertInstanceOf;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -105,7 +106,7 @@ class UtilsTest {
         @ParameterizedTest
         @NullSource
         void escapeXmlWithNullString(String input) {
-            assertThat(Utils.escapeXml(input)).isNull();
+            assertThatCode(() -> Utils.escapeXml(input)).isInstanceOf(NullPointerException.class);
         }
 
         @Test

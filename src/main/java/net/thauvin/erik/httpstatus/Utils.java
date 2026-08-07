@@ -32,11 +32,11 @@
 
 package net.thauvin.erik.httpstatus;
 
-import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 
 import java.io.IOException;
 import java.io.Writer;
-import java.util.Map;
 import java.util.Objects;
 
 /**
@@ -48,15 +48,8 @@ import java.util.Objects;
  * @author <a href="mailto:erik@thauvin.net">Erik C. Thauvin</a>
  * @since 1.0.0
  */
+@NullMarked
 public final class Utils {
-
-    private static final Map<Character, String> XML_ENTITIES = Map.of(
-            '<', "&lt;",
-            '>', "&gt;",
-            '&', "&amp;",
-            '\'', "&apos;",
-            '"', "&quot;"
-    );
 
     /**
      * Prevents instantiation of this utility class.
@@ -71,23 +64,30 @@ public final class Utils {
      * Converts the characters {@code <}, {@code >}, {@code &}, {@code '}, and {@code "}
      * to their corresponding XML entity codes.
      * <p>
-     * Returns the original value when null or empty. Only the predefined XML entities
+     * Returns the original value when empty. Only the predefined XML entities
      * are escaped; all other characters are preserved as-is.
+     *
+     * @param value the string to escape
+     * @return the escaped string
+     * @throws NullPointerException if the value is {@code null}
      */
     @SuppressWarnings("PMD.ForLoopVariableCount")
     public static String escapeXml(String value) {
-        if (value == null || value.isEmpty()) {
+        Objects.requireNonNull(value, "value cannot be null");
+        if (value.isEmpty()) {
             return value;
         }
 
         var escaped = new StringBuilder(value.length() * 2);
         for (int i = 0, len = value.length(); i < len; i++) {
             char c = value.charAt(i);
-            var entity = XML_ENTITIES.get(c);
-            if (entity != null) {
-                escaped.append(entity);
-            } else {
-                escaped.append(c);
+            switch (c) {
+                case '<' -> escaped.append("&lt;");
+                case '>' -> escaped.append("&gt;");
+                case '&' -> escaped.append("&amp;");
+                case '\'' -> escaped.append("&apos;");
+                case '"' -> escaped.append("&quot;");
+                default -> escaped.append(c);
             }
         }
         return escaped.toString();
@@ -100,16 +100,20 @@ public final class Utils {
      * <p>
      * The writer must not be null. XML escaping is performed using {@link #escapeXml(String)}.
      *
+     * @param out          the writer to write to
+     * @param value        the string value to write, may be {@code null}
+     * @param defaultValue the default value to use when {@code value} is {@code null}, may be {@code null}
+     * @param escapeXml    {@code true} to escape XML characters, {@code false} otherwise
      * @throws IOException          If an I/O error occurs while writing
-     * @throws NullPointerException If the writer is null
+     * @throws NullPointerException If the writer is {@code null}
      */
-    public static void outWrite(@NonNull Writer out, String value, String defaultValue, boolean xml)
+    public static void outWrite(Writer out, @Nullable String value, @Nullable String defaultValue, boolean escapeXml)
             throws IOException {
         Objects.requireNonNull(out, "Writer cannot be null");
 
         var textToWrite = value != null ? value : defaultValue;
         if (textToWrite != null) {
-            out.write(xml ? escapeXml(textToWrite) : textToWrite);
+            out.write(escapeXml ? escapeXml(textToWrite) : textToWrite);
         }
     }
 }

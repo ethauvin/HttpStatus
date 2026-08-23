@@ -85,7 +85,7 @@ public class HttpStatusBuild extends Project {
                 .include(dependency("jakarta.el", "jakarta.el-api",
                         version(6, 0, 1)))
 //                .include(dependency("com.github.spotbugs", "spotbugs-annotations",
-//                        version(4, 10, 3)))
+//                        version(4, 10, 4)))
                 .include(dependency("org.jspecify", "jspecify",
                         version(1, 0, 1)));
         scope(test)

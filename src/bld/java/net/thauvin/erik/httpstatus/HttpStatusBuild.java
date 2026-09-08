@@ -73,7 +73,7 @@ public class HttpStatusBuild extends Project {
 
         downloadSources = true;
         autoDownloadPurge = true;
-        repositories = List.of(MAVEN_CENTRAL, CENTRAL_SNAPSHOTS, RIFE2_SNAPSHOTS);
+        repositories = List.of(MAVEN_CENTRAL, CENTRAL_SNAPSHOTS, RIFE2_SNAPSHOTS, RIFE2_RELEASES);
 
         var junit = version(6, 1, 3);
         var tomcat = version(11, 0, 25);
@@ -90,7 +90,7 @@ public class HttpStatusBuild extends Project {
                         version(1, 0, 1)));
         scope(test)
                 .include(dependency("com.uwyn.rife2", "bld-testing-helpers",
-                        version(1, 1, 0, "SNAPSHOT")))
+                        version(1, 1, 0)))
                 .include(dependency("org.jetbrains", "annotations",
                         version(26, 1, 0)))
                 .include(dependency("org.mockito", "mockito-core",

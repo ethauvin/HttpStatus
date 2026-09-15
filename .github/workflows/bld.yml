@@ -52,6 +52,22 @@ jobs:
         if: success() && matrix.java-version == env.COVERAGE_JDK && matrix.os == 'ubuntu-latest'
         run: printf "\nsonar.java.jdkHome=${{ env.JAVA_HOME }}\n" >> sonar-project.properties
 
+      - name: Debug Sonar config
+        if: success() && matrix.java-version == env.COVERAGE_JDK && matrix.os == 'ubuntu-latest'
+        run: |
+          echo "--- sonar-project.properties ---"
+          cat sonar-project.properties || echo "FILE MISSING"
+          echo "--- env check ---"
+          echo "GITHUB_TOKEN set? $([ -n "$GITHUB_TOKEN" ] && echo yes || echo no)"
+          echo "SONAR_TOKEN length: ${#SONAR_TOKEN}"
+          echo "SONAR_TOKEN first 4: ${SONAR_TOKEN:0:4}"
+          # Test token against API - will 403 if token is bad
+          curl -s -o /tmp/out.json -w "HTTP %{http_code}\n" -u "$SONAR_TOKEN:" "https://api.sonarcloud.io/api/projects/search?organization=ethauvin"
+          cat /tmp/out.json | head -c 500
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+
       - name: SonarCloud Scan
         uses: SonarSource/sonarqube-scan-action@v8.2.1
         if: success() && matrix.java-version == env.COVERAGE_JDK && matrix.os == 'ubuntu-latest'
